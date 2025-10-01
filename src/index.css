@@ -1,3 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primary-main1: #AE89FF;
+  --color-primary-main2: #AE89FF;
+  --color-primary-main3: #DAC8FF;
+  --color-custom-red: #f84f4f;
+  --color-custom-blue: #525AFF;
+  --color-custom-green: #37CC70;
+  --color-custom-green2: #8AFF8C;
+  --color-custom-yellow: #FFFF65;
+  --color-background: #FAFAFA;
+}
