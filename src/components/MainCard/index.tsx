@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Like } from '../../assets';
+import { Comment } from '../../assets';
 
 type MainCardProps = {
   id: number;
@@ -75,7 +76,10 @@ export default function MainCard({
             </span>
           </button>
 
-          <span>💬 {comment}</span>
+          <span>
+            <Comment />
+            {comment}
+          </span>
         </div>
       </div>
 
