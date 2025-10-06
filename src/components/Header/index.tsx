@@ -2,7 +2,7 @@ import { Logo, Person, Pen } from "@/assets";
 
 const Header = ({ EndPoint }: { EndPoint: boolean }) => {
   return (
-    <header className="flex justify-center">
+    <header className="flex justify-center border-b-[0.125rem] border-[#EFF0F2]">
       <div className="flex w-[37.5rem] h-[5.375rem] justify-between items-center">
         <div>
           <Logo />
