@@ -1,13 +1,20 @@
-@import "tailwindcss";
+@import url('pretendard/dist/web/static/pretendard.css');
+@import 'tailwindcss';
 
 @theme {
-  --color-primary-main1: #AE89FF;
-  --color-primary-main2: #AE89FF;
-  --color-primary-main3: #DAC8FF;
+  --color-primary-main1: #ae89ff;
+  --color-primary-main2: #ae89ff;
+  --color-primary-main3: #dac8ff;
   --color-custom-red: #f84f4f;
-  --color-custom-blue: #525AFF;
-  --color-custom-green: #37CC70;
-  --color-custom-green2: #8AFF8C;
-  --color-custom-yellow: #FFFF65;
-  --color-background: #FAFAFA;
+  --color-custom-blue: #525aff;
+  --color-custom-green: #37cc70;
+  --color-custom-green2: #8aff8c;
+  --color-custom-yellow: #ffff65;
+  --color-background: #fafafa;
+}
+
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui,
+    Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
+    'Malgun Gothic', sans-serif;
 }
