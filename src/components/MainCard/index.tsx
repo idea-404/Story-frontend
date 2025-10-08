@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Like } from '../../assets';
-import { Comment } from '../../assets';
+import { Like } from '@/assets';
+import { Comment } from '@/assets';
 
 type MainCardProps = {
   id: number;

@@ -1,4 +1,4 @@
-import MainCard from '../../components/MainCard';
+import MainCard from '@/components/MainCard';
 
 const MainPage = () => {
   // MainCard에 전달할 데이터들 예시로 넣음
