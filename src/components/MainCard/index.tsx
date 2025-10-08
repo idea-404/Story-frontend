@@ -58,7 +58,7 @@ export default function MainCard({
         <h2 className="mt-2 text-lg font-semibold">{title}</h2>
         <p className="mt-1 text-sm text-black line-clamp-2">{preview}</p>
 
-        <div className="mt-3 flex gap-4 text-black text-sm items-center">
+        <div className="mt-3 flex gap-4 text-gray-300 text-sm items-center">
           <span>조회 {list}</span>
 
           <button
@@ -76,9 +76,9 @@ export default function MainCard({
             </span>
           </button>
 
-          <span>
-            <Comment />
-            {comment}
+          <span className="flex items-center gap-1">
+            <Comment className="w-5 h-5" />
+            <span className="text-gray-400">{comment}</span>
           </span>
         </div>
       </div>
