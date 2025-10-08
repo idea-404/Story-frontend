@@ -63,22 +63,25 @@ export default function MainCard({
 
           <button
             onClick={handleLike}
-            className="flex items-center gap-1 focus:outline-none"
+            className="flex items-center gap-1 focus:outline-none group cursor-pointer"
           >
             <Like
               className={`w-5 h-5 transition ${
-                liked ? 'text-purple-400' : 'text-gray-400'
+                liked
+                  ? 'text-primary-main1'
+                  : 'text-gray-300 group-hover:text-primary-main3'
               }`}
             />
-
-            <span className={liked ? 'text-purple-400' : 'text-gray-400'}>
+            <span className={liked ? 'text-primary-main1' : 'text-gray-300'}>
               {likeCount}
             </span>
           </button>
 
-          <span className="flex items-center gap-1">
-            <Comment className="w-5 h-5" />
-            <span className="text-gray-400">{comment}</span>
+          <span className="flex items-center gap-1 group cursor-pointer">
+            <Comment className="w-5 h-5 text-gray-300 transition group-hover:text-primary-main1" />
+            <span className="text-gray-300 transition group-hover:text-primary-main1">
+              {comment}
+            </span>
           </span>
         </div>
       </div>
