@@ -15,7 +15,6 @@ export default function Header({
 
   return (
     <header className="flex items-center justify-between mt-6 my-7">
-      {/* 왼쪽: 블로그 / 포트폴리오 */}
       <div className="flex items-center gap-3">
         <button
           onClick={() => handleClick('blog', '/blog/list')}
@@ -46,7 +45,6 @@ export default function Header({
         </button>
       </div>
 
-      {/* 오른쪽: 정렬 메뉴 + 검색 */}
       <div className="flex gap-6 text-gray-500 ml-65">
         <span>조회수순</span>
         <span>좋아요순</span>
