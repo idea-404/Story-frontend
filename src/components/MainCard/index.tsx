@@ -45,7 +45,7 @@ export default function MainCard({
 
   return (
     <div
-      className="w-full max-w-2xl bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4 flex justify-between items-start"
+      className="w-[600px] h-[208px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4 flex justify-between items-start"
       onClick={() => onClick && onClick(id)}
     >
       <div className="flex-1">

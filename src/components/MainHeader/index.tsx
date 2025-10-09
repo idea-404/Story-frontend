@@ -14,7 +14,7 @@ export default function Header({
   };
 
   return (
-    <header className="flex items-center justify-between mt-6 my-7">
+    <header className="flex items-center justify-between w-[600px] mx-auto pt-4 pb-14">
       <div className="flex items-center gap-3">
         <button
           onClick={() => handleClick('blog', '/blog/list')}
@@ -22,7 +22,7 @@ export default function Header({
             transition-all duration-200 font-semibold
             ${
               active === 'blog'
-                ? 'text-primary-main1 text-xl font-bold'
+                ? 'text-primary-main1 text-2xl font-bold'
                 : 'text-gray-300 text-lg font-semibold hover:text-primary-main3'
             }
           `}
@@ -36,7 +36,7 @@ export default function Header({
             transition-all duration-200 font-semibold
             ${
               active === 'portfolio'
-                ? 'text-primary-main1 text-xl font-bold'
+                ? 'text-primary-main1 text-2xl font-bold'
                 : 'text-gray-300 text-lg font-semibold hover:text-primary-main3'
             }
           `}
@@ -45,7 +45,7 @@ export default function Header({
         </button>
       </div>
 
-      <div className="flex gap-6 text-gray-500 ml-65">
+      <div className="flex gap-6 text-gray-400 font-bold">
         <span>조회수순</span>
         <span>좋아요순</span>
         <span>댓글순</span>
