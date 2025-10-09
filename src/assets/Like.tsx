@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-const Like = (props: SVGProps<SVGSVGElement>) => {
+const Line = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="14"
@@ -18,4 +18,4 @@ const Like = (props: SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default Like;
+export default Line;
