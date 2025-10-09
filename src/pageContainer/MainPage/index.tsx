@@ -1,4 +1,5 @@
 import MainCard from '@/components/MainCard';
+import MainHeader from '@/components/MainHeader';
 
 const MainPage = () => {
   // MainCard에 전달할 데이터들 예시로 넣음
@@ -24,6 +25,8 @@ const MainPage = () => {
 
   return (
     <div className="p-4 bg-white min-h-screen flex flex-col items-center">
+      <MainHeader onNavigate={(page) => console.log(`Navigate to ${page}`)} />
+
       <MainCard
         id={samplePost.id}
         author={samplePost.author}

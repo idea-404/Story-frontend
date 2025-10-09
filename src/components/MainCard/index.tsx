@@ -45,20 +45,22 @@ export default function MainCard({
 
   return (
     <div
-      className="w-full max-w-2xl bg-white rounded-xl shadow p-4 flex justify-between items-start"
+      className="w-full max-w-2xl bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4 flex justify-between items-start"
       onClick={() => onClick && onClick(id)}
     >
       <div className="flex-1">
         <div className="flex items-center gap-2 text-sm text-black">
           <img src={authorImg} alt={author} className="w-8 h-8 rounded-full" />
-          <span className="font-medium">{author}</span>
-          <span className="text-black text-xs">{time}</span>
+          <span className="font-semibold">{author}</span>
+          <span className="text-gray-300 font-semibold text-xs">{time}</span>
         </div>
 
-        <h2 className="mt-2 text-lg font-semibold">{title}</h2>
-        <p className="mt-1 text-sm text-black line-clamp-2">{preview}</p>
+        <h2 className="mt-2 text-[23px] font-medium">{title}</h2>
+        <p className="mt-4 text-sm text-black font-regular line-clamp-2">
+          {preview}
+        </p>
 
-        <div className="mt-3 flex gap-4 text-gray-300 text-sm items-center">
+        <div className="mt-7 flex gap-6 text-gray-300 text-xs items-center font-medium">
           <span>조회 {list}</span>
 
           <button
@@ -66,7 +68,7 @@ export default function MainCard({
             className="flex items-center gap-1 focus:outline-none group cursor-pointer"
           >
             <Like
-              className={`w-5 h-5 transition ${
+              className={`w-4 h-4 transition ${
                 liked
                   ? 'text-primary-main1'
                   : 'text-gray-300 group-hover:text-primary-main3'
@@ -78,7 +80,7 @@ export default function MainCard({
           </button>
 
           <span className="flex items-center gap-1 group cursor-pointer">
-            <Comment className="w-5 h-5 text-gray-300 transition group-hover:text-primary-main1" />
+            <Comment className="w-4 h-4 text-gray-300 transition group-hover:text-primary-main1" />
             <span className="text-gray-300 transition group-hover:text-primary-main1">
               {comment}
             </span>
