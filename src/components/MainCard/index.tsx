@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { Like } from '@/assets';
-import { Comment } from '@/assets';
+import { Like, Comment } from '@/assets';
 
 type MainCardProps = {
   id: number;
@@ -29,20 +27,6 @@ export default function MainCard({
   time,
   onClick,
 }: MainCardProps) {
-  // 좋아요 버튼 UseState
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(likes);
-
-  const handleLike = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (liked) {
-      setLikeCount((prev) => prev - 1);
-    } else {
-      setLikeCount((prev) => prev + 1);
-    }
-    setLiked(!liked);
-  };
-
   return (
     <div
       className="w-[600px] h-[208px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4 flex justify-between items-start"
@@ -63,19 +47,10 @@ export default function MainCard({
         <div className="mt-7 flex gap-6 text-gray-300 text-xs items-center font-medium">
           <span>조회 {list}</span>
 
-          <button
-            onClick={handleLike}
-            className="flex items-center gap-1 focus:outline-none group cursor-pointer"
-          >
-            <Like
-              className={`w-4 h-4 transition ${
-                liked
-                  ? 'text-primary-main1'
-                  : 'text-gray-300 group-hover:text-primary-main3'
-              }`}
-            />
-            <span className={liked ? 'text-primary-main1' : 'text-gray-300'}>
-              {likeCount}
+          <button className="flex items-center gap-1 focus:outline-none group cursor-pointer">
+            <Like className="w-4 h-4 text-gray-300 transition group-hover:text-primary-main1" />
+            <span className="text-gray-300 transition group-hover:text-primary-main1">
+              {likes}
             </span>
           </button>
 
