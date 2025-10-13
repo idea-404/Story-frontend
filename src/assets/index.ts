@@ -3,3 +3,4 @@ export { default as Person } from "./Person";
 export { default as Pen } from "./Pen";
 export { default as Google } from "./Google";
 export { default as Kakao } from "./Kakao";
+export { default as Line2 } from "./Line2";
