@@ -10,20 +10,21 @@ import MainHeader from '@/components/MainHeader';
  * @property {string} author - 작성자 이름
  * @property {string} authorImg - 작성자 이미지 URL
  * @property {string} title - 글 제목
- * @property {string} preview - 글 미리보기 내용
- * @property {number} likes - 좋아요 수
+ * @property {string} view - 글 미리보기 내용
+ * @property {number} like - 좋아요 수
  * @property {number} list - 조회 수
  * @property {number} comment - 댓글 수
  * @property {string} thumbnail - 썸네일 이미지 URL
  * @property {string} time - 업로드된 시간
  */
+
 type Post = {
   id: number;
   author: string;
   authorImg: string;
   title: string;
-  preview: string;
-  likes: number;
+  view: string;
+  like: number;
   list: number;
   comment: number;
   thumbnail: string;
@@ -121,7 +122,7 @@ const MainPage = () => {
   return (
     <div className="p-4 bg-white min-h-screen flex flex-col items-center">
       <MainHeader onNavigate={(page) => console.log(`Navigate to ${page}`)} />
-      <div className="flex flex-col gap-6 w-full max-w-3xl">
+      <div className="flex flex-col gap-[2.75rem] w-full max-w-3xl">
         {posts.map((post) => (
           <MainCard
             key={post.id}
@@ -129,8 +130,8 @@ const MainPage = () => {
             author={post.author}
             authorImg={post.authorImg}
             title={post.title}
-            preview={post.preview}
-            likes={post.likes}
+            view={post.view}
+            like={post.like}
             list={post.list}
             comment={post.comment}
             thumbnail={post.thumbnail}

@@ -1,29 +1,29 @@
-import { useState } from 'react';
-import { Line, Search } from '@/assets';
+import { useState } from "react";
+import { Line, Search } from "@/assets";
 
 export default function Header({
   onNavigate,
 }: {
   onNavigate: (path: string) => void;
 }) {
-  const [active, setActive] = useState<'blog' | 'portfolio'>('blog');
+  const [active, setActive] = useState<"blog" | "portfolio">("blog");
 
-  const handleClick = (tab: 'blog' | 'portfolio', path: string) => {
+  const handleClick = (tab: "blog" | "portfolio", path: string) => {
     setActive(tab);
     onNavigate(path);
   };
 
   return (
-    <header className="flex items-center justify-between w-[600px] mx-auto pt-4 pb-14">
+    <header className="flex items-center justify-between w-[37.5rem] h-[2.875rem] mx-auto pt-4 pb-14">
       <div className="flex items-center gap-3">
         <button
-          onClick={() => handleClick('blog', '/blog/list')}
+          onClick={() => handleClick("blog", "/blog/list")}
           className={`
             transition-all duration-200 font-semibold
             ${
-              active === 'blog'
-                ? 'text-primary-main1 text-2xl font-bold'
-                : 'text-gray-300 text-lg font-semibold hover:text-primary-main3'
+              active === "blog"
+                ? "text-primary-main1 text-2xl font-bold"
+                : "text-gray-300 text-lg font-semibold hover:text-primary-main3"
             }
           `}
         >
@@ -31,13 +31,13 @@ export default function Header({
         </button>
         <Line />
         <button
-          onClick={() => handleClick('portfolio', '/portfolio/list')}
+          onClick={() => handleClick("portfolio", "/portfolio/list")}
           className={`
             transition-all duration-200 font-semibold
             ${
-              active === 'portfolio'
-                ? 'text-primary-main1 text-2xl font-bold'
-                : 'text-gray-300 text-lg font-semibold hover:text-primary-main3'
+              active === "portfolio"
+                ? "text-primary-main1 text-2xl font-bold"
+                : "text-gray-300 text-lg font-semibold hover:text-primary-main3"
             }
           `}
         >

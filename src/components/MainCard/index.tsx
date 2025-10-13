@@ -5,8 +5,8 @@ type MainCardProps = {
   author: string;
   authorImg: string;
   title: string;
-  preview: string;
-  likes: number;
+  view: string;
+  like: number;
   list: number;
   comment: number;
   thumbnail: string;
@@ -19,8 +19,8 @@ export default function MainCard({
   author,
   authorImg,
   title,
-  preview,
-  likes,
+  view,
+  like,
   list,
   comment,
   thumbnail,
@@ -41,7 +41,7 @@ export default function MainCard({
 
         <h2 className="mt-2 text-[23px] font-medium">{title}</h2>
         <p className="mt-4 text-sm text-black font-regular line-clamp-2">
-          {preview}
+          {view}
         </p>
 
         <div className="mt-7 flex gap-6 text-gray-300 text-xs items-center font-medium">
@@ -50,7 +50,7 @@ export default function MainCard({
           <button className="flex items-center gap-1 focus:outline-none group cursor-pointer">
             <Like className="w-4 h-4 text-gray-300 transition group-hover:text-primary-main1" />
             <span className="text-gray-300 transition group-hover:text-primary-main1">
-              {likes}
+              {like}
             </span>
           </button>
 
