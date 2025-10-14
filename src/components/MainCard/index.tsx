@@ -14,6 +14,7 @@ type MainCardProps = {
   onClick?: (id: number) => void;
 };
 
+/**ISO 시간 설정 */
 function formatTime(isoString: string) {
   const date = new Date(isoString);
   const now = new Date();
