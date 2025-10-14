@@ -12,7 +12,9 @@ const Login = () => {
         <div>시작해 보세요!</div>
       </div>
 
-      <Logincomponents />
+      <div className="w-[31.25rem]">
+        <Logincomponents />
+      </div>
 
       <div className="w-[32.5rem] flex flex-col justify-center gap-4">
         <div className="flex items-center gap-4">
