@@ -14,6 +14,25 @@ type MainCardProps = {
   onClick?: (id: number) => void;
 };
 
+function formatTime(isoString: string) {
+  const date = new Date(isoString);
+  const now = new Date();
+  const diff = (now.getTime() - date.getTime()) / 1000;
+
+  if (isNaN(diff)) return "";
+
+  if (diff < 60) return `${Math.floor(diff)}초 전`;
+  if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
+  if (diff < 2592000) return `${Math.floor(diff / 86400)}일 전`;
+
+  return date.toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+}
+
 export default function MainCard({
   id,
   author,
@@ -36,7 +55,9 @@ export default function MainCard({
         <div className="flex items-center gap-2 text-sm text-black">
           <img src={authorImg} alt={author} className="w-8 h-8 rounded-full" />
           <span className="font-semibold">{author}</span>
-          <span className="text-gray-300 font-semibold text-xs">{time}</span>
+          <span className="text-gray-300 font-semibold text-xs">
+            {formatTime(time)}
+          </span>
         </div>
 
         <h2 className="mt-2 text-[23px] font-medium">{title}</h2>
