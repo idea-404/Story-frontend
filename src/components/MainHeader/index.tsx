@@ -17,7 +17,7 @@ export default function MainHeader({
         <button
           onClick={() => {
             onSelectTab("blog");
-            onNavigate("/blog/list");
+            onNavigate("/blog");
           }}
           className={`
             transition-all duration-200 font-semibold
@@ -34,7 +34,7 @@ export default function MainHeader({
         <button
           onClick={() => {
             onSelectTab("portfolio");
-            onNavigate("/portfolio/list");
+            onNavigate("/portfolio");
           }}
           className={`
             transition-all duration-200 font-semibold
