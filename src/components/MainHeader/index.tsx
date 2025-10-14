@@ -1,27 +1,28 @@
-import { useState } from "react";
 import { Line, Search } from "@/assets";
 
-export default function Header({
-  onNavigate,
-}: {
+type MainHeaderProps = {
   onNavigate: (path: string) => void;
-}) {
-  const [active, setActive] = useState<"blog" | "portfolio">("blog");
+  activeTab: "blog" | "portfolio";
+  onSelectTab: (tab: "blog" | "portfolio") => void;
+};
 
-  const handleClick = (tab: "blog" | "portfolio", path: string) => {
-    setActive(tab);
-    onNavigate(path);
-  };
-
+export default function MainHeader({
+  onNavigate,
+  activeTab,
+  onSelectTab,
+}: MainHeaderProps) {
   return (
     <header className="flex items-center justify-between w-[37.5rem] h-[2.875rem] mx-auto pt-4 pb-14">
       <div className="flex items-center gap-3">
         <button
-          onClick={() => handleClick("blog", "/blog/list")}
+          onClick={() => {
+            onSelectTab("blog");
+            onNavigate("/blog/list");
+          }}
           className={`
             transition-all duration-200 font-semibold
             ${
-              active === "blog"
+              activeTab === "blog"
                 ? "text-primary-main1 text-2xl font-bold"
                 : "text-gray-300 text-lg font-semibold hover:text-primary-main3"
             }
@@ -31,11 +32,14 @@ export default function Header({
         </button>
         <Line />
         <button
-          onClick={() => handleClick("portfolio", "/portfolio/list")}
+          onClick={() => {
+            onSelectTab("portfolio");
+            onNavigate("/portfolio/list");
+          }}
           className={`
             transition-all duration-200 font-semibold
             ${
-              active === "portfolio"
+              activeTab === "portfolio"
                 ? "text-primary-main1 text-2xl font-bold"
                 : "text-gray-300 text-lg font-semibold hover:text-primary-main3"
             }
