@@ -37,13 +37,14 @@ const MainPage = () => {
   const [limit] = useState(10);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
 
   const fetchPosts = useCallback(
     async (pageToFetch: number = page) => {
       if (loading || !hasMore) return;
       setLoading(true);
+
+      const minLoadingTime = new Promise((resolve) => setTimeout(resolve, 300));
 
       try {
         const response = await axios.get("/api/posts", {
@@ -65,19 +66,22 @@ const MainPage = () => {
         }
       } catch (error) {
         console.error("데이터 가져오기 실패:", error);
+
+        await minLoadingTime;
       } finally {
         setLoading(false);
       }
     },
-    [limit, loading, hasMore, page, tab]
+    [limit, tab]
   );
 
   useEffect(() => {
     setPosts([]);
     setPage(1);
     setHasMore(true);
+    setLoading(false);
     fetchPosts(1);
-  }, [tab, fetchPosts]);
+  }, [tab]);
 
   useEffect(() => {
     const handleScroll = () => {
