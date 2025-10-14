@@ -1,4 +1,4 @@
-import { Like, Comment } from '@/assets';
+import { Like, Comment } from "@/assets";
 
 type MainCardProps = {
   id: number;
@@ -9,7 +9,7 @@ type MainCardProps = {
   like: number;
   list: number;
   comment: number;
-  thumbnail: string;
+  thumbnail: string | null;
   time: string;
   onClick?: (id: number) => void;
 };
