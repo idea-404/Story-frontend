@@ -40,15 +40,18 @@ const MainPage = () => {
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
 
   const fetchPosts = useCallback(
-    async (pageToFetch: number = page) => {
-      if (loading || !hasMore) return;
+    async (
+      pageToFetch: number = page,
+      tabToFetch: "blog" | "portfolio" = tab
+    ) => {
+      if (pageToFetch !== 1 && (loading || !hasMore)) return;
       setLoading(true);
 
       const minLoadingTime = new Promise((resolve) => setTimeout(resolve, 300));
 
       try {
         const response = await axios.get("/api/posts", {
-          params: { page: pageToFetch, limit, type: tab },
+          params: { page: pageToFetch, limit, type: tabToFetch },
         });
 
         const newPosts: Post[] = response.data.data ?? [];
@@ -72,15 +75,17 @@ const MainPage = () => {
         setLoading(false);
       }
     },
-    [limit, tab]
+    [limit]
   );
 
   useEffect(() => {
     setPosts([]);
-    setPage(1);
     setHasMore(true);
-    setLoading(false);
-    fetchPosts(1);
+    setPage(1);
+    setLoading(true); // ← 먼저 로딩 상태 true
+
+    // 첫 페이지 요청, 현재 탭 명시
+    fetchPosts(1, tab);
   }, [tab]);
 
   useEffect(() => {
