@@ -14,7 +14,7 @@ import MainHeader from "@/components/MainHeader";
  * @property {number} like - 좋아요 수
  * @property {number} list - 조회 수
  * @property {number} comment - 댓글 수
- * @property {string} thumbnail - 썸네일 이미지 URL
+ * @property {string|null} thumbnail - 썸네일 이미지 URL
  * @property {string} time - 업로드된 시간
  */
 
@@ -31,35 +31,70 @@ type Post = {
   time: string;
 };
 
+/**
+ * 메인 페이지 컴포넌트
+ *
+ * - 블로그/포트폴리오 게시글을 불러와 카드 형태로 보여줌
+ * - 무한 스크롤 기능을 지원
+ * - 탭 전환 시 새 데이터를 불러옴
+ */
 const MainPage = () => {
+  /** @state {Post[]} posts - 현재 화면에 표시되는 게시글 목록 */
   const [posts, setPosts] = useState<Post[]>([]);
+
+  /** @state {number} page - 현재 불러온 페이지 번호 */
   const [page, setPage] = useState(1);
+
+  /** @state {number} limit - 한 번에 불러올 게시글 개수 */
   const [limit] = useState(10);
+
+  /** @state {boolean} loading - 데이터 로딩 중 여부 */
   const [loading, setLoading] = useState(false);
+
+  /** @state {boolean} hasMore - 더 불러올 게시글이 남아있는지 여부 */
   const [hasMore, setHasMore] = useState(true);
+
+  /** @state {"blog" | "portfolio"} tab - 현재 선택된 탭 (블로그 / 포트폴리오) */
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
 
+  /**
+   * 게시글 데이터를 불러오는 함수
+   *
+   * @function fetchPosts
+   * @param {number} [pageToFetch=page] - 요청할 페이지 번호
+   * @param {"blog" | "portfolio"} [tabToFetch=tab] - 요청할 탭 종류
+   * @description
+   * - 이미 로딩 중이거나 불러올 데이터가 더 없으면 요청하지 않음
+   * - 첫 페이지일 경우 기존 데이터를 초기화하고 새 데이터로 교체
+   * - 다음 페이지일 경우 기존 데이터 뒤에 추가
+   */
   const fetchPosts = useCallback(
     async (
       pageToFetch: number = page,
       tabToFetch: "blog" | "portfolio" = tab
     ) => {
+      // 이미 로딩 중이거나 더 이상 불러올 데이터가 없을 때는 요청 여기서 끝냄!!
       if (pageToFetch !== 1 && (loading || !hasMore)) return;
+
       setLoading(true);
 
       const minLoadingTime = new Promise((resolve) => setTimeout(resolve, 300));
 
       try {
+        // 게시글 데이터 요청
         const response = await axios.get("/api/posts", {
           params: { page: pageToFetch, limit, type: tabToFetch },
         });
 
+        /** @type {Post[]} */
         const newPosts: Post[] = response.data.data ?? [];
 
+        // 새 게시글이 없을 경우에
         if (!newPosts || newPosts.length === 0) {
           if (pageToFetch === 1) setPosts([]);
           setHasMore(false);
         } else {
+          // 첫 페이지면 덮어쓰고 아니면 이어붙이도록함
           if (pageToFetch === 1) {
             setPosts(newPosts);
           } else {
@@ -69,7 +104,6 @@ const MainPage = () => {
         }
       } catch (error) {
         console.error("데이터 가져오기 실패:", error);
-
         await minLoadingTime;
       } finally {
         setLoading(false);
@@ -78,24 +112,32 @@ const MainPage = () => {
     [limit]
   );
 
+  /**
+   * 탭이 변경될 때마다 실행
+   *
+   * @effect
+   * - 게시글 목록 초기화
+   * - 첫 페이지부터 다시 데이터 불러오기
+   */
   useEffect(() => {
     setPosts([]);
     setHasMore(true);
     setPage(1);
-    setLoading(true); // ← 먼저 로딩 상태 true
-
-    // 첫 페이지 요청, 현재 탭 명시
+    setLoading(true);
     fetchPosts(1, tab);
   }, [tab]);
 
+  /**
+   * 스크롤이 페이지 하단에 도달하면 다음 페이지 데이터를 자동으로 요청
+   *
+   * @effect
+   * - 스크롤 이벤트 리스너 등록 및 해제
+   */
   useEffect(() => {
     const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-          document.body.offsetHeight - 300 &&
-        !loading &&
-        hasMore
-      ) {
+      const nearBottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
+      if (nearBottom && !loading && hasMore) {
         fetchPosts(page);
       }
     };
@@ -104,23 +146,40 @@ const MainPage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [fetchPosts, loading, hasMore, page]);
 
+  /**
+   * 카드 클릭 시 실행되는 함수
+   *
+   * @param {number} id - 클릭한 카드의 ID
+   */
   const handleCardClick = (id: number) => {
     console.log(`Card with id ${id} clicked`);
   };
 
+  /**
+   * 탭 변경 시 실행되는 함수
+   *
+   * @param {"blog" | "portfolio"} newTab - 새로 선택된 탭
+   */
   const handleTabChange = (newTab: "blog" | "portfolio") => {
-    if (newTab === tab) return;
+    if (newTab === tab) return; // 이미 선택된 탭이면 무시
     setTab(newTab);
   };
 
+  /**
+   * 렌더링 부분
+   *
+   * @returns JSX.Element
+   */
   return (
     <div className="p-4 bg-white min-h-screen flex flex-col items-center">
+      {/* 메인페이지 헤더 */}
       <MainHeader
         onNavigate={(page) => console.log(`Navigate to ${page}`)}
         activeTab={tab}
         onSelectTab={handleTabChange}
       />
 
+      {/* 게시글 카드 리스트 */}
       <div className="flex flex-col gap-[2.75rem] w-full max-w-3xl">
         {posts.map((post) => (
           <MainCard
