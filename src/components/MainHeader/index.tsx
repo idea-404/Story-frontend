@@ -4,12 +4,14 @@ type MainHeaderProps = {
   onNavigate: (path: string) => void;
   activeTab: "blog" | "portfolio";
   onSelectTab: (tab: "blog" | "portfolio") => void;
+  onSortChange: (sortType: "views" | "likes" | "comments") => void;
 };
 
 export default function MainHeader({
   onNavigate,
   activeTab,
   onSelectTab,
+  onSortChange,
 }: MainHeaderProps) {
   return (
     <header className="flex items-center justify-between w-[37.5rem] h-[2.875rem] mx-auto pt-4 pb-14">
@@ -50,9 +52,9 @@ export default function MainHeader({
       </div>
 
       <div className="flex gap-6 text-gray-400 font-bold">
-        <span>조회수순</span>
-        <span>좋아요순</span>
-        <span>댓글순</span>
+        <button onClick={() => onSortChange("views")}>조회수순</button>
+        <button onClick={() => onSortChange("likes")}>좋아요순</button>
+        <button onClick={() => onSortChange("comments")}>댓글순</button>
         <button>
           <Search />
         </button>
