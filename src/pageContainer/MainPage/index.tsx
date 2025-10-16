@@ -57,6 +57,11 @@ const MainPage = () => {
   /** @state {"blog" | "portfolio"} tab - 현재 선택된 탭 (블로그 / 포트폴리오) */
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
 
+  /** @state {"views" | "likes" | "comments"} change - 현재 선택된 알고리즘 순위 */
+  const [sortType, setSortType] = useState<"views" | "likes" | "comments">(
+    "views"
+  );
+
   /**
    * 게시글 데이터를 불러오는 함수
    *
@@ -83,7 +88,12 @@ const MainPage = () => {
       try {
         // 게시글 데이터 요청
         const response = await axios.get("/api/posts", {
-          params: { page: pageToFetch, limit, type: tabToFetch },
+          params: {
+            page: pageToFetch,
+            limit,
+            type: tabToFetch,
+            sort: sortType,
+          },
         });
 
         /** @type {Post[]} */
@@ -109,7 +119,7 @@ const MainPage = () => {
         setLoading(false);
       }
     },
-    [limit]
+    [limit, sortType]
   );
 
   /**
@@ -125,7 +135,7 @@ const MainPage = () => {
     setPage(1);
     setLoading(true);
     fetchPosts(1, tab);
-  }, [tab]);
+  }, [tab, sortType]);
 
   /**
    * 스크롤이 페이지 하단에 도달하면 다음 페이지 데이터를 자동으로 요청
@@ -177,6 +187,7 @@ const MainPage = () => {
         onNavigate={(page) => console.log(`Navigate to ${page}`)}
         activeTab={tab}
         onSelectTab={handleTabChange}
+        ViewChange={setSortType}
       />
 
       {/* 게시글 카드 리스트 */}
