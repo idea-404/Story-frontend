@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "./components";
+import { Search } from "./components";
 
 function App() {
   const location = useLocation();
@@ -8,6 +9,7 @@ function App() {
   return (
     <>
       <Header EndPoint={isSignIn} />
+      <Search />
       <Routes></Routes>
     </>
   );
