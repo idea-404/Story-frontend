@@ -1,4 +1,4 @@
-const Person = () => {
+const SearchPurple = () => {
   return (
     <svg
       width="20"
@@ -15,4 +15,4 @@ const Person = () => {
   );
 };
 
-export default Person;
+export default SearchPurple;
