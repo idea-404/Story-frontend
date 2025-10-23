@@ -3,7 +3,7 @@ import { SearchPurple } from "@/assets";
 const Search = () => {
   return (
     <div className="flex justify-center items-center h-screen -mt-82">
-      <div className="flex items-center w-full max-w-sm px-3 py-2 bg-white border border-gray-700 rounded-full  focus-within:border-purple-400">
+      <div className="flex items-center max-w-sm px-3 py-2 w-[460px] h-[46px]  bg-white border-[0.5px] border-gray-700 rounded-2xl  focus-within:border-purple-400">
         <input
           type="text"
           placeholder="검색어를 입력하세요"
