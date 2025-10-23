@@ -4,9 +4,6 @@ import { Header } from "./components";
 import { useEndpointStore } from "@/store/useEndpointStore";
 
 function App() {
-  const location = useLocation();
-  const isSignIn = location.pathname === "/signin";
-
   const { pathname } = useLocation();
   const setEndpoint = useEndpointStore((state) => state.setEndpoint);
 
@@ -15,7 +12,7 @@ function App() {
   }, [pathname]);
   return (
     <>
-      <Header EndPoint={isSignIn} />
+      <Header />
       <Routes></Routes>
     </>
   );
