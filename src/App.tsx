@@ -17,8 +17,9 @@ function App() {
   return (
     <>
       <Header EndPoint={isSignIn} />
-      <Search />
-      <Routes></Routes>
+      <Routes>
+        <Route path="/search" element={<Search />} />
+      </Routes>
     </>
   );
 }
