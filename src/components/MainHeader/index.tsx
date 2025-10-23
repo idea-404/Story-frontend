@@ -55,7 +55,7 @@ export default function MainHeader({
         <button onClick={() => ViewChange("views")}>조회수순</button>
         <button onClick={() => ViewChange("likes")}>좋아요순</button>
         <button onClick={() => ViewChange("comments")}>댓글순</button>
-        <button>
+        <button onClick={() => onNavigate("/search")}>
           <Search />
         </button>
       </div>
