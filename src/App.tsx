@@ -19,6 +19,7 @@ function App() {
       <Header EndPoint={isSignIn} />
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/main" element={<MainPage />} />
       </Routes>
     </>
   );
