@@ -3,21 +3,17 @@ import { Logincomponents } from "@/components";
 
 const Login = () => {
   return (
-    <main className="flex items-center flex-col ">
-      <div className="w-[32.5rem] my-[5.5rem] text-[2rem] font-medium flex flex-col">
-        <div>당신의</div>
-        <div>
-          <span className="text-primary-main1">Story</span>를
-        </div>
-        <div>시작해 보세요!</div>
+    <main className="flex items-center flex-col">
+      <div className="w-[32.5rem] my-[5.5rem] text-[2rem] font-medium">
+        당신의
+        <br />
+        <span className="text-primary-main1">Story</span>를
+        <br />
+        시작해 보세요!
       </div>
-
-      <div className="w-[31.25rem]">
+      <div className="w-[32.5rem] flex flex-col justify-center">
         <Logincomponents />
-      </div>
-
-      <div className="w-[32.5rem] flex flex-col justify-center gap-4">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 px-[0.625rem]">
           <Line2 />
           소셜 로그인
           <Line2 />
