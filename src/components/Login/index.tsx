@@ -1,10 +1,10 @@
 const Logincomponents = () => {
   return (
-    <div className="flex flex-col w-[31.25rem] px-[0.625rem]">
+    <div className="flex flex-col w-[31.25rem] px-[0.625rem] mb-[6.25rem] gap-[0.625rem]">
       <div className="font-medium text-[1.25rem] text-[#828387]">
         이메일로 로그인
       </div>
-      <div>
+      <div className="flex flex-col gap-[1.125rem]">
         <input
           type="email"
           placeholder="이메일로 로그인"
