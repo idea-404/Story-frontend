@@ -2,10 +2,11 @@ import { SigninPerson, Star } from "@/assets";
 import { useState } from "react";
 
 const Signin = () => {
+  const MAX = 128;
   const [introduce, setintroduce] = useState("");
   const introduceCount = introduce.length;
   const change = (e) => {
-    setintroduce(e.target.value);
+    setintroduce(e.target.value.slice(0, MAX));
   };
 
   return (
@@ -48,10 +49,13 @@ const Signin = () => {
         <div className="flex flex-col gap-[0.5rem] w-full">
           <div className="flex justify-between">
             <div>소개글</div>
-            <div className="text-primary-main1">{introduceCount}/123</div>
+            <div className="text-primary-main1">
+              {introduceCount}/{MAX}
+            </div>
           </div>
           <textarea
             onChange={change}
+            value={introduce}
             className="border-1 p-[0.625rem] h-[6.25rem] resize-none rounded-[0.75rem]"
           />
         </div>
