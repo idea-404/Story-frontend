@@ -1,8 +1,15 @@
 import { SigninPerson, Star } from "@/assets";
+import { useState } from "react";
 
 const Signin = () => {
+  const [introduce, setintroduce] = useState("");
+  const introduceCount = introduce.length;
+  const change = (e) => {
+    setintroduce(e.target.value);
+  };
+
   return (
-    <div className="flex flex-col items-center my-5">
+    <div className="flex flex-col items-center my-5 font-medium">
       <div className="py-[2.875rem] mt-[0.125rem]">
         <SigninPerson />
       </div>
@@ -41,12 +48,18 @@ const Signin = () => {
         <div className="flex flex-col gap-[0.5rem] w-full">
           <div className="flex justify-between">
             <div>소개글</div>
-            <div className="text-primary-main1">123/123</div>
+            <div className="text-primary-main1">{introduceCount}/123</div>
           </div>
-          <textarea className="border-1 p-[0.625rem] h-[6.25rem] resize-none rounded-[0.75rem]" />
+          <textarea
+            onChange={change}
+            className="border-1 p-[0.625rem] h-[6.25rem] resize-none rounded-[0.75rem]"
+          />
         </div>
-        <button className="w-full bg-primary-main3 text-white py-[0.875rem] rounded-[0.75rem]">
-          회원가입
+        <button
+          className="w-full bg-primary-main3 text-white py-[0.875rem] rounded-[0.75rem] font-bold text-[20px]
+"
+        >
+          완료
         </button>
       </div>
     </div>
