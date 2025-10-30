@@ -9,18 +9,18 @@ const Signin = () => {
       <div className="w-[31.25rem] flex flex-col items-center gap-[2.25rem]">
         <div className="flex flex-col gap-[0.5rem] w-full ">
           <div className="flex">
-            이름
+            이름&nbsp;
             <Star />
           </div>
           <input
             type="text"
-            placeholder="ㅁㄴㅇㄹㄴ"
+            placeholder="이름을 입력해 주세요."
             className="border-1 p-[0.625rem] rounded-[0.75rem]"
           />
         </div>
         <div className="flex flex-col gap-[0.5rem] w-full">
           <div className="flex">
-            학번
+            학번&nbsp;
             <Star />
           </div>
           <div className="flex flex-wrap">
@@ -29,12 +29,12 @@ const Signin = () => {
         </div>
         <div className="flex flex-col gap-[0.5rem] w-full">
           <div className="flex">
-            전공
+            전공&nbsp;
             <Star />
           </div>
           <input
             type="text"
-            placeholder="ㅁㄴㅇㄹㄴ"
+            placeholder="전공을 선택해 주세요."
             className="border-1 p-[0.625rem] rounded-[0.75rem]"
           />
         </div>
@@ -43,12 +43,9 @@ const Signin = () => {
             <div>소개글</div>
             <div className="text-primary-main1">123/123</div>
           </div>
-          <textarea
-            placeholder="안녕하세요 저는 ..."
-            className="border-1 p-[0.625rem] h-[6.25rem] resize-none rounded-[0.75rem]"
-          />
+          <textarea className="border-1 p-[0.625rem] h-[6.25rem] resize-none rounded-[0.75rem]" />
         </div>
-        <button className="w-full bg-purple-400 text-white py-[0.875rem] rounded-[0.75rem]">
+        <button className="w-full bg-primary-main3 text-white py-[0.875rem] rounded-[0.75rem]">
           회원가입
         </button>
       </div>
