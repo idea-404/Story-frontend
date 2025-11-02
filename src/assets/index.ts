@@ -3,3 +3,6 @@ export { default as Person } from "./Person";
 export { default as Pen } from "./Pen";
 export { default as SigninPerson } from "./SigninPerson";
 export { default as Star } from "./Star";
+export { default as Class } from "./select/Class";
+export { default as Grade } from "./select/Grade";
+export { default as Number } from "./select/Number";
