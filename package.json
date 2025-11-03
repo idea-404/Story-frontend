@@ -16,6 +16,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.62.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^7.9.3",
     "zustand": "^5.0.8"
   },
