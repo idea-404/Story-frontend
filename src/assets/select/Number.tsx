@@ -8,10 +8,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const Number = () => {
+interface NumberSelectProps {
+  onChange: (value: string) => void;
+}
+const Number = ({ onChange }: NumberSelectProps) => {
   const numbers = Array.from({ length: 18 }, (_, i) => i + 1);
   return (
-    <Select>
+    <Select onValueChange={onChange}>
       <SelectTrigger className="w-[8.5rem] h-[3.5rem] text-[1.375rem] text-[#828387] rounded-[0.75rem]">
         <SelectValue placeholder="번호" />
       </SelectTrigger>
@@ -19,8 +22,8 @@ const Number = () => {
         <SelectGroup className=" h-[11.625rem] mb-[0.75rem]">
           {numbers.map((num) => (
             <SelectItem
-              key={num} // React에서 필수
-              value={String(num)} // value는 문자열이어야 함
+              key={num}
+              value={String(num)}
               className="text-[1.375rem] mt-[0.25rem]"
             >
               {num}번

@@ -8,9 +8,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const Class = () => {
+interface NumberSelectProps {
+  onChange: (value: string) => void;
+}
+const Class = ({ onChange }: NumberSelectProps) => {
   return (
-    <Select>
+    <Select onValueChange={onChange}>
       <SelectTrigger className="w-[8.5rem] h-[3.5rem] text-[1.375rem] text-[#828387] rounded-[0.75rem]">
         <SelectValue placeholder="반" />
       </SelectTrigger>
