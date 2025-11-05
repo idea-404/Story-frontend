@@ -1,12 +1,17 @@
-import { SigninPerson, Star } from "@/assets";
-import { Class, Grade, Number } from "@/assets";
-import { useState } from "react";
+import { SigninPerson, Star, Class, Grade, Number } from "@/assets";
+import { useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
 interface FormState {
   user_name: string;
   student_id: string;
   major: string;
 }
+type ID = {
+  grade: string;
+  class: string;
+  number: string;
+};
 
 const Signin = () => {
   /*소개글 설정*/
@@ -23,40 +28,13 @@ const Signin = () => {
     major: "",
   });
 
+  /*이름 배열*/
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setForm((prev) => ({
       ...prev,
-      [name]: name === "age" ? Number(value) : value,
-    }));
-  };
-
-  /*학번*/
-  const [selectedNumber, setSelectedNumber] = useState<string>("");
-  const handleSelectNumber = (value: string) => {
-    setSelectedNumber(value);
-    setForm((prev) => ({
-      ...prev,
-      student_id: `${selectedGrade}${selectedClass}${value}`,
-    }));
-  };
-
-  const [selectedGrade, setSelectedGrade] = useState<string>("");
-  const handleSelectGrade = (value: string) => {
-    setSelectedGrade(value);
-    setForm((prev) => ({
-      ...prev,
-      student_id: `${value}${selectedClass}${selectedNumber}`,
-    }));
-  };
-
-  const [selectedClass, setSelectedClass] = useState<string>("");
-  const handleSelectClass = (value: string) => {
-    setSelectedClass(value);
-    setForm((prev) => ({
-      ...prev,
-      student_id: `${selectedGrade}${value}${selectedNumber}`,
+      [name]: value,
     }));
   };
 
@@ -74,7 +52,7 @@ const Signin = () => {
           <input
             type="text"
             placeholder="이름을 입력해 주세요."
-            name="name"
+            name="user_name"
             value={form.user_name}
             onChange={handleChange}
             className="border-1 p-[0.625rem] rounded-[0.75rem] h-[3.5rem]"
@@ -86,9 +64,9 @@ const Signin = () => {
             <Star />
           </div>
           <div className="flex flex-wrap justify-between">
-            <Grade onChange={handleSelectGrade} />
-            <Class onChange={handleSelectClass} />
-            <Number onChange={handleSelectNumber} />
+            <Grade />
+            <Class />
+            <Number />
           </div>
         </div>
         <div className="flex flex-col gap-[0.5rem] w-full">

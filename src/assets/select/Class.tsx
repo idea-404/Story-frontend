@@ -1,3 +1,4 @@
+import { useFormContext } from "react-hook-form";
 import {
   Select,
   SelectContent,
@@ -8,12 +9,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-interface NumberSelectProps {
-  onChange: (value: string) => void;
-}
-const Class = ({ onChange }: NumberSelectProps) => {
+const Class = () => {
   return (
-    <Select onValueChange={onChange}>
+    <Select>
       <SelectTrigger className="w-[8.5rem] h-[3.5rem] text-[1.375rem] text-[#828387] rounded-[0.75rem]">
         <SelectValue placeholder="반" />
       </SelectTrigger>

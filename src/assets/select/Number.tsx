@@ -1,3 +1,4 @@
+import { useFormContext, Controller } from "react-hook-form";
 import {
   Select,
   SelectContent,
@@ -8,13 +9,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-interface NumberSelectProps {
-  onChange: (value: string) => void;
-}
-const Number = ({ onChange }: NumberSelectProps) => {
+const Number = () => {
   const numbers = Array.from({ length: 18 }, (_, i) => i + 1);
+
   return (
-    <Select onValueChange={onChange}>
+    <Select>
       <SelectTrigger className="w-[8.5rem] h-[3.5rem] text-[1.375rem] text-[#828387] rounded-[0.75rem]">
         <SelectValue placeholder="번호" />
       </SelectTrigger>
