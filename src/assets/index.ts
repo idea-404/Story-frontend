@@ -6,3 +6,4 @@ export { default as Star } from "./Star";
 export { default as Class } from "./select/Class";
 export { default as Grade } from "./select/Grade";
 export { default as Number } from "./select/Number";
+export { default as Major } from "./select/Major";
