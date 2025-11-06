@@ -188,6 +188,7 @@ const MainPage = () => {
         activeTab={tab}
         onSelectTab={handleTabChange}
         ViewChange={setSortType}
+        activeSort={sortType}
       />
 
       {/* 게시글 카드 리스트 */}
