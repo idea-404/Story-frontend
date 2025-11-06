@@ -1,4 +1,4 @@
-import { SigninPerson, Star, Class, Grade, Number } from "@/assets";
+import { SigninPerson, Star, Class, Grade, Number, Major } from "@/assets";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -74,14 +74,7 @@ const Signin = () => {
             전공&nbsp;
             <Star />
           </div>
-          <input
-            type="text"
-            placeholder="전공을 선택해 주세요."
-            className="border-1 p-[0.625rem] rounded-[0.75rem] h-[3.5rem]"
-            name="major"
-            value={form.major}
-            onChange={handleChange}
-          />
+          <Major />
         </div>
         <div className="flex flex-col gap-[0.5rem] w-full">
           <div className="flex justify-between">
