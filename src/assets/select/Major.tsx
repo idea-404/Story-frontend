@@ -31,6 +31,9 @@ const Major = () => {
           <SelectItem value="devops" className="text-[1.375rem] mt-[0.25rem]">
             devops
           </SelectItem>
+          <SelectItem value="AI" className="text-[1.375rem] mt-[0.25rem]">
+            AI
+          </SelectItem>
           <SelectItem
             value="functional group"
             className="text-[1.375rem] mt-[0.25rem]"
