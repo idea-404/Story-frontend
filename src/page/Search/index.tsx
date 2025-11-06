@@ -1,46 +1,36 @@
-import { useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import Search from "@/components/Search";
 
-type SearchResult = {
-  title?: string;
-  name?: string;
-};
+interface SearchItem {
+  id: number;
+  title: string;
+  content: string;
+}
 
-export default function SearchPage() {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [loading, setLoading] = useState(false);
+const Search = () => {
+  const [posts, setPosts] = useState<SearchItem[]>([]);
 
-  const handleSearch = useCallback(async () => {
-    if (!query.trim()) return;
-    setLoading(true);
-    try {
-      const response = await axios.get<SearchResult[]>(
-        "http://localhost:8080/api/search",
-        {
-          params: { query },
-        }
-      );
-      setResults(response.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, [query]);
+  useEffect(() => {
+    axios
+      .get<SearchItem[]>("/api/search")
+      .then((res) => {
+        setPosts(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   return (
-    <div className="p-4">
-      <Search value={query} onChange={setQuery} onSearch={handleSearch} />
-      {loading && <p>검색 중</p>}
-      <ul>
-        {results.map((item, index) => (
-          <li key={index} className="border-b py-2">
-            {item.title || item.name || JSON.stringify(item)}
-          </li>
-        ))}
-      </ul>
+    <div>
+      {posts.map((item) => (
+        <div key={item.id}>
+          <h3>{item.title}</h3>
+          <p>{item.content}</p>
+        </div>
+      ))}
     </div>
   );
-}
+};
+
+export default Search;
