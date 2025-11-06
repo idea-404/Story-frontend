@@ -38,6 +38,23 @@ const Signin = () => {
     }));
   };
 
+  const methods = useForm<ID>({
+    defaultValues: {
+      grade: "",
+      class: "",
+      number: "",
+    },
+  });
+  const { watch } = methods;
+  const grade = watch("grade");
+  const classValue = watch("class");
+  const number = watch("number");
+
+  useEffect(() => {
+    const studentId = `${grade}${classValue}${number}`;
+    console.log("학번:", studentId);
+  }, [grade, classValue, number]);
+
   return (
     <div className="flex flex-col items-center my-5 font-medium">
       <div className="py-[2.875rem] mt-[0.125rem]">
@@ -64,9 +81,11 @@ const Signin = () => {
             <Star />
           </div>
           <div className="flex flex-wrap justify-between">
-            <Grade />
-            <Class />
-            <Number />
+            <FormProvider {...methods}>
+              <Grade />
+              <Class />
+              <Number />
+            </FormProvider>
           </div>
         </div>
         <div className="flex flex-col gap-[0.5rem] w-full">
