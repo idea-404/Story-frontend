@@ -51,8 +51,10 @@ const Signin = () => {
   const number = watch("number");
 
   useEffect(() => {
-    const studentId = `${grade}${classValue}${number}`;
-    console.log("학번:", studentId);
+    setForm((prev) => ({
+      ...prev,
+      student_id: `${grade}${classValue}${number}`,
+    }));
   }, [grade, classValue, number]);
 
   return (
