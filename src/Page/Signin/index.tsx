@@ -11,6 +11,7 @@ type ID = {
   grade: string;
   class: string;
   number: string;
+  major: string;
 };
 
 const Signin = () => {
@@ -43,19 +44,22 @@ const Signin = () => {
       grade: "",
       class: "",
       number: "",
+      major: "",
     },
   });
   const { watch } = methods;
   const grade = watch("grade");
   const classValue = watch("class");
   const number = watch("number");
+  const major = watch("major");
 
   useEffect(() => {
     setForm((prev) => ({
       ...prev,
       student_id: `${grade}${classValue}${number}`,
+      major: major,
     }));
-  }, [grade, classValue, number]);
+  }, [grade, classValue, number, major]);
 
   return (
     <div className="flex flex-col items-center my-5 font-medium">
@@ -95,7 +99,9 @@ const Signin = () => {
             전공&nbsp;
             <Star />
           </div>
-          <Major />
+          <FormProvider {...methods}>
+            <Major />
+          </FormProvider>
         </div>
         <div className="flex flex-col gap-[0.5rem] w-full">
           <div className="flex justify-between">
