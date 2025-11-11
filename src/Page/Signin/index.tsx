@@ -61,6 +61,8 @@ const Signin = () => {
     }));
   }, [grade, classValue, number, major]);
 
+  const button = form.user_name && form.student_id && form.major ? true : false;
+
   return (
     <div className="flex flex-col items-center my-5 font-medium">
       <div className="py-[2.875rem] mt-[0.125rem]">
@@ -117,8 +119,11 @@ const Signin = () => {
           />
         </div>
         <button
-          className="w-full bg-primary-main3 text-white py-[0.875rem] rounded-[0.75rem] font-bold text-[20px]
-"
+          className={
+            button
+              ? "w-full bg-primary-main2 text-white py-[0.875rem] rounded-[0.75rem] font-bold text-[20px]"
+              : "w-full bg-primary-main3 text-white py-[0.875rem] rounded-[0.75rem] font-bold text-[20px]"
+          }
         >
           완료
         </button>
