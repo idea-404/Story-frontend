@@ -120,6 +120,7 @@ const Signin = () => {
           />
         </div>
         <button
+          disabled={!button}
           className={
             button
               ? "w-full bg-primary-main2 text-white py-[0.875rem] rounded-[0.75rem] font-bold text-[20px]"
