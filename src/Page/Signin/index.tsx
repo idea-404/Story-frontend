@@ -56,7 +56,8 @@ const Signin = () => {
   useEffect(() => {
     setForm((prev) => ({
       ...prev,
-      student_id: `${grade}${classValue}${number}`,
+      student_id:
+        grade && classValue && number ? `${grade}${classValue}${number}` : "",
       major: major,
     }));
   }, [grade, classValue, number, major]);
