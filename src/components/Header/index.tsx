@@ -14,8 +14,11 @@ const Header = () => {
           className={pathname === "/signin" ? "hidden" : "flex gap-[1.25rem]"}
         >
           <div
-            className="flex items-center gap-[0.625rem] py-[0.375rem] px-[0.875rem] border-[0.025rem] rounded-[1.5rem] font-medium cursor-default
-"
+            className={
+              pathname === "/portfolio/write" || pathname === "/blog/write"
+                ? "hidden"
+                : "flex items-center gap-[0.625rem] py-[0.375rem] px-[0.875rem] border-[0.025rem] rounded-[1.5rem] font-medium cursor-default"
+            }
             onClick={() => navigate("/blog/write")}
           >
             글 작성 <Pen />
