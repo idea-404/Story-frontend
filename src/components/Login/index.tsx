@@ -14,7 +14,7 @@ const Logincomponents = () => {
           로그인
         </button>
       </div>
-      <div className="flex gap-[0.3125rem] text-primary-main1 justify-end">
+      <div className="flex gap-[1.125rem] text-primary-main1 justify-end">
         <div>Story가 처음이라면?</div>
         <div>회원가입</div>
       </div>
