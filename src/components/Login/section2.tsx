@@ -1,4 +1,4 @@
-const Logincomponents = () => {
+const section2 = () => {
   return (
     <div className="flex flex-col w-[31.25rem] px-[0.625rem] mb-[6.25rem] gap-[0.625rem]">
       <div className="font-medium text-[1.25rem] text-[#828387]">
@@ -22,4 +22,4 @@ const Logincomponents = () => {
   );
 };
 
-export default Logincomponents;
+export default section2;
