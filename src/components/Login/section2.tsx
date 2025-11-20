@@ -1,6 +1,6 @@
 const section2 = () => {
   return (
-    <div className="flex flex-col w-[31.25rem] px-[0.625rem] mb-[6.25rem] gap-[0.625rem]">
+    <div className="flex flex-col w-[31.25rem] px-[0.625rem] gap-[0.625rem]">
       <div className="font-medium text-[1.25rem] text-[#828387]">
         이메일로 로그인
       </div>
@@ -14,9 +14,9 @@ const section2 = () => {
           로그인
         </button>
       </div>
-      <div className="flex gap-[1.125rem] text-primary-main1 justify-end">
-        <div>Story가 처음이라면?</div>
-        <div>회원가입</div>
+      <div className="flex gap-[1.125rem] text-primary-main1 justify-end h-[2.25rem] pt-[0.5rem]">
+        <button className="">Story가 처음이라면?</button>
+        <button className="underline">회원가입</button>
       </div>
     </div>
   );
