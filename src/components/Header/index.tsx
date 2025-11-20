@@ -17,7 +17,7 @@ const Header = () => {
             className={
               pathname === "/portfolio/write" || pathname === "/blog/write"
                 ? "hidden"
-                : "flex items-center gap-[0.625rem] py-[0.375rem] px-[0.875rem] border-[0.025rem] rounded-[1.5rem] font-medium cursor-default"
+                : "flex items-center gap-[0.625rem] py-[0.375rem] px-[0.875rem] border-[0.025rem] rounded-[1.5rem] font-medium cursor-pointer text-[#3C3C3E] hover:bg-[#3C3C3E] hover:text-white transition-colors"
             }
             onClick={() => navigate("/blog/write")}
           >
