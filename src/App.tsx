@@ -1,12 +1,20 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Header } from "./components";
+import NotFound from "./pageContainer/NotFoundPage";
 
 function App() {
   return (
-    <>
-      <Header />
-      <Routes></Routes>
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <Header />
+          </>
+        }
+      />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
