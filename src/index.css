@@ -1,5 +1,5 @@
-@import url('pretendard/dist/web/static/pretendard.css');
-@import 'tailwindcss';
+@import url("pretendard/dist/web/static/pretendard.css");
+@import "tailwindcss";
 
 @theme {
   --color-primary-main1: #ae89ff;
@@ -14,7 +14,13 @@
 }
 
 body {
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui,
-    Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
-    'Malgun Gothic', sans-serif;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui,
+    Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", sans-serif;
+}
+
+@layer base {
+  button:not(:disabled) {
+    @apply cursor-pointer;
+  }
 }
