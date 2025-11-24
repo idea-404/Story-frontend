@@ -20,7 +20,7 @@ body {
 }
 
 @layer base {
-  button {
+  button:not(:disabled) {
     @apply cursor-pointer;
   }
 }
