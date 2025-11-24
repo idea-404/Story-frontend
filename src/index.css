@@ -29,4 +29,9 @@ body {
 
 .jalnan {
   font-family: "YeogiOttaeJalnan", sans-serif;
+  @layer base {
+    button:not(:disabled) {
+      @apply cursor-pointer;
+    }
+  }
 }
