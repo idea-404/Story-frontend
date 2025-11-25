@@ -5,7 +5,7 @@ import { handleKakaoLogin } from "@/API/kakao";
 const section3 = () => {
   return (
     <div className="flex flex-col items-center gap-[0.5rem]">
-      <div className="flex items-center gap-3 px-[0.625rem] h-[1.5rem]">
+      <div className="flex items-center gap-3 px-[0.625rem] h-[2.5rem]">
         <Line2 />
         소셜 로그인
         <Line2 />
