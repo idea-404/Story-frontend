@@ -19,6 +19,17 @@ body {
     "Malgun Gothic", sans-serif;
 }
 
+@font-face {
+  font-family: "YeogiOttaeJalnan";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
+    format("woff");
+  font-weight: normal;
+  font-display: swap;
+}
+
+.jalnan {
+  font-family: "YeogiOttaeJalnan", sans-serif;
+}
 @layer base {
   button:not(:disabled) {
     @apply cursor-pointer;
