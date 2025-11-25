@@ -1,5 +1,6 @@
 import { Line2 } from "@/assets";
 import { Kakao, Google } from "@/assets";
+import { handleKakaoLogin } from "@/API/kakao";
 
 const section3 = () => {
   return (
@@ -13,7 +14,10 @@ const section3 = () => {
         <button className="bg-[#EFF0F2] rounded-full p-[0.625rem]">
           <Google />
         </button>
-        <button className="bg-[#F7E44C] rounded-full p-[0.625rem]">
+        <button
+          className="bg-[#F7E44C] rounded-full p-[0.625rem]"
+          onClick={handleKakaoLogin}
+        >
           <Kakao />
         </button>
       </div>
