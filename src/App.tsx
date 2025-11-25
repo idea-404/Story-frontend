@@ -1,25 +1,18 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Header } from "./components";
-import { useEndpointStore } from "@/store/useEndpointStore";
 import MainPage from "@/page/MainPage";
+import NotFound from "./pageContainer/NotFoundPage";
 
 function App() {
-  const location = useLocation();
-  const isSignIn = location.pathname === "/signin";
-
   const { pathname } = useLocation();
-  const setEndpoint = useEndpointStore((state) => state.setEndpoint);
-
-  useEffect(() => {
-    setEndpoint(pathname);
-  }, [pathname]);
   return (
     <>
-      <Header EndPoint={isSignIn} />
+      {!(pathname === "/404") && <Header />}
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/main" element={<MainPage />} />
+        <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
     </>
   );

@@ -81,7 +81,9 @@ export default function MainHeader({
           댓글순
         </button>
 
-        <Search />
+        <button onClick={() => onNavigate("/search")}>
+          <Search />
+        </button>
       </div>
     </header>
   );
