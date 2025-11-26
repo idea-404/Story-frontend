@@ -1,9 +1,9 @@
 import { Like, Comment } from "@/assets";
 
 type MainCardProps = {
-  id: number;
-  author: string;
-  authorImg: string;
+  userId: number;
+  nickname: string;
+  profileImage: string;
   title: string;
   view: string;
   like: number;
@@ -14,7 +14,7 @@ type MainCardProps = {
   onClick?: (id: number) => void;
 };
 
-/**ISO 시간 설정 */
+/**ISO 시간*/
 function formatTime(isoString: string) {
   const date = new Date(isoString);
   const now = new Date();
@@ -26,6 +26,7 @@ function formatTime(isoString: string) {
   if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
   if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
   if (diff < 2592000) return `${Math.floor(diff / 86400)}일 전`;
+  if (diff < 2592000) return `${Math.floor(diff / 604800)}주 전`;
 
   return date.toLocaleDateString("ko-KR", {
     year: "numeric",
@@ -35,9 +36,9 @@ function formatTime(isoString: string) {
 }
 
 export default function MainCard({
-  id,
-  author,
-  authorImg,
+  userId,
+  nickname,
+  profileImage,
   title,
   view,
   like,
@@ -50,12 +51,12 @@ export default function MainCard({
   return (
     <div
       className="w-[600px] h-[208px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4 flex justify-between items-start"
-      onClick={() => onClick && onClick(id)}
+      onClick={() => onClick && onClick(userId)}
     >
       <div className="flex-1">
         <div className="flex items-center gap-2 text-sm text-black">
-          <img src={authorImg} alt={author} className="w-8 h-8 rounded-full" />
-          <span className="font-semibold">{author}</span>
+          <img src={profileImage} className="w-8 h-8 rounded-full" />
+          <span className="font-semibold">{nickname}</span>
           <span className="text-gray-300 font-semibold text-xs">
             {formatTime(time)}
           </span>
