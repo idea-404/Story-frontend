@@ -1,4 +1,5 @@
 import { LoginSection1, LoginSection2, LoginSection3 } from "@/components";
+import axios from "axios";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -7,8 +8,20 @@ const Login = () => {
   useEffect(() => {
     const params = new URLSearchParams(search);
     const code = params.get("code");
-
     console.log("카카오 인가코드:", code);
+
+    const fetchToken = async () => {
+      if (!code) return;
+      try {
+        const res = await axios.post("/auth/kakao", { code });
+        const tokenValue = res.data.token;
+        console.log("받은 토큰:", tokenValue);
+      } catch (error) {
+        console.error("Error fetching token:", error);
+      }
+    };
+
+    fetchToken();
   }, [search]);
 
   return (
