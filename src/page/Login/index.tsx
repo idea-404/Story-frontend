@@ -6,7 +6,7 @@ import useTokenStore from "@/Store/token";
 
 const Login = () => {
   const { search } = useLocation();
-  const setToken = useTokenStore((state) => state.setToken);
+  const setToken = useTokenStore((state) => state.setAuthWithToken);
 
   useEffect(() => {
     const params = new URLSearchParams(search);
