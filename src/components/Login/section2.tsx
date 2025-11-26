@@ -13,7 +13,7 @@ const section2 = () => {
         <input
           type="email"
           placeholder="이메일을 입력하세요."
-          className="w-full border-[0.0625rem] h-[3.5rem] rounded-[0.625rem] px-[1.25rem] text-[1.375rem] text-[#CBCCCE]"
+          className="w-full border-[0.0625rem] h-[3.5rem] rounded-[0.625rem] px-[1.25rem] text-[1.375rem] placeholder-[#CBCCCE] text-[#3C3C3E]"
         />
         <button className="w-full h-[3.5rem] bg-primary-main3 text-white rounded-[0.625rem] text-[1.375rem] font-bold ">
           {loginType}
