@@ -16,7 +16,7 @@ const Login = () => {
     const fetchToken = async () => {
       if (!code) return;
       try {
-        const res = await axios.post("/auth/kakao", { code });
+        const res = await axios.post("/v1/auth/kakao", { code });
         const tokenValue = res.data.token;
         setToken(tokenValue);
         console.log("받은 토큰:", tokenValue);
