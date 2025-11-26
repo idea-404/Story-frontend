@@ -14,9 +14,10 @@ const Section2 = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    mode: "onChange",
   });
 
   const onSubmit = (data: LoginFormData) => {
@@ -44,7 +45,14 @@ const Section2 = () => {
           }`}
         />
 
-        <button className="w-full h-[3.5rem] bg-primary-main3 text-white rounded-[0.625rem] text-[1.375rem] font-bold ">
+        <button
+          className={`w-full h-[3.5rem]  text-white rounded-[0.625rem] text-[1.375rem] font-bold ${
+            !isValid
+              ? "bg-primary-main3 cursor-not-allowed"
+              : "bg-primary-main1"
+          }`}
+          disabled={!isValid}
+        >
           {loginType}
         </button>
       </form>
