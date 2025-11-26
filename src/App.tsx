@@ -10,6 +10,7 @@ function App() {
       {!(pathname === "/404") && <Header />}
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<Login />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
