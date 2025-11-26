@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-const section2 = () => {
+const Section2 = () => {
   const { pathname } = useLocation();
   const loginType = pathname === "/login" ? "로그인" : "회원가입";
   const start = pathname === "/login" ? true : false;
@@ -27,4 +27,4 @@ const section2 = () => {
   );
 };
 
-export default section2;
+export default Section2;

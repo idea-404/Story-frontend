@@ -1,4 +1,4 @@
-const section1 = () => {
+const Section1 = () => {
   return (
     <div className="w-[32.5rem] my-[5.5rem] text-[2rem] font-medium">
       당신의
@@ -10,4 +10,4 @@ const section1 = () => {
   );
 };
 
-export default section1;
+export default Section1;

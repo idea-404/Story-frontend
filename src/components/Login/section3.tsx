@@ -2,7 +2,7 @@ import { Line2 } from "@/assets";
 import { Kakao, Google } from "@/assets";
 import { handleKakaoLogin } from "@/API/kakao";
 
-const section3 = () => {
+const Section3 = () => {
   return (
     <div className="flex flex-col items-center gap-[0.5rem]">
       <div className="flex items-center gap-3 px-[0.625rem] h-[2.5rem]">
@@ -25,4 +25,4 @@ const section3 = () => {
   );
 };
 
-export default section3;
+export default Section3;
