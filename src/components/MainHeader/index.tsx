@@ -4,8 +4,8 @@ type MainHeaderProps = {
   onNavigate: (path: string) => void;
   activeTab: "blog" | "portfolio";
   onSelectTab: (tab: "blog" | "portfolio") => void;
-  ViewChange: (sortType: "views" | "likes" | "comments") => void;
-  activeSort: "views" | "likes" | "comments";
+  ViewChange: (sortType: "view" | "like" | "comment") => void;
+  activeSort: "view" | "like" | "comment";
 };
 
 export default function MainHeader({
@@ -55,27 +55,27 @@ export default function MainHeader({
 
       <div className="flex gap-6 text-gray-400 font-bold">
         <button
-          onClick={() => ViewChange("views")}
+          onClick={() => ViewChange("view")}
           className={
-            activeSort === "views" ? "text-primary-main1" : "text-gray-400"
+            activeSort === "view" ? "text-primary-main1" : "text-gray-400"
           }
         >
           조회수순
         </button>
 
         <button
-          onClick={() => ViewChange("likes")}
+          onClick={() => ViewChange("like")}
           className={
-            activeSort === "likes" ? "text-primary-main1" : "text-gray-400"
+            activeSort === "like" ? "text-primary-main1" : "text-gray-400"
           }
         >
           좋아요순
         </button>
 
         <button
-          onClick={() => ViewChange("comments")}
+          onClick={() => ViewChange("comment")}
           className={
-            activeSort === "comments" ? "text-primary-main1" : "text-gray-400"
+            activeSort === "comment" ? "text-primary-main1" : "text-gray-400"
           }
         >
           댓글순

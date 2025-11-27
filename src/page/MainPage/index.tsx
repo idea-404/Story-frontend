@@ -40,9 +40,7 @@ const MainPage = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
-  const [sortType, setSortType] = useState<"views" | "likes" | "comments">(
-    "views"
-  );
+  const [sortType, setSortType] = useState<"view" | "like" | "comment">("view");
 
   /**
    * 게시글 불러오기
