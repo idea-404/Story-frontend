@@ -152,7 +152,7 @@ const MainPage = () => {
       </div>
 
       {loading && <p className="text-gray-500">로딩 중..</p>}
-      {!hasMore && (
+      {!loading && !hasMore && (
         <p className="text-gray-500">더 이상 표시할 글이 없습니다.</p>
       )}
     </div>
