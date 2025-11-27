@@ -1,4 +1,4 @@
-export const handleGoogleLogin = () => {
+export const HandleGoogleLogin = () => {
   const CLIENT_ID = import.meta.env.VITE_APP_GOOGLE_CLIENT_ID;
   const REDIRECT_URI = "http://localhost:5173/login";
 

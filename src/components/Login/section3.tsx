@@ -1,6 +1,6 @@
 import { Line2 } from "@/assets";
 import { Kakao, Google } from "@/assets";
-import { handleKakaoLogin, handleGoogleLogin } from "@/API";
+import { HandleKakaoLogin, HandleGoogleLogin } from "@/API";
 
 const Section3 = () => {
   return (
@@ -13,13 +13,13 @@ const Section3 = () => {
       <div className="flex gap-[4.5rem]">
         <button
           className="bg-[#EFF0F2] rounded-full p-[0.625rem]"
-          onClick={handleGoogleLogin}
+          onClick={HandleGoogleLogin}
         >
           <Google />
         </button>
         <button
           className="bg-[#F7E44C] rounded-full p-[0.625rem]"
-          onClick={handleKakaoLogin}
+          onClick={HandleKakaoLogin}
         >
           <Kakao />
         </button>
