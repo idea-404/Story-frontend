@@ -3,6 +3,8 @@ import axios from "axios";
 import MainCard from "@/components/MainCard";
 import MainHeader from "@/components/MainHeader";
 
+axios.defaults.baseURL = "/api/v1/main";
+
 /**
  * 게시글 타입
  * @typedef  {Object} Post
