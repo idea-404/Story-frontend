@@ -1,1 +1,1 @@
-export type oauthType = "KAKAO" | "GOOGLE";
+export type oauthType = "kakao" | "google";
