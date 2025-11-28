@@ -1,4 +1,4 @@
-const Like = () => {
+const Line = () => {
   return (
     <svg
       width="2"
@@ -12,4 +12,4 @@ const Like = () => {
   );
 };
 
-export default Like;
+export default Line;
