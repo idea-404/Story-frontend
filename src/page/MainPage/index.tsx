@@ -9,8 +9,8 @@ axios.defaults.baseURL = "/api/v1/main";
  * 게시글 타입
  * @typedef  {Object} Post
  * @property {number} id - 작성자 ID
- * @property {string} author - 작성자 이름
- * @property {string} authorImg - 작성자 이미지 URL
+ * @property {string} nickname - 작성자 이름
+ * @property {string} profileImage - 작성자 이미지 URL
  * @property {string} title - 글 제목
  * @property {string} view - 글 미리보기 내용
  * @property {number} like - 좋아요 수
