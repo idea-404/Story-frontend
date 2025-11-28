@@ -94,7 +94,7 @@ const MainPage = () => {
     setLastId(null);
     setLoading(true);
     fetchPosts(null, tab);
-  }, [tab, sortType, fetchPosts]);
+  }, [tab, sortType]);
 
   /**
    * 무한 스크롤
