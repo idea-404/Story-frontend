@@ -1,14 +1,9 @@
-import axios from "axios";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import useTokenStore from "@/Store/token";
-
 export const HandleKakaoLogin = () => {
-  const REST_API_KEY = import.meta.env.VITE_APP_KAKAO_CLIENT_ID;
+  const CLIENT_ID = import.meta.env.VITE_APP_KAKAO_CLIENT_ID;
   const REDIRECT_URI = "http://localhost:5173/login";
   const KAKAO_AUTH_URL =
     `https://kauth.kakao.com/oauth/authorize?` +
-    `client_id=${REST_API_KEY}` +
+    `client_id=${CLIENT_ID}` +
     `&redirect_uri=${REDIRECT_URI}` +
     `&response_type=code`;
 
