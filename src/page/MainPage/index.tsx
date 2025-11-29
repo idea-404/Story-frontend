@@ -77,7 +77,7 @@ const MainPage = () => {
         }
       } catch (error) {
         console.error("데이터 가져오기 실패:", error);
-        await minLoadingTime;
+        setHasMore(false);
       } finally {
         setLoading(false);
       }
