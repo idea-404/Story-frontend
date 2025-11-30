@@ -7,5 +7,7 @@ export const HandleKakaoLogin = () => {
     `&redirect_uri=${REDIRECT_URI}` +
     `&response_type=code`;
 
+  // OAuth 제공자 저장
+  localStorage.setItem("oauth_provider", "kakao");
   window.location.href = KAKAO_AUTH_URL;
 };

@@ -11,5 +11,7 @@ export const HandleGoogleLogin = () => {
     `&prompt=consent` +
     `&access_type=offline`;
 
+  // OAuth 제공자 저장
+  localStorage.setItem("oauth_provider", "google");
   window.location.href = GOOGLE_AUTH_URL;
 };
