@@ -77,12 +77,12 @@ export default function MainCard({
             </span>
           </button>
 
-          <span className="flex items-center gap-1 group cursor-pointer">
+          <button className="flex items-center gap-1 focus:outline-none group cursor-pointer">
             <Comment className="w-4 h-4 text-gray-300 transition group-hover:text-primary-main1" />
             <span className="text-gray-300 transition group-hover:text-primary-main1">
               {comment}
             </span>
-          </span>
+          </button>
         </div>
       </div>
 
