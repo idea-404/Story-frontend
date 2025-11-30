@@ -53,7 +53,6 @@ const MainPage = () => {
       if (currentLastId !== null && (loading || !hasMore)) return;
 
       setLoading(true);
-      const minLoadingTime = new Promise((resolve) => setTimeout(resolve, 300));
 
       try {
         const baseURL = currentTab === "blog" ? "/blog" : "/portfolio";
