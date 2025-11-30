@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schema/email";
@@ -11,6 +11,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 const Section2 = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const loginType = pathname === "/login" ? "로그인" : "회원가입";
   const start = pathname === "/login" ? true : false;
   const [emailState, setEmailState] = useState<emailType>("first");
@@ -86,7 +87,12 @@ const Section2 = () => {
         {emailState === "first" && (
           <>
             {start && <div>Story가 처음이라면?</div>}
-            <button className="underline">
+            <button
+              className="underline"
+              onClick={() => {
+                navigate(start ? "/signin" : "/login");
+              }}
+            >
               {start ? "회원가입" : "로그인"}
             </button>
           </>
