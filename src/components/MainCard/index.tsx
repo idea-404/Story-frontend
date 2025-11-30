@@ -5,9 +5,9 @@ type MainCardProps = {
   nickname: string;
   profileImage: string;
   title: string;
-  view: string;
+  content: string;
   like: number;
-  list: number;
+  view: number;
   comment: number;
   thumbnail: string | null;
   time: string;
@@ -40,9 +40,9 @@ export default function MainCard({
   nickname,
   profileImage,
   title,
-  view,
+  content,
   like,
-  list,
+  view,
   comment,
   thumbnail,
   time,
@@ -64,11 +64,11 @@ export default function MainCard({
 
         <h2 className="mt-2 text-[23px] font-medium">{title}</h2>
         <p className="mt-4 text-sm text-black font-regular line-clamp-2">
-          {view}
+          {content}
         </p>
 
         <div className="mt-7 flex gap-6 text-gray-300 text-xs items-center font-medium">
-          <span>조회 {list}</span>
+          <span>조회 {view}</span>
 
           <button className="flex items-center gap-1 focus:outline-none group cursor-pointer">
             <Like className="w-4 h-4 text-gray-300 transition group-hover:text-primary-main1" />
