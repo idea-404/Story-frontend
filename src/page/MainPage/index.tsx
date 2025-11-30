@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
 import MainCard from "@/components/MainCard";
 import MainHeader from "@/components/MainHeader";
@@ -19,15 +19,16 @@ axios.defaults.baseURL = "/api/v1/main";
  * @property {string|null} thumbnail - 썸네일 이미지 URL
  * @property {string} time - 업로드된 시간
  */
+
 type Post = {
   id: number;
   userId: number;
   nickname: string;
   profileImage: string;
   title: string;
-  view: string;
+  content: string;
   like: number;
-  list: number;
+  view: number;
   comment: number;
   thumbnail: string | null;
   time: string;
@@ -42,9 +43,8 @@ const MainPage = () => {
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
   const [sortType, setSortType] = useState<"view" | "like" | "comment">("view");
 
-  /**
-   * 게시글 불러오기
-   */
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
   const fetchPosts = useCallback(
     async (
       currentLastId: number | null = lastId,
@@ -95,21 +95,21 @@ const MainPage = () => {
     fetchPosts(null, tab);
   }, [tab, sortType]);
 
-  /**
-   * 무한 스크롤
-   */
   useEffect(() => {
-    const handleScroll = () => {
-      const nearBottom =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
+    if (!observerRef.current) return;
 
-      if (nearBottom && !loading && hasMore) {
-        fetchPosts(lastId, tab);
-      }
-    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loading && hasMore) {
+          fetchPosts(lastId, tab);
+        }
+      },
+      { threshold: 1.0 }
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    observer.observe(observerRef.current);
+
+    return () => observer.disconnect();
   }, [fetchPosts, loading, hasMore, lastId, tab]);
 
   const handleCardClick = (id: number) => {
@@ -139,9 +139,9 @@ const MainPage = () => {
             nickname={post.nickname}
             profileImage={post.profileImage}
             title={post.title}
-            view={post.view}
+            content={post.content}
             like={post.like}
-            list={post.list}
+            view={post.view}
             comment={post.comment}
             thumbnail={post.thumbnail}
             time={post.time}
@@ -154,6 +154,8 @@ const MainPage = () => {
       {!loading && !hasMore && (
         <p className="text-gray-500">더 이상 표시할 글이 없습니다.</p>
       )}
+
+      <div ref={observerRef} className="h-10" />
     </div>
   );
 };
