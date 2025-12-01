@@ -29,13 +29,14 @@ const Signin = () => {
     major: "",
   });
 
+  const nameCount = form.user_name.length;
   /*이름 배열*/
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setForm((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: nameCount < 10 ? value : e.target.value.slice(0, 10),
     }));
   };
 
@@ -71,9 +72,14 @@ const Signin = () => {
       </div>
       <div className="w-[31.25rem] flex flex-col items-center gap-[2.25rem]">
         <div className="flex flex-col gap-[0.5rem] w-full ">
-          <div className="flex text-[1.25rem]">
-            이름&nbsp;
-            <Star />
+          <div className="flex text-[1.25rem] justify-between">
+            <div className="flex">
+              이름&nbsp;
+              <Star />
+            </div>
+            <div className="text-primary-main1 text-[1.125rem]">
+              {nameCount}/10
+            </div>
           </div>
           <input
             type="text"
