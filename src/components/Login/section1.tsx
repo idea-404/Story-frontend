@@ -1,6 +1,6 @@
 const Section1 = () => {
   return (
-    <div className="w-[32.5rem] my-[5.5rem] text-[2rem] font-medium">
+    <div className="w-[31.25rem] my-[3rem] text-[1.75rem] font-medium">
       당신의
       <br />
       <span className="text-primary-main1">Story</span>를
