@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Header } from "./components";
+import MainPage from "@/page/MainPage";
 import { Login } from "./page";
 import NotFound from "./pageContainer/NotFoundPage";
 
@@ -9,6 +10,8 @@ function App() {
     <>
       {!(pathname === "/404") && <Header />}
       <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/main" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/404" element={<NotFound />} />
