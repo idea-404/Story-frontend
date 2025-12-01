@@ -1,5 +1,5 @@
 import { Line, Search } from "@/assets";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type MainHeaderProps = {
   onNavigate: (path: string) => void;
