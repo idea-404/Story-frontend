@@ -10,6 +10,7 @@ function App() {
     <>
       {!(pathname === "/404") && <Header />}
       <Routes>
+        <Route path="/info" element={} />
         <Route path="/" element={<MainPage />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
