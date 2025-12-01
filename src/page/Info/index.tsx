@@ -125,16 +125,19 @@ const Signin = () => {
             className="border-1 p-[0.625rem] h-[6.25rem] resize-none rounded-[0.75rem]"
           />
         </div>
-        <button
-          disabled={!button}
-          className={
-            button
-              ? "w-full bg-primary-main2 text-white py-[0.875rem] rounded-[0.75rem] font-bold text-[20px]"
-              : "w-full bg-primary-main3 text-white py-[0.875rem] rounded-[0.75rem] font-bold text-[20px]"
-          }
-        >
-          완료
-        </button>
+        <div className="w-full">
+          <button
+            disabled={!button}
+            className={`w-full text-white py-[0.875rem] rounded-[0.75rem] font-bold text-[20px] ${
+              button ? " bg-primary-main2" : "bg-primary-main3"
+            }`}
+          >
+            완료
+          </button>
+          <div className="flex gap-[0.5rem] underline text-primary-main1 justify-end h-[35px] items-center">
+            <Star /> 필수 항목을 모두 입력해 주세요.
+          </div>
+        </div>
       </div>
     </div>
   );
