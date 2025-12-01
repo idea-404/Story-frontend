@@ -82,7 +82,14 @@ const Section2 = () => {
           </div>
         )}
         {emailState === "second" && (
-          <button className="underline">인증 메일이 전송 되지 않았나요?</button>
+          <button
+            className="underline"
+            onClick={() => {
+              setEmailState("first");
+            }}
+          >
+            인증 메일이 전송 되지 않았나요?
+          </button>
         )}
         {emailState === "first" && (
           <>
