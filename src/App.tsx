@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Header } from "./components";
 import { Search } from "./components";
-import { useEndpointStore } from "@/store/useEndpointStore";
 import NotFound from "./pageContainer/NotFoundPage";
 
 function App() {
