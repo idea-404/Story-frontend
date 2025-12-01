@@ -1,4 +1,5 @@
 import { Line, Search } from "@/assets";
+import { useNavigate } from "react-router-dom";
 
 type MainHeaderProps = {
   onNavigate: (path: string) => void;
@@ -15,6 +16,7 @@ export default function MainHeader({
   ViewChange,
   activeSort,
 }: MainHeaderProps) {
+  const navigate = useNavigate();
   return (
     <header className="flex items-center justify-between w-[37.5rem] h-[2.875rem] mx-auto pt-4 pb-14">
       <div className="flex items-center gap-3">
@@ -81,7 +83,7 @@ export default function MainHeader({
           댓글순
         </button>
 
-        <button onClick={() => onNavigate("/search")}>
+        <button onClick={() => navigate("/search")}>
           <Search />
         </button>
       </div>
