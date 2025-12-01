@@ -2,7 +2,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Header } from "./components";
 import MainPage from "@/page/MainPage";
 import NotFound from "./pageContainer/NotFoundPage";
-import { Signin } from "@/Page";
+import { Signin } from "@/page";
 
 function App() {
   const { pathname } = useLocation();
