@@ -1,18 +1,20 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Header } from "./components";
 import { Search } from "./components";
+import MainPage from "@/page/MainPage";
 import NotFound from "./pageContainer/NotFoundPage";
 
 function App() {
   const { pathname } = useLocation();
+
   return (
     <>
-      <Header EndPoint={isSignIn} />
+      {pathname !== "/404" && <Header />}
+
       <Routes>
         <Route path="/search" element={<Search />} />
-      </Routes>
-      {!(pathname === "/404") && <Header />}
-      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/main" element={<MainPage />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
