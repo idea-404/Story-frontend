@@ -43,7 +43,7 @@ const Section2 = () => {
       >
         {emailState === "first" ? (
           <input
-            type="text"
+            type="email"
             placeholder="이메일을 입력하세요."
             {...register("email")}
             className={`w-full h-[3rem] rounded-[0.625rem] px-[1.25rem] text-[1.25rem] placeholder-[#CBCCCE] text-[#3C3C3E] border-[0.0625rem] focus:outline-none ${
