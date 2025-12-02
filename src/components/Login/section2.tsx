@@ -78,7 +78,7 @@ const Section2 = () => {
       >
         {errors.email && (
           <div className="text-[#F84F4F] text-sm mr-auto">
-            {errors.email.message as string}
+            {errors.email?.message}
           </div>
         )}
         {emailState === "second" && (
