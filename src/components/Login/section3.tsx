@@ -1,5 +1,4 @@
-import { Line2 } from "@/assets";
-import { Kakao, Google } from "@/assets";
+import { Kakao, Google, Line2 } from "@/assets";
 import { HandleKakaoLogin, HandleGoogleLogin } from "@/API";
 
 const Section3 = () => {
