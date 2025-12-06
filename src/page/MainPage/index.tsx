@@ -64,8 +64,10 @@ const MainPage = () => {
           },
         });
         const newPosts: Post[] = (response.data.data ?? []).map(
-          (item: any) => ({
-            id: item.blog_id ?? item.portfolio_id,
+          (
+            item: Omit<Post, "id"> & { blog_id?: number; portfolio_id?: number }
+          ) => ({
+            id: (item.blog_id ?? item.portfolio_id)!,
             userId: item.userId,
             nickname: item.nickname,
             profileImage: item.profileImage,
