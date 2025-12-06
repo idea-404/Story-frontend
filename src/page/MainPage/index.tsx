@@ -63,8 +63,21 @@ const MainPage = () => {
             size: limit,
           },
         });
-
-        const newPosts: Post[] = response.data.data ?? [];
+        const newPosts: Post[] = (response.data.data ?? []).map(
+          (item: any) => ({
+            id: item.blog_id ?? item.portfolio_id,
+            userId: item.userId,
+            nickname: item.nickname,
+            profileImage: item.profileImage,
+            title: item.title,
+            content: item.content,
+            like: item.like,
+            view: item.view,
+            comment: item.comment,
+            thumbnail: item.thumbnail,
+            time: item.time,
+          })
+        );
 
         if (newPosts.length === 0) {
           if (currentLastId === null) setPosts([]);
