@@ -11,7 +11,6 @@ function App() {
     <>
       {!(pathname === "/404") && <Header />}
       <Routes>
-        <Route path="/info" element={<div>asdf</div>} />
         <Route path="/" element={<MainPage />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
