@@ -1,7 +1,7 @@
 import { SigninPerson, Star, Class, Grade, Number, Major } from "@/assets";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { infoAPI } from "@/API";
+import { info } from "@/API";
 
 interface FormState {
   user_name: string;
@@ -132,7 +132,7 @@ const Signin = () => {
             className={`w-full text-white py-[0.875rem] rounded-[0.75rem] font-bold text-[20px] ${
               button ? " bg-primary-main2" : "bg-primary-main3"
             }`}
-            onClick={() => infoAPI(form, introduce)}
+            onClick={() => info(form, introduce)}
           >
             완료
           </button>
