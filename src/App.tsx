@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Header } from "./components";
 import MainPage from "@/page/MainPage";
-import { Login } from "./page";
+import { Login, Profile } from "./page";
 import NotFound from "./pageContainer/NotFoundPage";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
     <>
       {!(pathname === "/404") && <Header />}
       <Routes>
+        <Route path="/profile" element={<Profile />} />
         <Route path="/info" element={<div>asdf</div>} />
         <Route path="/" element={<MainPage />} />
         <Route path="/main" element={<MainPage />} />
