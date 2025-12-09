@@ -98,4 +98,61 @@ body {
     border: 1px solid #ddd;
     padding: 0.5rem;
   }
+
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin: 0.75rem 0;
+  }
+
+  .prose li {
+    margin: 0.3rem 0;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin: 0.75rem 0;
+  }
+  .prose code {
+    background: #f1f1f1;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #d63384;
+  }
+
+  /* 코드블럭 */
+  .prose pre {
+    background: #1e1e1e;
+    color: #e4e4e4;
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* pre 안에 있는 코드 태그 */
+  .prose pre code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid #d1d5db; /* 회색 라인 */
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #555;
+    font-style: italic;
+    background: #f9f9f9;
+    border-radius: 4px;
+  }
+
+  /* blockquote 안의 p 태그 간격 조절 */
+  .prose blockquote p {
+    margin: 0.5rem 0;
+  }
 }
