@@ -151,6 +151,7 @@ const MainPage = () => {
         {posts.map((post) => (
           <MainCard
             key={post.id}
+            postId={post.id}
             userId={post.userId}
             nickname={post.nickname}
             profileImage={post.profileImage}
