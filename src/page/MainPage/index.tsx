@@ -7,17 +7,18 @@ axios.defaults.baseURL = "/api/v1/main";
 
 /**
  * 게시글 타입
- * @typedef  {Object} Post
- * @property {number} id - 작성자 ID
- * @property {string} nickname - 작성자 이름
- * @property {string} profileImage - 작성자 이미지 URL
+ * @typedef {Object} Post
+ * @property {number} id - 게시글 ID
+ * @property {number} userId - 작성자(유저) ID
+ * @property {string} nickname - 작성자 닉네임
+ * @property {string} profileImage - 작성자 프사 URL
  * @property {string} title - 글 제목
- * @property {string} view - 글 미리보기 내용
+ * @property {string} content - 글 미리보기
  * @property {number} like - 좋아요 수
- * @property {number} list - 조회 수
+ * @property {number} view - 조회 수
  * @property {number} comment - 댓글 수
- * @property {string|null} thumbnail - 썸네일 이미지 URL
- * @property {string} time - 업로드된 시간
+ * @property {string|null} thumbnail - 썸네일 이미지 URL (없으면 null)
+ * @property {string} time - 업로드 시간
  */
 
 type Post = {
@@ -62,8 +63,23 @@ const MainPage = () => {
             size: limit,
           },
         });
-
-        const newPosts: Post[] = response.data.data ?? [];
+        const newPosts: Post[] = (response.data.data ?? []).map(
+          (
+            item: Omit<Post, "id"> & { blog_id?: number; portfolio_id?: number }
+          ) => ({
+            id: (item.blog_id ?? item.portfolio_id)!,
+            userId: item.userId,
+            nickname: item.nickname,
+            profileImage: item.profileImage,
+            title: item.title,
+            content: item.content,
+            like: item.like,
+            view: item.view,
+            comment: item.comment,
+            thumbnail: item.thumbnail,
+            time: item.time,
+          })
+        );
 
         if (newPosts.length === 0) {
           if (currentLastId === null) setPosts([]);
@@ -135,6 +151,7 @@ const MainPage = () => {
         {posts.map((post) => (
           <MainCard
             key={post.id}
+            postId={post.id}
             userId={post.userId}
             nickname={post.nickname}
             profileImage={post.profileImage}
