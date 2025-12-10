@@ -2,6 +2,7 @@ import { Logo, Person, Pen } from "@/assets";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const nooutput = ["/blog/write", "/portfolio/write"];
+const nooutput2 = ["/login", "/signin", "/info"];
 
 const Header = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Header = () => {
         <button onClick={() => navigate("/")}>
           <Logo />
         </button>
-        {!(pathname === "/signin") && (
+        {!nooutput2.includes(pathname) && (
           <div className={"flex gap-[1.25rem]"}>
             {!nooutput.includes(pathname) && (
               <button
