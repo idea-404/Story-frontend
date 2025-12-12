@@ -1,7 +1,6 @@
 import { Like, Comment } from "@/assets";
 
 type MainCardProps = {
-  postId: number;
   userId: number;
   nickname: string;
   profileImage: string;
@@ -11,6 +10,7 @@ type MainCardProps = {
   view: number;
   comment: number;
   thumbnail: string | null;
+  type: "portfolio" | "blog";
   time: string;
   onClick?: (id: number) => void;
 };
@@ -37,7 +37,6 @@ function formatTime(isoString: string) {
 }
 
 export default function MainCard({
-  postId,
   userId,
   nickname,
   profileImage,
@@ -47,13 +46,14 @@ export default function MainCard({
   view,
   comment,
   thumbnail,
+  type,
   time,
   onClick,
 }: MainCardProps) {
   return (
     <div
       className="w-[600px] h-[208px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4 flex justify-between items-start"
-      onClick={() => onClick && onClick(postId)}
+      onClick={() => onClick && onClick(userId)}
     >
       <div className="flex-1">
         <div className="flex items-center gap-2 text-sm text-black">
@@ -88,7 +88,7 @@ export default function MainCard({
         </div>
       </div>
 
-      {thumbnail && (
+      {type === "blog" && thumbnail && (
         <img
           src={thumbnail}
           className="w-45 h-45 rounded-lg object-cover ml-4"
