@@ -33,6 +33,51 @@ const Writing = () => {
     }, 0);
   };
 
+  const handlePaste = async (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    const items = e.clipboardData.items;
+
+    for (const item of items) {
+      if (item.type.startsWith("image/")) {
+        e.preventDefault(); // 기본 붙여넣기 막기
+
+        const file = item.getAsFile();
+        if (!file) return;
+
+        await uploadImageAndInsert(file);
+      }
+    }
+  };
+
+  const uploadImageAndInsert = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const { url } = await res.json();
+
+    insertAtCursor(`![image](${url})`);
+  };
+
+  const insertAtCursor = (value: string) => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    setText((prev) => prev.slice(0, start) + value + prev.slice(end));
+
+    setTimeout(() => {
+      const pos = start + value.length;
+      textarea.selectionStart = textarea.selectionEnd = pos;
+      textarea.focus();
+    }, 0);
+  };
+
   return (
     <div
       style={{
@@ -74,6 +119,7 @@ const Writing = () => {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Velog처럼 Markdown을 입력해보세요..."
+        onPaste={handlePaste}
       />
       <button onClick={() => ad("~~")}>asdf</button>
     </div>
