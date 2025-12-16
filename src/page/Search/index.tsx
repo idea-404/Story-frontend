@@ -54,6 +54,7 @@ export default function SearchPage() {
           return (
             <MainCard
               key={item.id}
+              postId={item.id}
               type={isPortfolio ? "portfolio" : "blog"}
               userId={item.userId}
               nickname={item.nickname}
