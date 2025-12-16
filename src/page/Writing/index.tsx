@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
+import { Print } from "@/components";
 
 const Writing = () => {
   const [text, setText] = useState<string>("");
@@ -88,15 +89,9 @@ const Writing = () => {
       className="prose"
     >
       {/* 미리보기 영역 (왼쪽) */}
-      <div
-        style={{
-          width: "50%",
-          padding: "20px",
-          borderRight: "1px solid #ddd",
-          overflowY: "auto",
-        }}
-        className="prose"
-      >
+      <div className="prose">
+        <Print />
+
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeSanitize]}
