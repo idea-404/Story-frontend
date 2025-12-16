@@ -162,6 +162,7 @@ const MainPage = () => {
             comment={post.comment}
             thumbnail={post.thumbnail}
             time={post.time}
+            type={tab}
             onClick={handleCardClick}
           />
         ))}

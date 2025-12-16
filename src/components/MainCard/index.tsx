@@ -11,6 +11,7 @@ type MainCardProps = {
   view: number;
   comment: number;
   thumbnail: string | null;
+  type: "portfolio" | "blog";
   time: string;
   onClick?: (id: number) => void;
 };
@@ -47,6 +48,7 @@ export default function MainCard({
   view,
   comment,
   thumbnail,
+  type,
   time,
   onClick,
 }: MainCardProps) {
@@ -88,7 +90,7 @@ export default function MainCard({
         </div>
       </div>
 
-      {thumbnail && (
+      {type === "blog" && thumbnail && (
         <img
           src={thumbnail}
           className="w-45 h-45 rounded-lg object-cover ml-4"
