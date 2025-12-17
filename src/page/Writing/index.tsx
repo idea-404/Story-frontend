@@ -86,12 +86,10 @@ const Writing = () => {
         height: "100vh",
         fontFamily: "pretendard, sans-serif",
       }}
-      className="prose"
     >
       {/* 미리보기 영역 (왼쪽) */}
+      <Print />
       <div className="prose">
-        <Print />
-
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeSanitize]}
