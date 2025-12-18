@@ -1,7 +1,4 @@
 import { useRef, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeSanitize from "rehype-sanitize";
 import { Print } from "@/components";
 
 const Writing = () => {
@@ -89,15 +86,6 @@ const Writing = () => {
     >
       {/* 미리보기 영역 (왼쪽) */}
 
-      <div className="prose">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeSanitize]}
-        >
-          {text}
-        </ReactMarkdown>
-      </div>
-
       <textarea
         ref={textareaRef}
         style={{
@@ -114,7 +102,7 @@ const Writing = () => {
         placeholder="Velog처럼 Markdown을 입력해보세요..."
         onPaste={handlePaste}
       />
-      <Print body={text} />
+      <Print title="asdf" body={text} />
     </div>
   );
 };
