@@ -18,3 +18,4 @@ export { default as Major } from "./select/Major";
 export { default as Image } from "./Image";
 export { default as Link } from "./Link";
 export { default as Quotes } from "./Quotes";
+export { default as Dotline } from "./Dotline";
