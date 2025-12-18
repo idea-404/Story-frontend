@@ -20,3 +20,4 @@ export { default as Link } from "./Link";
 export { default as Quotes } from "./Quotes";
 export { default as Dotline } from "./Dotline";
 export { default as Line3 } from "./Line3";
+export { default as Line4 } from "./Line4";
