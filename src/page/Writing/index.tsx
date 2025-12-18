@@ -88,7 +88,7 @@ const Writing = () => {
       }}
     >
       {/* 미리보기 영역 (왼쪽) */}
-      <Print />
+
       <div className="prose">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
@@ -114,7 +114,7 @@ const Writing = () => {
         placeholder="Velog처럼 Markdown을 입력해보세요..."
         onPaste={handlePaste}
       />
-      <button onClick={() => ad("~~")}>asdf</button>
+      <Print />
     </div>
   );
 };
