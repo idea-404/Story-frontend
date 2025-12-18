@@ -1,0 +1,58 @@
+name: Story-CI
+
+on:
+  push:
+    branches: ["develop"]
+  pull_request:
+    branches: ["develop"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.16.0]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: GSMC-front CI Discord Notification (success)
+        if: ${{ success() }}
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.GSMC_FRONT_WEBHOOK }}
+          title: "빌드 성공"
+          status: ${{ job.status }}
+          description: "성공 야르킁킁~~"
+          color: 65280
+          username: "gsmc-front-bot"
+
+      - name: GSMC-front CI Discord Notification (failure)
+        if: ${{ failure() }}
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.GSMC_FRONT_WEBHOOK }}
+          title: "빌드 실패"
+          status: ${{ job.status }}
+          description: "아으.... 이거 실패하너"
+          color: 16711680
+          username: "gsmc-front-bot"
