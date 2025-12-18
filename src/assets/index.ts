@@ -23,3 +23,4 @@ export { default as Dotline } from "./Dotline";
 export { default as Line3 } from "./Line3";
 export { default as Line4 } from "./Line4";
 export { default as Code } from "./Code";
+export { default as Line5 } from "./Line5";
