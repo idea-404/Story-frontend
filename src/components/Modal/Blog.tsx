@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PublishBlog } from "@/assets";
 
-export default function Portfolio() {
+export default function Blog() {
   const [text, setText] = useState("");
 
   return (
