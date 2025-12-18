@@ -2,7 +2,7 @@ const Line5 = () => {
   return (
     <svg
       width="4"
-      height="880"
+      height="81.48vh"
       viewBox="0 0 4 880"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
