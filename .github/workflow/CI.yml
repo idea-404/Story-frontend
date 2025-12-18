@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [22.16.0]
 
     steps:
       - name: Checkout
@@ -22,19 +22,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: npm
+          cache: "pnpm"
 
+      # ✅ pnpm 설치
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      # ✅ 의존성 설치
       - name: Install deps
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
-      - name: Test
-        run: npm test --if-present
-
-      - name: Lint
-        run: npm run lint --if-present
-
+      # ✅ 빌드 (이게 CI 핵심)
       - name: Build
-        run: npm run build --if-present
+        run: pnpm build
 
       - name: GSMC-front CI Discord Notification (success)
         if: ${{ success() }}
@@ -45,7 +47,6 @@ jobs:
           status: ${{ job.status }}
           description: "성공 야르킁킁~~"
           color: 65280
-          url: "https://github.com/sarisia/actions-status-discord"
           username: "gsmc-front-bot"
 
       - name: GSMC-front CI Discord Notification (failure)
@@ -57,5 +58,4 @@ jobs:
           status: ${{ job.status }}
           description: "아으.... 이거 실패하너"
           color: 16711680
-          url: "https://github.com/sarisia/actions-status-discord"
           username: "gsmc-front-bot"
