@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Print } from "@/components";
+import { Print, Inputheader } from "@/components";
 
 const Writing = () => {
   const [text, setText] = useState<string>("내용을 입력해 주세요.");
@@ -77,31 +77,32 @@ const Writing = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        fontFamily: "pretendard, sans-serif",
-      }}
-    >
-      {/* 미리보기 영역 (왼쪽) */}
+    <div className="flex">
+      <div className="flex flex-col">
+        <input
+          type="text"
+          placeholder="제목을 입력해 주세요."
+          className="w-[37.5rem] h-[2.25rem] px-[0.75rem] py-[0.62rem] text-[1.875rem] border-0 outline-none focus:outline-none focus:ring-0"
+        />
+        <Inputheader />
+        <textarea
+          ref={textareaRef}
+          style={{
+            width: "50%",
+            padding: "20px",
+            border: "none",
+            outline: "none",
+            resize: "none",
+            fontSize: "16px",
+            lineHeight: "1.6",
+          }}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Velog처럼 Markdown을 입력해보세요..."
+          onPaste={handlePaste}
+        />
+      </div>
 
-      <textarea
-        ref={textareaRef}
-        style={{
-          width: "50%",
-          padding: "20px",
-          border: "none",
-          outline: "none",
-          resize: "none",
-          fontSize: "16px",
-          lineHeight: "1.6",
-        }}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Velog처럼 Markdown을 입력해보세요..."
-        onPaste={handlePaste}
-      />
       <Print title="asdf" body={text} />
     </div>
   );

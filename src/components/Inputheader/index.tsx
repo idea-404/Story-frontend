@@ -2,7 +2,7 @@ import HeadingSelect from "@/assets/select/HeadingSelect";
 import { Line3, Line4, Dotline, Quotes, Code, Link, Image } from "@/assets";
 const Inputheader = () => {
   return (
-    <div className="flex gap-[0.55rem] items-center ">
+    <div className="flex gap-[0.55rem] items-center w-[37.5rem]">
       <div>
         <HeadingSelect />
       </div>
@@ -14,7 +14,7 @@ const Inputheader = () => {
         <button className="line-through">S</button>
       </div>
       <Line4 />
-      <div className="flex gap-[1.88rem] items-center px-[0.55rem]">
+      <div className="flex gap-[0.75rem] items-center px-[0.55rem]">
         <button>
           <Line3 />
         </button>
