@@ -1,9 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import MainCard from "@/components/MainCard";
 import Search from "@/components/Search/index";
-
-axios.defaults.baseURL = "/api/v1/main";
+import api from "@/API/api";
 
 export default function SearchPage() {
   const [keyword, setKeyword] = useState("");
@@ -12,7 +10,7 @@ export default function SearchPage() {
 
   const handleSearch = async () => {
     try {
-      const res = await axios.get(`/search`, {
+      const res = await api.get(`/search`, {
         params: {
           keyword,
           lastId,
