@@ -6,7 +6,7 @@ const Printbody = ({ body }: { body: string }) => {
     "py-[0.47rem] px-[2.03rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold";
   return (
     <div className="flex flex-col gap-[2.75rem]">
-      <div className="w-[35.75rem] h-[59.26vh] mt-[1rem] overflow-y-scroll prose">
+      <div className="w-[35.75rem] h-[59.26vh] mt-[1rem] overflow-y-scroll overflow-x-hidden prose">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeSanitize]}
