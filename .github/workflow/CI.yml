@@ -24,17 +24,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
 
-      # ✅ pnpm 설치
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
 
-      # ✅ 의존성 설치
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
-      # ✅ 빌드 (이게 CI 핵심)
       - name: Build
         run: pnpm build
 
