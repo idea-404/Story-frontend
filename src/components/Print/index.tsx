@@ -1,10 +1,10 @@
 import Printtitle from "./Printtitle";
 import Printbody from "./Printbody";
 const Print = ({
-  title = "제목을 입력해 주세요.",
+  title,
   body = "내용을 입력해 주세요.",
 }: {
-  title?: string;
+  title: string;
   body?: string;
 }) => {
   return (

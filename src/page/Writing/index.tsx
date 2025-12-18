@@ -5,7 +5,7 @@ import rehypeSanitize from "rehype-sanitize";
 import { Print } from "@/components";
 
 const Writing = () => {
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>("내용을 입력해 주세요.");
 
   // textarea DOM 접근
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -114,7 +114,7 @@ const Writing = () => {
         placeholder="Velog처럼 Markdown을 입력해보세요..."
         onPaste={handlePaste}
       />
-      <Print />
+      <Print body={text} />
     </div>
   );
 };
