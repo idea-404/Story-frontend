@@ -13,7 +13,7 @@ export default function SearchPage() {
       const res = await api.get(`/search`, {
         params: {
           keyword,
-          lastId,
+          lastId: 0,
           size: 10,
         },
       });
