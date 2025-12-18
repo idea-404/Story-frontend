@@ -15,3 +15,4 @@ export { default as Class } from "./select/Class";
 export { default as Grade } from "./select/Grade";
 export { default as Number } from "./select/Number";
 export { default as Major } from "./select/Major";
+export { default as Image } from "./Image";
