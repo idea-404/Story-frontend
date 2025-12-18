@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Print, Inputheader } from "@/components";
+import { Line5 } from "@/assets";
 
 const Writing = () => {
   const [text, setText] = useState<string>("내용을 입력해 주세요.");
@@ -77,32 +78,24 @@ const Writing = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex flex-col">
+    <div className="flex justify-center gap-[2.88rem]">
+      <div className="flex flex-col mt-[2.88rem]">
         <input
           type="text"
           placeholder="제목을 입력해 주세요."
-          className="w-[37.5rem] h-[2.25rem] px-[0.75rem] py-[0.62rem] text-[1.875rem] border-0 outline-none focus:outline-none focus:ring-0"
+          className="w-[37.5rem] h-[2.25rem] mb-[0.75rem] px-[0.75rem] py-[0.62rem] text-[1.875rem] border-0 outline-none focus:outline-none focus:ring-0"
         />
         <Inputheader />
         <textarea
           ref={textareaRef}
-          style={{
-            width: "50%",
-            padding: "20px",
-            border: "none",
-            outline: "none",
-            resize: "none",
-            fontSize: "16px",
-            lineHeight: "1.6",
-          }}
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Velog처럼 Markdown을 입력해보세요..."
           onPaste={handlePaste}
+          className="h-[61.85vh] mt-[1rem] border-0 outline-none focus:outline-none focus:ring-0 resize-none"
         />
       </div>
-
+      <Line5 />
       <Print title="asdf" body={text} />
     </div>
   );
