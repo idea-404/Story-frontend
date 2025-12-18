@@ -17,3 +17,4 @@ export { default as Number } from "./select/Number";
 export { default as Major } from "./select/Major";
 export { default as Image } from "./Image";
 export { default as Link } from "./Link";
+export { default as Quotes } from "./Quotes";
