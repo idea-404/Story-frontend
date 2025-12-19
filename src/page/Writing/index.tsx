@@ -68,9 +68,9 @@ const Writing = () => {
           ref={textareaRef}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Velog처럼 Markdown을 입력해보세요..."
+          placeholder="내용을 입력해 주세요."
           onPaste={handlePaste}
-          className="h-[61.85vh] mt-[1rem] border-0 outline-none focus:outline-none focus:ring-0 resize-none"
+          className="h-[59.26vh] mt-[1rem] border-0 outline-none focus:outline-none focus:ring-0 resize-none"
         />
         <div className="flex gap-[2.25rem]">
           <button className="flex items-center gap-[0.63rem] py-[0.47rem] px-[1.81rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold">
@@ -85,7 +85,10 @@ const Writing = () => {
         </div>
       </div>
       <Line5 />
-      <Print title={title} body={text} />
+      <Print
+        title={title ? title : "제목을 입력해 주세요."}
+        body={text ? text : "내용을 입력해 주세요."}
+      />
     </div>
   );
 };
