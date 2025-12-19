@@ -1,5 +1,4 @@
-import { Line, Search } from "@/assets";
-import { useNavigate } from "react-router-dom";
+import { Line } from "@/assets";
 
 type MainHeaderProps = {
   onNavigate: (path: string) => void;
@@ -16,10 +15,8 @@ export default function MainHeader({
   onEdit,
   onDelete,
 }: MainHeaderProps) {
-  const navigate = useNavigate();
-
   return (
-    <header className="flex items-center justify-between w-[37.5rem] h-[2.875rem] mx-auto pt-4 pb-14">
+    <header className="mx-auto flex h-[2.875rem] w-[37.5rem] items-center justify-between pt-4 pb-14">
       <div className="flex items-center gap-3">
         <button
           onClick={() => {
@@ -37,7 +34,9 @@ export default function MainHeader({
         >
           블로그
         </button>
+
         <Line />
+
         <button
           onClick={() => {
             onSelectTab("portfolio");
@@ -54,7 +53,9 @@ export default function MainHeader({
         >
           포트폴리오
         </button>
+
         <Line />
+
         <button
           onClick={() => {
             onSelectTab("intro");
@@ -73,27 +74,24 @@ export default function MainHeader({
         </button>
       </div>
 
-      <div className="flex gap-6 text-gray-400 font-bold">
+      <div className="flex gap-6 font-bold text-gray-400">
         {onEdit && (
           <button
             onClick={onEdit}
-            className="text-gray-400 hover:text-primary-main1 transition-colors"
+            className="transition-colors hover:text-primary-main1"
           >
             수정
           </button>
         )}
+
         {onDelete && (
           <button
             onClick={onDelete}
-            className="text-gray-400 hover:text-red-500 transition-colors"
+            className="transition-colors hover:text-red-500"
           >
             삭제
           </button>
         )}
-
-        <button onClick={() => navigate("/search")}>
-          <Search />
-        </button>
       </div>
     </header>
   );

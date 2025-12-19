@@ -1,22 +1,50 @@
 import { Arrow, Person } from "@/assets";
 
-export default function ProfileHeader() {
+type ProfileHeaderProps = {
+  nickname: string;
+  studentId: string;
+  profileImage: string;
+  onBack?: () => void;
+};
+
+export default function ProfileHeader({
+  nickname,
+  studentId,
+  profileImage,
+  onBack,
+}: ProfileHeaderProps) {
   return (
-    <header className="mx-auto flex h-[4.5rem] w-[37.5rem] items-center justify-between px-4">
-      <div className="flex items-center gap-3">
-        <button className="flex items-center justify-center">
-          <Arrow />
-        </button>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-300">
-          <Person />
-        </div>
-        <span className="text-base font-semibold text-gray-900">
-          1210 이남진
-        </span>
-      </div>
-      <button className="rounded-full bg-gray-100 px-4 py-1 text-sm font-medium text-purple-500">
-        프로필 설정
+    <header className="mx-auto w-[37.5rem] py-6">
+      <button
+        className="mb-4 flex h-6 w-6 items-center justify-center"
+        onClick={onBack}
+      >
+        <Arrow />
       </button>
+
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full ">
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt="profile"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <Person h={60} />
+            )}
+          </div>
+
+          <span className="text-lg font-semibold text-gray-900">
+            {studentId} {nickname}
+          </span>
+        </div>
+
+        <button className="rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-primary-main1 hover:bg-gray-200">
+          프로필 설정
+        </button>
+      </div>
     </header>
   );
 }
