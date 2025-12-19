@@ -1,7 +1,6 @@
 import { RefObject } from "react";
 import HeadingSelect from "@/assets/select/HeadingSelect";
 import { Line3, Line4, Dotline, Quotes, Code, Link, Image } from "@/assets";
-import { fa } from "zod/v4/locales";
 
 interface InputheaderProps {
   textareaRef: RefObject<HTMLTextAreaElement>;
@@ -55,7 +54,10 @@ const Inputheader = ({ textareaRef, setText }: InputheaderProps) => {
         <button className="italic" onClick={() => insertMarkdown("*")}>
           I
         </button>
-        <button className="underline" onClick={() => insertMarkdown("<u>")}>
+        <button
+          className="underline"
+          onClick={() => insertMarkdown("- [ ] ", false)}
+        >
           U
         </button>
         <button className="line-through" onClick={() => insertMarkdown("~~")}>
