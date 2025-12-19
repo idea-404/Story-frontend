@@ -24,7 +24,7 @@ const HeadingSelect = ({
 
   return (
     <Select onValueChange={handleChange} value={selected}>
-      <SelectTrigger className="w-[7.5rem] h-[2.5rem]">
+      <SelectTrigger className="w-[7.5rem] h-[2.5rem] border-0 focus:ring-0 focus:ring-offset-0 shadow-none">
         <SelectValue placeholder="본문" />
       </SelectTrigger>
       <SelectContent className="bg-white border-0 text-[1.375rem] font-normal">
