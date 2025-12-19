@@ -53,16 +53,26 @@ const Writing = () => {
     }, 0);
   };
 
+  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value.slice(0, 20));
+  };
+
   return (
     <div className="flex justify-center gap-[2.88rem]">
       <div className="flex flex-col mt-[2.88rem]">
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          type="text"
-          placeholder="제목을 입력해 주세요."
-          className="w-[37.5rem] h-[2.25rem] mb-[0.75rem] px-[0.75rem] py-[0.62rem] text-[1.875rem] border-0 outline-none focus:outline-none focus:ring-0"
-        />
+        <div className="flex">
+          <input
+            value={title}
+            onChange={(e) => change(e)}
+            type="text"
+            placeholder="제목을 입력해 주세요."
+            className="w-[34.125rem] h-[2.25rem] mb-[0.75rem] px-[0.75rem] py-[0.62rem] text-[1.875rem] border-0 outline-none focus:outline-none focus:ring-0"
+          />
+          <div className="w-[3.375rem] text-primary-main1 text-center">
+            {title.length}/20
+          </div>
+        </div>
+
         <Inputheader textareaRef={textareaRef} setText={setText} />
         <textarea
           ref={textareaRef}
