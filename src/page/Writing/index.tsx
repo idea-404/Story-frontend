@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Print, Inputheader } from "@/components";
-import { Line5 } from "@/assets";
+import { Ai, Line5, Out } from "@/assets";
 
 const Writing = () => {
   const [text, setText] = useState<string>("내용을 입력해 주세요.");
@@ -69,6 +69,17 @@ const Writing = () => {
           onPaste={handlePaste}
           className="h-[61.85vh] mt-[1rem] border-0 outline-none focus:outline-none focus:ring-0 resize-none"
         />
+        <div className="flex gap-[2.25rem]">
+          <button className="flex items-center gap-[0.63rem] py-[0.47rem] px-[1.81rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold">
+            <Out />
+            나가기
+          </button>
+
+          <button className="flex items-center gap-[0.63rem] py-[0.47rem] px-[1.03rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold">
+            <Ai />
+            AI 피드백
+          </button>
+        </div>
       </div>
       <Line5 />
       <Print title="asdf" body={text} />
