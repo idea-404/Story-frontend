@@ -3,7 +3,8 @@ import { Print, Inputheader } from "@/components";
 import { Ai, Line5, Out } from "@/assets";
 
 const Writing = () => {
-  const [text, setText] = useState<string>("내용을 입력해 주세요.");
+  const [text, setText] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -56,6 +57,8 @@ const Writing = () => {
     <div className="flex justify-center gap-[2.88rem]">
       <div className="flex flex-col mt-[2.88rem]">
         <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           type="text"
           placeholder="제목을 입력해 주세요."
           className="w-[37.5rem] h-[2.25rem] mb-[0.75rem] px-[0.75rem] py-[0.62rem] text-[1.875rem] border-0 outline-none focus:outline-none focus:ring-0"
@@ -82,7 +85,7 @@ const Writing = () => {
         </div>
       </div>
       <Line5 />
-      <Print title="asdf" body={text} />
+      <Print title={title} body={text} />
     </div>
   );
 };
