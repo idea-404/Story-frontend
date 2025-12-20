@@ -24,6 +24,10 @@ export default function ProfileHeader({
     }
   };
 
+  const handleProfileEdit = () => {
+    navigate("/profile-edit");
+  };
+
   return (
     <header className="mx-auto w-[37.5rem] py-6">
       <button
@@ -35,7 +39,7 @@ export default function ProfileHeader({
 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full ">
+          <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full">
             {profileImage ? (
               <img
                 src={profileImage}
@@ -52,7 +56,10 @@ export default function ProfileHeader({
           </span>
         </div>
 
-        <button className="rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-primary-main1 hover:bg-gray-200">
+        <button
+          onClick={handleProfileEdit}
+          className="rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-primary-main1 hover:bg-gray-200"
+        >
           프로필 설정
         </button>
       </div>
