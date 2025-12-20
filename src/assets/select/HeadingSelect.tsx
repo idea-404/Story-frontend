@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -17,6 +17,11 @@ const HeadingSelect = ({
 }) => {
   const [selected, setSelected] = useState(value);
 
+  // value prop이 변경되면 selected state도 업데이트
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
+
   const handleChange = (newValue: string) => {
     setSelected(newValue);
     onChange?.(newValue);
@@ -32,13 +37,13 @@ const HeadingSelect = ({
           <SelectItem value="body" className="text-[1.375rem] mt-[0.25rem]">
             본문
           </SelectItem>
-          <SelectItem value="h1" className="text-[2rem] mt-[0.25rem]">
+          <SelectItem value="# " className="text-[2rem] mt-[0.25rem]">
             제목 1
           </SelectItem>
-          <SelectItem value="h2" className="text-[1.75rem] mt-[0.25rem]">
+          <SelectItem value="## " className="text-[1.75rem] mt-[0.25rem]">
             제목 2
           </SelectItem>
-          <SelectItem value="h3" className="text-[1.5rem] mt-[0.25rem]">
+          <SelectItem value="### " className="text-[1.5rem] mt-[0.25rem]">
             제목 3
           </SelectItem>
         </SelectGroup>

@@ -5,6 +5,7 @@ import { Ai, Line5, Out } from "@/assets";
 const Writing = () => {
   const [text, setText] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [headingType, setHeadingType] = useState<string>("body");
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -73,11 +74,26 @@ const Writing = () => {
           </div>
         </div>
 
-        <Inputheader textareaRef={textareaRef} setText={setText} />
+        <Inputheader
+          textareaRef={textareaRef}
+          setText={setText}
+          headingType={headingType}
+          setHeadingType={setHeadingType}
+        />
         <textarea
           ref={textareaRef}
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const oldValue = text;
+
+            // 줄바꿈이 추가되었는지 확인
+            if (newValue.length > oldValue.length && newValue.endsWith("\n")) {
+              setHeadingType("body");
+            }
+
+            setText(newValue);
+          }}
           placeholder="내용을 입력해 주세요."
           onPaste={handlePaste}
           className="h-[59.26vh] mt-[1rem] border-0 outline-none focus:outline-none focus:ring-0 resize-none"

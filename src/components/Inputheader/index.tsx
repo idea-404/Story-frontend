@@ -1,13 +1,20 @@
-import { RefObject } from "react";
+import { RefObject, useState } from "react";
 import HeadingSelect from "@/assets/select/HeadingSelect";
 import { Line3, Line4, Dotline, Quotes, Code, Link, Image } from "@/assets";
 
 interface InputheaderProps {
   textareaRef: RefObject<HTMLTextAreaElement>;
   setText: React.Dispatch<React.SetStateAction<string>>;
+  headingType: string;
+  setHeadingType: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Inputheader = ({ textareaRef, setText }: InputheaderProps) => {
+const Inputheader = ({
+  textareaRef,
+  setText,
+  headingType,
+  setHeadingType,
+}: InputheaderProps) => {
   const insertMarkdown = (value: string, wrapper = true) => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -44,7 +51,15 @@ const Inputheader = ({ textareaRef, setText }: InputheaderProps) => {
   return (
     <div className="flex gap-[0.55rem] items-center w-[37.5rem]">
       <div>
-        <HeadingSelect />
+        <HeadingSelect
+          value={headingType}
+          onChange={(value) => {
+            setHeadingType(value);
+            if (value !== "body") {
+              insertMarkdown(value, false);
+            }
+          }}
+        />
       </div>
       <Line4 />
       <div className="flex gap-[1.88rem] px-[0.74rem]">
