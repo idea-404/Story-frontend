@@ -22,3 +22,4 @@ export { default as Portfolio } from "./popup/Portfolio";
 export { default as PublishPortfolio } from "./popup/PublishPortfolio";
 export { default as PublishBlog } from "./popup/PublishBlog";
 export { default as Arrow } from "./Arrow";
+export { default as Quote } from "./Quote";
