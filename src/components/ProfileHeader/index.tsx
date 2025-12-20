@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Arrow, Person } from "@/assets";
 
 type ProfileHeaderProps = {
@@ -13,11 +14,21 @@ export default function ProfileHeader({
   profileImage,
   onBack,
 }: ProfileHeaderProps) {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <header className="mx-auto w-[37.5rem] py-6">
       <button
         className="mb-4 flex h-6 w-6 items-center justify-center"
-        onClick={onBack}
+        onClick={handleBack}
       >
         <Arrow />
       </button>
