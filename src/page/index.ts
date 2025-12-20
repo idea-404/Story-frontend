@@ -3,3 +3,5 @@ export { default as Signin } from "./Info";
 export { default as MainPage } from "./MainPage";
 export { default as Login } from "./Login";
 export { default as MyPage } from "./MyPage";
+export { default as UserPage } from "./UserPage";
+export { default as ProfileEditPage } from "./ProfileEditPage";

@@ -5,8 +5,8 @@ import MainPage from "@/page/MainPage";
 import { Login } from "./page";
 import NotFound from "./pageContainer/NotFoundPage";
 import { Signin } from "@/page";
-import MyPage from "@/page/MyPage";
-
+import { MyPage, UserPage } from "@/page";
+import { ProfileEditPage } from "@/page";
 function App() {
   const { pathname } = useLocation();
 
@@ -22,6 +22,8 @@ function App() {
         <Route path="/signin" element={<Login />} />
         <Route path="/info" element={<Signin />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/users/:userId" element={<UserPage />} />
+        <Route path="/profile-edit" element={<ProfileEditPage />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
