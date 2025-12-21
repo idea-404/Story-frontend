@@ -1,24 +1,27 @@
 import { Arrow } from "@/assets";
 import { useTermsStore } from "@/Store/terms";
-import { useNavigate } from "react-router-dom";
 
-const Terms = () => {
+interface TermsProps {
+  setTermsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Terms = ({ setTermsOpen }: TermsProps) => {
   const { setIsAgreed } = useTermsStore();
-  const navigate = useNavigate();
 
   const handleAgree = () => {
     setIsAgreed(true);
-    navigate(-1);
+    setTermsOpen(false);
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <button
-        className="flex justify-start w-[37.5rem] my-[1.5rem]"
-        onClick={() => navigate(-1)}
-      >
-        <Arrow />
-      </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div className="bg-white rounded-xl flex flex-col items-center p-6 max-w-[43.75rem] max-h-[90vh] overflow-hidden">
+        <button
+          className="flex justify-start w-full mb-[1.5rem]"
+          onClick={() => setTermsOpen(false)}
+        >
+          <Arrow />
+        </button>
       <div className="prose w-[37.5rem] h-[26rem] overflow-y-scroll overflow-x-hidden mb-[2.91rem]">
         <h1>이용약관</h1>
 
@@ -216,12 +219,11 @@ const Terms = () => {
       </div>
       <button
         onClick={handleAgree}
-        className={
-          "w-[32.5rem] bg-primary-main1 text-white rounded-[0.625rem] h-[3rem] font-bold text-[1.25rem]"
-        }
+        className="w-[32.5rem] bg-primary-main1 text-white rounded-[0.625rem] h-[3rem] font-bold text-[1.25rem] mt-[2.91rem]"
       >
         이용 약관 동의
       </button>
+      </div>
     </div>
   );
 };

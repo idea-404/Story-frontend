@@ -7,8 +7,8 @@ import type { emailType } from "@/Types";
 import { useState } from "react";
 import { Check } from "@/assets";
 import { useTermsStore } from "@/Store/terms";
-import { Link } from "react-router-dom";
 import ResendMail from "../Modal/ResendMail";
+import TermsModal from "../Terms";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
@@ -20,6 +20,7 @@ const Section2 = () => {
   const [emailState, setEmailState] = useState<emailType>("first");
   const { isAgreed } = useTermsStore();
   const [modal, setModal] = useState(false);
+  const [termsOpen, setTermsOpen] = useState(false);
 
   const {
     register,
@@ -85,9 +86,14 @@ const Section2 = () => {
           className="w-4 h-4 cursor-pointer"
         />
         <label htmlFor="terms" className="text-sm">
-          <Link to="/terms" className="text-primary-main1 underline">
+          <button
+            onClick={() => {
+              setTermsOpen(true);
+            }}
+            className="text-primary-main1 underline"
+          >
             이용 약관 동의
-          </Link>
+          </button>
         </label>
       </div>
       <div
@@ -127,6 +133,7 @@ const Section2 = () => {
       {modal && (
         <ResendMail setEmailState={setEmailState} setModal={setModal} />
       )}
+      {termsOpen && <TermsModal setTermsOpen={setTermsOpen} />}
     </div>
   );
 };

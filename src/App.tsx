@@ -5,7 +5,7 @@ import MainPage from "@/page/MainPage";
 import { Login } from "./page";
 import NotFound from "./pageContainer/NotFoundPage";
 import { Signin } from "@/page";
-import Terms from "./page/Terms";
+import Terms from "./components/Terms";
 
 function App() {
   const { pathname } = useLocation();
