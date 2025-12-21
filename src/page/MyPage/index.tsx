@@ -24,20 +24,22 @@ type UserData = {
   blog: Post[];
 };
 
+type Mode = "none" | "edit" | "delete";
+
 export default function MyPage() {
   const [activeTab, setActiveTab] = useState<"blog" | "portfolio" | "intro">(
     "blog"
   );
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [mode, setMode] = useState<Mode>("none");
+  const [targetPostId, setTargetPostId] = useState<number | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   const [representativePostId, setRepresentativePostId] = useState<
     number | null
   >(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [selectedPostIds, setSelectedPostIds] = useState<Set<number>>(
-    new Set()
-  );
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchMyPage = async () => {
@@ -60,64 +62,62 @@ export default function MyPage() {
     fetchMyPage();
   }, []);
 
+  // 대표글 설정
   const handleRepresentativeToggle = async (postId: number) => {
     try {
-      const newRepresentativeId =
-        representativePostId === postId ? null : postId;
+      const newId = representativePostId === postId ? null : postId;
 
-      if (newRepresentativeId === null) {
+      if (newId === null) {
         await api.delete("/api/v1/portfolio/representative");
       } else {
         await api.post("/api/v1/portfolio/representative", {
-          postId: newRepresentativeId,
+          postId: newId,
         });
       }
 
-      setRepresentativePostId(newRepresentativeId);
-    } catch (error) {
-      console.error("대표글 지정/해제 실패:", error);
+      setRepresentativePostId(newId);
+    } catch (e) {
+      console.error("대표글 설정 실패", e);
     }
   };
 
   const handleCardClick = (postId: number) => {
-    if (isEditMode) {
-      setSelectedPostIds((prev) => {
-        const newSelected = new Set(prev);
-        if (newSelected.has(postId)) {
-          newSelected.delete(postId);
-        } else {
-          newSelected.add(postId);
-        }
-        return newSelected;
-      });
-    } else {
-      console.log("게시글 상세:", postId);
+    if (mode === "edit") {
+      console.log("수정 페이지 이동:", postId);
+      return;
+    }
+
+    if (mode === "delete") {
+      setTargetPostId(postId);
+      setIsDeleteModalOpen(true);
     }
   };
 
   const handleEditClick = () => {
-    setIsEditMode(true);
-    setSelectedPostIds(new Set());
+    setMode("edit");
+    alert("수정할 게시글을 선택하세요.");
   };
 
   const handleDeleteClick = () => {
-    if (selectedPostIds.size === 0) {
-      alert("삭제할 게시글을 선택해주세요.");
-      return;
-    }
-    setIsDeleteModalOpen(true);
+    setMode("delete");
+    alert("삭제할 게시글을 선택하세요.");
+  };
+
+  const handleCancelMode = () => {
+    setMode("none");
   };
 
   const handleDeleteConfirm = async () => {
-    try {
-      // 선택된 게시글들 삭제 API 호출
-      await Promise.all(
-        Array.from(selectedPostIds).map((postId) =>
-          api.delete(`/api/v1/posts/${postId}`)
-        )
-      );
+    if (!targetPostId) return;
 
-      // 삭제 후 데이터 다시 불러오기
+    try {
+      const deleteUrl =
+        activeTab === "portfolio"
+          ? `/api/v1/portfolio/delete/${targetPostId}`
+          : `/api/v1/blog/delete/${targetPostId}`;
+
+      await api.delete(deleteUrl);
+
       const res = await api.get("/api/v1/mypage/view");
       const data = res.data;
 
@@ -127,22 +127,13 @@ export default function MyPage() {
         blog: Array.isArray(data.blog) ? data.blog : [],
       });
 
-      setIsEditMode(false);
-      setSelectedPostIds(new Set());
+      setMode("none");
+      setTargetPostId(null);
       setIsDeleteModalOpen(false);
-    } catch (error) {
-      console.error("게시글 삭제 실패:", error);
-      alert("게시글 삭제에 실패했습니다.");
+    } catch (e) {
+      console.error(e);
+      alert("삭제 실패");
     }
-  };
-
-  const handleDeleteCancel = () => {
-    setIsDeleteModalOpen(false);
-  };
-
-  const handleCancelEdit = () => {
-    setIsEditMode(false);
-    setSelectedPostIds(new Set());
   };
 
   if (loading) return <div>로딩중...</div>;
@@ -167,7 +158,7 @@ export default function MyPage() {
 
         {(activeTab === "blog" || activeTab === "portfolio") && (
           <div className="absolute left-223 top-1 flex gap-3">
-            {!isEditMode ? (
+            {mode === "none" && (
               <>
                 <button
                   onClick={handleEditClick}
@@ -182,21 +173,15 @@ export default function MyPage() {
                   삭제
                 </button>
               </>
-            ) : (
-              <>
-                <button
-                  onClick={handleDeleteClick}
-                  className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600"
-                >
-                  삭제 ({selectedPostIds.size})
-                </button>
-                <button
-                  onClick={handleCancelEdit}
-                  className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200"
-                >
-                  취소
-                </button>
-              </>
+            )}
+
+            {mode !== "none" && (
+              <button
+                onClick={handleCancelMode}
+                className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200"
+              >
+                취소
+              </button>
             )}
           </div>
         )}
@@ -221,12 +206,10 @@ export default function MyPage() {
               thumbnail={post.thumbnail ?? null}
               type={activeTab}
               time={post.createdAt}
-              showFavorite={activeTab === "portfolio" && !isEditMode}
+              showFavorite={activeTab === "portfolio" && mode === "none"}
               isFavorite={representativePostId === post.id}
               onFavoriteClick={handleRepresentativeToggle}
               onClick={handleCardClick}
-              isSelected={selectedPostIds.has(post.id)}
-              isEditMode={isEditMode}
             />
           ))}
         </div>
@@ -234,7 +217,7 @@ export default function MyPage() {
 
       <Delete
         isOpen={isDeleteModalOpen}
-        onClose={handleDeleteCancel}
+        onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleDeleteConfirm}
       />
     </div>
