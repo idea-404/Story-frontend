@@ -57,8 +57,6 @@ export default function ProfileEditPage() {
     }
   };
 
-  if (loading) return <div>로딩중...</div>;
-
   return (
     <ProfileEdit
       initialData={userData}

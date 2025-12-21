@@ -32,6 +32,7 @@ export default function ProfileSettings({
   const [profileImage, setProfileImage] = useState("");
   const [name, setName] = useState("");
   const [intro, setIntro] = useState("");
+  const [touched, setTouched] = useState(false);
 
   const methods = useForm({
     defaultValues: {
@@ -41,6 +42,12 @@ export default function ProfileSettings({
       major: "",
     },
   });
+
+  const { watch } = methods;
+  const grade = watch("grade");
+  const classValue = watch("class");
+  const number = watch("number");
+  const major = watch("major");
 
   useEffect(() => {
     setName(initialData.nickname);
@@ -70,7 +77,19 @@ export default function ProfileSettings({
     reader.readAsDataURL(file);
   };
 
+  const isFormValid =
+    name.trim() !== "" &&
+    grade !== "" &&
+    classValue !== "" &&
+    number !== "" &&
+    major !== "";
+
   const handleSubmit = () => {
+    if (!isFormValid) {
+      setTouched(true);
+      return;
+    }
+
     const values = methods.getValues();
     const studentId = `${values.grade}${values.class}${values.number}`;
 
@@ -81,6 +100,15 @@ export default function ProfileSettings({
       introduce: intro,
       profileImage,
     });
+  };
+
+  const getInputClassName = (hasValue: boolean) => {
+    const baseClass =
+      "h-[3.5rem] w-full rounded-lg border px-4 shadow-none text-gray-700 focus:outline-none";
+    if (touched && !hasValue) {
+      return `${baseClass} border-red-500 focus:border-red-500`;
+    }
+    return `${baseClass} focus:border-purple-500`;
   };
 
   return (
@@ -126,7 +154,7 @@ export default function ProfileSettings({
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="h-[3.5rem] w-full rounded-lg border shadow-none text-gray-700 focus:border-purple-500 focus:outline-none"
+            className={getInputClassName(name.trim() !== "")}
           />
         </div>
 
@@ -135,9 +163,9 @@ export default function ProfileSettings({
             학번 <Star />
           </label>
           <div className="flex gap-3">
-            <Grade />
-            <Class />
-            <Number />
+            <Grade error={touched && grade === ""} />
+            <Class error={touched && classValue === ""} />
+            <Number error={touched && number === ""} />
           </div>
         </div>
 
@@ -145,7 +173,7 @@ export default function ProfileSettings({
           <label className="mb-2 flex items-center text-sm font-medium text-gray-900">
             전공 <Star />
           </label>
-          <Major />
+          <Major error={touched && major === ""} />
         </div>
 
         <div className="mb-8 w-[31.5rem]">
@@ -157,7 +185,7 @@ export default function ProfileSettings({
             value={intro}
             onChange={(e) => setIntro(e.target.value)}
             maxLength={128}
-            className="h-[10rem] w-full resize-none rounded-lg border shadow-none text-gray-700 focus:border-primary-main1 focus:outline-none"
+            className="h-[10rem] w-full resize-none rounded-lg border p-4 shadow-none text-gray-700 focus:border-primary-main1 focus:outline-none"
           />
         </div>
 
@@ -167,6 +195,11 @@ export default function ProfileSettings({
         >
           수정
         </button>
+
+        <div className="mb-10 w-[31.5rem] flex items-center justify-end font-normal text-[0.875rem] text-primary-main1 mt-4">
+          <Star />
+          <span className="underline ml-1">필수 항목을 모두 입력해주세요.</span>
+        </div>
       </div>
     </FormProvider>
   );
