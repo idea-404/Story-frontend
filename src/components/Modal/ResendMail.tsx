@@ -1,5 +1,4 @@
 import type { emailType } from "@/Types";
-import { set } from "zod";
 
 interface ResendMailProps {
   setEmailState: React.Dispatch<React.SetStateAction<emailType>>;
