@@ -1,9 +1,22 @@
 import { Arrow } from "@/assets";
+import { useTermsStore } from "@/Store/terms";
+import { useNavigate } from "react-router-dom";
 
 const Terms = () => {
+  const { setIsAgreed } = useTermsStore();
+  const navigate = useNavigate();
+
+  const handleAgree = () => {
+    setIsAgreed(true);
+    navigate(-1);
+  };
+
   return (
     <div className="flex flex-col items-center">
-      <button className="flex justify-start w-[37.5rem] my-[1.5rem]">
+      <button
+        className="flex justify-start w-[37.5rem] my-[1.5rem]"
+        onClick={() => navigate(-1)}
+      >
         <Arrow />
       </button>
       <div className="prose w-[37.5rem] h-[26rem] overflow-y-scroll overflow-x-hidden mb-[2.91rem]">
@@ -202,6 +215,7 @@ const Terms = () => {
         </p>
       </div>
       <button
+        onClick={handleAgree}
         className={
           "w-[32.5rem] bg-primary-main1 text-white rounded-[0.625rem] h-[3rem] font-bold text-[1.25rem]"
         }
