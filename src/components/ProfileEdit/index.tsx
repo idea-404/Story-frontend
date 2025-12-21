@@ -192,7 +192,7 @@ export default function ProfileSettings({
           />
         </div>
 
-        <div className="mb-4 w-[31.5rem] flex items-center justify-end text-sm text-gray-600">
+        <div className="mb-4 w-[31.5rem] flex items-center justify-end text-sm text-primary-main1">
           <Star />
           <span className="underline ml-1">필수 항목을 모두 입력해주세요.</span>
         </div>
