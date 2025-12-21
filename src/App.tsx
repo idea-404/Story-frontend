@@ -5,7 +5,6 @@ import MainPage from "@/page/MainPage";
 import { Login } from "./page";
 import NotFound from "./pageContainer/NotFoundPage";
 import { Signin } from "@/page";
-import Terms from "./components/Terms";
 
 function App() {
   const { pathname } = useLocation();
@@ -23,7 +22,6 @@ function App() {
         <Route path="/info" element={<Signin />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
-        <Route path="/terms" element={<Terms />} />
       </Routes>
     </>
   );
