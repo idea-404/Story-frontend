@@ -63,13 +63,13 @@ const Section2 = () => {
 
         <button
           className={`w-full h-[3rem] text-white rounded-[0.625rem] text-[1.25rem] font-bold ${
-            !isValid
+            !isValid || !isAgreed
               ? "bg-primary-main3 cursor-not-allowed"
               : emailState === "first"
               ? "bg-primary-main1"
               : "bg-primary-main3"
           }`}
-          disabled={!isValid}
+          disabled={!isValid || !isAgreed}
         >
           {loginType}
         </button>
