@@ -15,7 +15,6 @@ export default function ProfileEditPage() {
     profileImage: "",
   });
 
-  // 초기 데이터 로드 (퍼블리싱용)
   useEffect(() => {
     const fetchUserData = async () => {
       try {
