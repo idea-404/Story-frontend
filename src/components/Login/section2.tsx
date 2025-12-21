@@ -6,6 +6,8 @@ import { z } from "zod";
 import type { emailType } from "@/Types";
 import { useState } from "react";
 import { Check } from "@/assets";
+import { useTermsStore } from "@/Store/terms";
+import { Link } from "react-router-dom";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
@@ -15,6 +17,7 @@ const Section2 = () => {
   const loginType = pathname === "/login" ? "로그인" : "회원가입";
   const start = pathname === "/login" ? true : false;
   const [emailState, setEmailState] = useState<emailType>("first");
+  const { isAgreed } = useTermsStore();
 
   const {
     register,
@@ -71,6 +74,20 @@ const Section2 = () => {
           {loginType}
         </button>
       </form>
+      <div className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          id="terms"
+          checked={isAgreed}
+          readOnly
+          className="w-4 h-4 cursor-pointer"
+        />
+        <label htmlFor="terms" className="text-sm">
+          <Link to="/terms" className="text-primary-main1 underline">
+            이용 약관 동의
+          </Link>
+        </label>
+      </div>
       <div
         className={`flex items-center gap-[1.125rem] text-primary-main1 h-[2.25rem] pt-[0.5rem] ${
           emailState === "first" ? "justify-end" : ""
