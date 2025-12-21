@@ -8,7 +8,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const Major = () => {
+type MajorProps = {
+  error?: boolean;
+};
+
+const Major = ({ error }: MajorProps) => {
   const { control } = useFormContext();
 
   return (
@@ -17,7 +21,11 @@ const Major = () => {
       control={control}
       render={({ field }) => (
         <Select onValueChange={field.onChange} value={field.value}>
-          <SelectTrigger className="w-[31.25rem] h-[3.5rem] text-[1.375rem] text-[#828387] rounded-[0.75rem] shadow-none">
+          <SelectTrigger
+            className={`w-[31.25rem] h-[3.5rem] text-[1.375rem] text-[#828387] rounded-[0.75rem] shadow-none ${
+              error ? "border-red-300" : ""
+            }`}
+          >
             <SelectValue placeholder="전공을 선택해 주세요." />
           </SelectTrigger>
           <SelectContent className="bg-white border-0 text-[1.375rem] font-normal align-center max-h-[31.5rem]">
