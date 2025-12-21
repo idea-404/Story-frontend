@@ -1,4 +1,4 @@
-import { Like, Comment } from "@/assets";
+import { Like, Comment, Star, StarOutline } from "@/assets";
 
 type MainCardProps = {
   postId: number;
@@ -14,6 +14,11 @@ type MainCardProps = {
   type: "portfolio" | "blog";
   time: string;
   onClick?: (id: number) => void;
+  showFavorite?: boolean;
+  isFavorite?: boolean;
+  onFavoriteClick?: (postId: number) => void;
+  isSelected?: boolean;
+  isEditMode?: boolean;
 };
 
 /**ISO 시간*/
@@ -51,13 +56,35 @@ export default function MainCard({
   type,
   time,
   onClick,
+  showFavorite = false,
+  isFavorite = false,
+  onFavoriteClick,
+  isSelected = false,
+  isEditMode = false,
 }: MainCardProps) {
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onFavoriteClick && onFavoriteClick(postId);
+  };
+
   return (
     <div
-      className="w-[600px] h-[208px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4 flex justify-between items-start"
+      className={`w-[600px] h-[208px] rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4 flex justify-between items-start relative transition-colors ${
+        isSelected ? "bg-purple-100 border-2 border-primary-main1" : "bg-white"
+      } ${isEditMode ? "cursor-pointer" : ""}`}
       onClick={() => onClick && onClick(postId)}
     >
-      <div className="flex-1">
+      {/* 즐겨찾기 버튼 */}
+      {showFavorite && (
+        <button
+          onClick={handleFavoriteClick}
+          className="absolute top-4 left-4 z-10 focus:outline-none"
+        >
+          {isFavorite ? <Star /> : <StarOutline />}
+        </button>
+      )}
+
+      <div className={`flex-1 ${showFavorite ? "pl-6" : ""}`}>
         <div className="flex items-center gap-2 text-sm text-black">
           <img src={profileImage} className="w-8 h-8 rounded-full" />
           <span className="font-semibold">{nickname}</span>
