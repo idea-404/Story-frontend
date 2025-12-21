@@ -71,14 +71,16 @@ export default function MyPage() {
           onNavigate={() => {}}
         />
 
-        <div className="absolute left-223 top-1 flex gap-3">
-          <button className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-purple-100 hover:text-primary-main1 ">
-            수정
-          </button>
-          <button className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100  rounded-lg hover:bg-purple-100 hover:text-primary-main1">
-            삭제
-          </button>
-        </div>
+        {(activeTab === "blog" || activeTab === "portfolio") && (
+          <div className="absolute left-223 top-1 flex gap-3">
+            <button className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-purple-100 hover:text-primary-main1 ">
+              수정
+            </button>
+            <button className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100  rounded-lg hover:bg-purple-100 hover:text-primary-main1">
+              삭제
+            </button>
+          </div>
+        )}
       </div>
 
       {activeTab === "intro" && <Introduce introduce={userData.introduce} />}
