@@ -114,8 +114,11 @@ export default function ProfileSettings({
   return (
     <FormProvider {...methods}>
       <div className="flex min-h-screen flex-col items-center bg-white p-6">
-        <div className="mb-6 w-[31.5rem]">
-          <button onClick={onBack}>
+        <div className="mb-4 w-[31.5rem]">
+          <button
+            onClick={onBack}
+            className="flex h-6 w-6 items-center justify-center"
+          >
             <Arrow />
           </button>
         </div>
@@ -189,17 +192,17 @@ export default function ProfileSettings({
           />
         </div>
 
+        <div className="mb-4 w-[31.5rem] flex items-center justify-end text-sm text-gray-600">
+          <Star />
+          <span className="underline ml-1">필수 항목을 모두 입력해주세요.</span>
+        </div>
+
         <button
           onClick={handleSubmit}
           className="h-[3.5rem] w-[31.5rem] rounded-lg bg-primary-main1 font-medium text-white hover:bg-primary-main2"
         >
           수정
         </button>
-
-        <div className="mb-10 w-[31.5rem] flex items-center justify-end font-normal text-[0.875rem] text-primary-main1 mt-4">
-          <Star />
-          <span className="underline ml-1">필수 항목을 모두 입력해주세요.</span>
-        </div>
       </div>
     </FormProvider>
   );

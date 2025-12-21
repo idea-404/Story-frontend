@@ -64,11 +64,22 @@ export default function MyPage() {
         profileImage={userData.profileImage}
       />
 
-      <MyPageHeader
-        activeTab={activeTab}
-        onSelectTab={setActiveTab}
-        onNavigate={() => {}}
-      />
+      <div className="relative w-full">
+        <MyPageHeader
+          activeTab={activeTab}
+          onSelectTab={setActiveTab}
+          onNavigate={() => {}}
+        />
+
+        <div className="absolute left-223 top-1 flex gap-3">
+          <button className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-purple-100 hover:text-primary-main1 ">
+            수정
+          </button>
+          <button className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100  rounded-lg hover:bg-purple-100 hover:text-primary-main1">
+            삭제
+          </button>
+        </div>
+      </div>
 
       {activeTab === "intro" && <Introduce introduce={userData.introduce} />}
 
