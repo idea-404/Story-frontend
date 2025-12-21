@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "@/API/api";
-import useTokenStore from "@/Store/token";
 import { ProfileHeader, MyPageHeader, MainCard, Introduce } from "@/components";
 
 type Post = {
@@ -26,9 +24,6 @@ type UserData = {
 };
 
 export default function MyPage() {
-  const navigate = useNavigate();
-  const token = useTokenStore((state) => state.auth.token);
-
   const [activeTab, setActiveTab] = useState<"blog" | "portfolio" | "intro">(
     "blog"
   );
@@ -36,11 +31,6 @@ export default function MyPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
     const fetchMyPage = async () => {
       try {
         const res = await api.get("/api/v1/mypage/view");
@@ -59,7 +49,7 @@ export default function MyPage() {
     };
 
     fetchMyPage();
-  }, [token, navigate]);
+  }, []);
 
   if (loading) return <div>로딩중...</div>;
   if (!userData) return null;

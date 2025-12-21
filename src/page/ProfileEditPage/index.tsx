@@ -1,13 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "@/API/api";
 import { ProfileEdit } from "@/components";
-import useTokenStore from "@/Store/token";
 
 export default function ProfileEditPage() {
   const navigate = useNavigate();
-  const token = useTokenStore((state) => state.auth.token);
-  const setAuthWithToken = useTokenStore((state) => state.setAuthWithToken);
 
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({
@@ -18,21 +15,18 @@ export default function ProfileEditPage() {
     profileImage: "",
   });
 
+  // 초기 데이터 로드 (퍼블리싱용)
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
     const fetchUserData = async () => {
       try {
         const res = await api.get("/api/v1/mypage/view");
+
         setUserData({
-          nickname: res.data.nickname || "",
-          studentId: res.data.studentId || "",
-          major: res.data.major || "",
-          introduce: res.data.introduce || "",
-          profileImage: res.data.profileImage || "",
+          nickname: res.data.nickname ?? "",
+          studentId: res.data.studentId ?? "",
+          major: res.data.major ?? "",
+          introduce: res.data.introduce ?? "",
+          profileImage: res.data.profileImage ?? "",
         });
       } catch (error) {
         console.error("유저 정보 불러오기 실패:", error);
@@ -42,8 +36,9 @@ export default function ProfileEditPage() {
     };
 
     fetchUserData();
-  }, [token, navigate]);
+  }, []);
 
+  // 프로필 수정 제출
   const handleSubmit = async (formData: {
     nickname: string;
     studentId: string;
@@ -52,11 +47,7 @@ export default function ProfileEditPage() {
     profileImage: string;
   }) => {
     try {
-      const response = await api.patch("/api/v1/mypage/edit", formData);
-
-      if (response.data.token) {
-        setAuthWithToken(response.data.token);
-      }
+      await api.patch("/api/v1/mypage/edit", formData);
 
       alert("프로필이 수정되었습니다.");
       navigate("/mypage");
