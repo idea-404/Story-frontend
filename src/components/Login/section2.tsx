@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Check } from "@/assets";
 import { useTermsStore } from "@/Store/terms";
 import { Link } from "react-router-dom";
+import ResendMail from "../Modal/ResendMail";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
@@ -18,6 +19,7 @@ const Section2 = () => {
   const start = pathname === "/login" ? true : false;
   const [emailState, setEmailState] = useState<emailType>("first");
   const { isAgreed } = useTermsStore();
+  const [modal, setModal] = useState(false);
 
   const {
     register,
@@ -102,7 +104,7 @@ const Section2 = () => {
           <button
             className="underline"
             onClick={() => {
-              setEmailState("first");
+              setModal(true);
             }}
           >
             인증 메일이 전송 되지 않았나요?
@@ -122,6 +124,9 @@ const Section2 = () => {
           </>
         )}
       </div>
+      {modal && (
+        <ResendMail setEmailState={setEmailState} setModal={setModal} />
+      )}
     </div>
   );
 };
