@@ -77,25 +77,27 @@ const Section2 = () => {
           {loginType}
         </button>
       </form>
-      <div className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          id="terms"
-          checked={isAgreed}
-          readOnly
-          className="w-4 h-4 cursor-pointer"
-        />
-        <label htmlFor="terms" className="text-sm">
-          <button
-            onClick={() => {
-              setTermsOpen(true);
-            }}
-            className="text-primary-main1 underline"
-          >
-            이용 약관 동의
-          </button>
-        </label>
-      </div>
+      {loginType === "회원가입" && (
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="terms"
+            checked={isAgreed}
+            readOnly
+            className="w-4 h-4 cursor-pointer"
+          />
+          <label htmlFor="terms" className="text-sm">
+            <button
+              onClick={() => {
+                setTermsOpen(true);
+              }}
+              className="text-primary-main1 underline"
+            >
+              이용 약관 동의
+            </button>
+          </label>
+        </div>
+      )}
       <div
         className={`flex items-center gap-[1.125rem] text-primary-main1 h-[2.25rem] pt-[0.5rem] ${
           emailState === "first" ? "justify-end" : ""
