@@ -24,3 +24,4 @@ export { default as PublishBlog } from "./popup/PublishBlog";
 export { default as Arrow } from "./Arrow";
 export { default as Quote } from "./Quote";
 export { default as Camera } from "./Camera";
+export { default as StarOutline } from "./StarOutline";
