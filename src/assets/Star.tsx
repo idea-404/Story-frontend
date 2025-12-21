@@ -1,9 +1,4 @@
-type StarProps = {
-  className?: string;
-  filled?: boolean;
-};
-
-const Star = ({ className = "", filled = false }: StarProps) => {
+const Star = () => {
   return (
     <svg
       width="14"
@@ -11,13 +6,10 @@ const Star = ({ className = "", filled = false }: StarProps) => {
       viewBox="0 0 14 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
     >
       <path
         d="M8.07854 2.46186C7.67954 1.51336 6.32037 1.51336 5.92137 2.46186L4.8982 4.89261L2.24287 5.1032C1.20745 5.18486 0.787452 6.46295 1.5767 7.13145L3.5997 8.8447L2.98137 11.4067C2.74045 12.4059 3.84004 13.1958 4.7267 12.6603L6.99995 11.2877L9.2732 12.6609C10.1599 13.1964 11.2595 12.4065 11.0185 11.4067L10.4002 8.84586L12.4232 7.13203C13.2125 6.46353 12.7925 5.18603 11.757 5.10378L9.1017 4.89378L8.07854 2.46186Z"
-        fill={filled ? "currentColor" : "none"}
-        stroke={filled ? "none" : "currentColor"}
-        strokeWidth={filled ? "0" : "1"}
+        fill="#AE89FF"
       />
     </svg>
   );
