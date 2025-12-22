@@ -12,8 +12,6 @@ export default function MainHeader({
   onNavigate,
   activeTab,
   onSelectTab,
-  onEdit,
-  onDelete,
 }: MainHeaderProps) {
   return (
     <header className="mx-auto flex h-[2.875rem] w-[37.5rem] items-center justify-between pt-4 pb-14">
