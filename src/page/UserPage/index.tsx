@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import api from "@/API/api";
 import { ProfileHeader, MyPageHeader, MainCard, Introduce } from "@/components";
 
@@ -24,6 +25,7 @@ type UserData = {
 };
 
 export default function UserPage() {
+  const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<"blog" | "portfolio" | "intro">(
     "blog"
   );
@@ -31,10 +33,11 @@ export default function UserPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMyPage = async () => {
-      try {
-        const res = await api.get("/api/v1/mypage/view");
+    if (!id) return;
 
+    const fetchUserProfile = async () => {
+      try {
+        const res = await api.get(`/api/v1/profile/${id}`);
         const data = res.data;
 
         setUserData({
@@ -49,11 +52,11 @@ export default function UserPage() {
       }
     };
 
-    fetchMyPage();
-  }, []);
+    fetchUserProfile();
+  }, [id]);
 
   if (loading) return <div>로딩중...</div>;
-  if (!userData) return null;
+  if (!userData) return <div>사용자 정보를 불러올 수 없습니다.</div>;
 
   const posts = activeTab === "portfolio" ? userData.portfolio : userData.blog;
 
@@ -63,6 +66,7 @@ export default function UserPage() {
         nickname={userData.nickname}
         studentId={userData.studentId}
         profileImage={userData.profileImage}
+        showEditButton={false}
       />
 
       <MyPageHeader
@@ -79,7 +83,7 @@ export default function UserPage() {
             <MainCard
               key={post.id}
               postId={post.id}
-              userId={1}
+              userId={id ? parseInt(id, 10) : 0}
               nickname={post.nickname}
               profileImage={userData.profileImage}
               title={post.title}
