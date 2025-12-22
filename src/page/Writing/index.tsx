@@ -102,16 +102,21 @@ const Writing = () => {
         <div className="flex gap-[2.25rem] items-center">
           <button className="flex items-center gap-[0.63rem] py-[0.47rem] px-[1.81rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold">
             <Out />
-            나가기
+            {!Aiasdf ? "나가기" : "돌아가기"}
           </button>
 
-          <button className="flex items-center gap-[0.63rem] py-[0.47rem] px-[1.03rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold">
-            <Ai />
-            AI 피드백
-          </button>
+          {!Aiasdf && (
+            <button
+              onClick={() => setAiasdf(true)}
+              className="flex items-center gap-[0.63rem] py-[0.47rem] px-[1.03rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold"
+            >
+              <Ai />
+              AI 피드백
+            </button>
+          )}
         </div>
       </div>
-      {Aiasdf && (
+      {!Aiasdf && (
         <>
           <Line5 />
           <Print
@@ -120,7 +125,7 @@ const Writing = () => {
           />
         </>
       )}
-      {!Aiasdf && <AiPrint />}
+      {Aiasdf && <AiPrint />}
     </div>
   );
 };
