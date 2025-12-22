@@ -1,11 +1,12 @@
 import { useRef, useState } from "react";
-import { Print, Inputheader } from "@/components";
+import { Print, Inputheader, AiPrint } from "@/components";
 import { Ai, Line5, Out } from "@/assets";
 
 const Writing = () => {
   const [text, setText] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [headingType, setHeadingType] = useState<string>("body");
+  const [Aiasdf, setAiasdf] = useState<boolean>(false);
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -110,11 +111,16 @@ const Writing = () => {
           </button>
         </div>
       </div>
-      <Line5 />
-      <Print
-        title={title ? title : "제목을 입력해 주세요."}
-        body={text ? text : "내용을 입력해 주세요."}
-      />
+      {Aiasdf && (
+        <>
+          <Line5 />
+          <Print
+            title={title ? title : "제목을 입력해 주세요."}
+            body={text ? text : "내용을 입력해 주세요."}
+          />
+        </>
+      )}
+      {!Aiasdf && <AiPrint />}
     </div>
   );
 };
