@@ -221,7 +221,6 @@ export default function MyPage() {
             <MainCard
               key={post.id}
               postId={post.id}
-              userId={1}
               nickname={post.nickname}
               profileImage={userData.profileImage}
               title={post.title}

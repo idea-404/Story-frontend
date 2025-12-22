@@ -2,7 +2,6 @@ import { Like, Comment, Star, StarOutline } from "@/assets";
 
 type MainCardProps = {
   postId: number;
-  userId: number;
   nickname: string;
   profileImage: string;
   title: string;
