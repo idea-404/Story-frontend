@@ -6,6 +6,9 @@ import { z } from "zod";
 import type { emailType } from "@/Types";
 import { useState } from "react";
 import { Check } from "@/assets";
+import { useTermsStore } from "@/Store/terms";
+import ResendMail from "../Modal/ResendMail";
+import TermsModal from "../Terms";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
@@ -15,6 +18,9 @@ const Section2 = () => {
   const loginType = pathname === "/login" ? "로그인" : "회원가입";
   const start = pathname === "/login" ? true : false;
   const [emailState, setEmailState] = useState<emailType>("first");
+  const { isAgreed } = useTermsStore();
+  const [modal, setModal] = useState(false);
+  const [termsOpen, setTermsOpen] = useState(false);
 
   const {
     register,
@@ -60,17 +66,38 @@ const Section2 = () => {
 
         <button
           className={`w-full h-[3rem] text-white rounded-[0.625rem] text-[1.25rem] font-bold ${
-            !isValid
+            !isValid || !isAgreed
               ? "bg-primary-main3 cursor-not-allowed"
               : emailState === "first"
               ? "bg-primary-main1"
               : "bg-primary-main3"
           }`}
-          disabled={!isValid}
+          disabled={!isValid || !isAgreed}
         >
           {loginType}
         </button>
       </form>
+      {loginType === "회원가입" && (
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="terms"
+            checked={isAgreed}
+            readOnly
+            className="w-4 h-4 cursor-pointer"
+          />
+          <label htmlFor="terms" className="text-sm">
+            <button
+              onClick={() => {
+                setTermsOpen(true);
+              }}
+              className="text-primary-main1 underline"
+            >
+              이용 약관 동의
+            </button>
+          </label>
+        </div>
+      )}
       <div
         className={`flex items-center gap-[1.125rem] text-primary-main1 h-[2.25rem] pt-[0.5rem] ${
           emailState === "first" ? "justify-end" : ""
@@ -85,7 +112,7 @@ const Section2 = () => {
           <button
             className="underline"
             onClick={() => {
-              setEmailState("first");
+              setModal(true);
             }}
           >
             인증 메일이 전송 되지 않았나요?
@@ -105,6 +132,10 @@ const Section2 = () => {
           </>
         )}
       </div>
+      {modal && (
+        <ResendMail setEmailState={setEmailState} setModal={setModal} />
+      )}
+      {termsOpen && <TermsModal setTermsOpen={setTermsOpen} />}
     </div>
   );
 };
