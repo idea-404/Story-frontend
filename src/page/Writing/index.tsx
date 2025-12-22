@@ -210,7 +210,12 @@ const Writing = () => {
         </div>
       )}
       {showModal && (
-        <AIFeedback setAires={setAires} setshowModal={setShowModal} />
+        <AIFeedback
+          setAires={setAires}
+          setshowModal={setShowModal}
+          body={text}
+          setConversionType={setConversionType}
+        />
       )}
       {End && (
         <>

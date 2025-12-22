@@ -1,13 +1,18 @@
 import { Feedback } from "@/assets";
-
+import { Aireq } from "@/API/aireq";
+import type { conversionType } from "@/Types";
 interface AIFeedbackProps {
   setAires: React.Dispatch<React.SetStateAction<boolean>>;
   setshowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setConversionType: React.Dispatch<React.SetStateAction<conversionType>>;
+  body: string;
 }
 
 export default function AIFeedback({
   setAires,
   setshowModal,
+  setConversionType,
+  body,
 }: AIFeedbackProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
@@ -31,12 +36,14 @@ export default function AIFeedback({
           >
             아니요
           </button>
-          <button 
+          <button
             onClick={() => {
               setAires(false);
               setshowModal(false);
+              Aireq(body, 1, setConversionType);
             }}
-          className="flex-1 rounded-lg bg-primary-main1 py-2 text-sm font-medium text-white hover:bg-purple-400">
+            className="flex-1 rounded-lg bg-primary-main1 py-2 text-sm font-medium text-white hover:bg-purple-400"
+          >
             예
           </button>
         </div>
