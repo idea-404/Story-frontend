@@ -9,3 +9,4 @@ export { default as MyPageHeader } from "./MyPageHeader";
 export { default as ProfileHeader } from "./ProfileHeader";
 export { default as Introduce } from "./Introduce";
 export { default as ProfileEdit } from "./ProfileEdit";
+export { default as Terms } from "./Terms";
