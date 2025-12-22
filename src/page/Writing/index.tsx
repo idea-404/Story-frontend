@@ -29,16 +29,14 @@ const Writing = () => {
       const currentStart = textarea.selectionStart;
       const currentEnd = textarea.selectionEnd;
 
-      // 선택이 변경되었는지 확인
-      if (
-        currentStart !== lastSelectionRef.current.start ||
-        currentEnd !== lastSelectionRef.current.end
-      ) {
-        // 이전 타이머 클리어
-        if (selectionTimerRef.current) {
-          clearTimeout(selectionTimerRef.current);
-        }
+      // 이전 타이머 항상 클리어
+      if (selectionTimerRef.current) {
+        clearTimeout(selectionTimerRef.current);
+        selectionTimerRef.current = null;
+      }
 
+      // 선택 영역이 있는 경우 (드래그한 경우)
+      if (currentStart !== currentEnd) {
         // 새로운 선택 위치 저장
         lastSelectionRef.current = { start: currentStart, end: currentEnd };
 
@@ -55,6 +53,7 @@ const Writing = () => {
       textarea.addEventListener("mouseup", handleSelectionChange);
       textarea.addEventListener("keyup", handleSelectionChange);
       textarea.addEventListener("select", handleSelectionChange);
+      textarea.addEventListener("click", handleSelectionChange);
     }
 
     // 클린업
@@ -66,6 +65,7 @@ const Writing = () => {
         textarea.removeEventListener("mouseup", handleSelectionChange);
         textarea.removeEventListener("keyup", handleSelectionChange);
         textarea.removeEventListener("select", handleSelectionChange);
+        textarea.removeEventListener("click", handleSelectionChange);
       }
     };
   }, [Aiasdf]);
