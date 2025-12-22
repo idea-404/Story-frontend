@@ -2,7 +2,15 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
 import { write } from "@/API";
-const Printbody = ({ body }: { body: string }) => {
+const Printbody = ({
+  title,
+  body,
+  setEnd,
+}: {
+  title: string;
+  body: string;
+  setEnd: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const buttonStyle =
     "py-[0.47rem] px-[2.03rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold";
   return (
@@ -16,13 +24,10 @@ const Printbody = ({ body }: { body: string }) => {
         </ReactMarkdown>
       </div>
       <div className="flex justify-end gap-[2.25rem]">
-        <button
-          onClick={() => write("title", "content")}
-          className={buttonStyle}
-        >
+        <button onClick={() => write(title, body)} className={buttonStyle}>
           임시저장
         </button>
-        <button onClick={() => console.log("asdf")} className={buttonStyle}>
+        <button onClick={() => setEnd(true)} className={buttonStyle}>
           작성완료
         </button>
       </div>

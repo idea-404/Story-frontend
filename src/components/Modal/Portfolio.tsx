@@ -1,7 +1,16 @@
 import { useState } from "react";
 import { PublishPortfolio } from "@/assets";
+import { write } from "@/API";
 
-export default function Portfolio() {
+export default function Portfolio({
+  setEnd,
+  title,
+  body,
+}: {
+  setEnd: React.Dispatch<React.SetStateAction<boolean>>;
+  title: string;
+  body: string;
+}) {
   const [text, setText] = useState("");
 
   return (
@@ -30,10 +39,21 @@ export default function Portfolio() {
           </div>
 
           <div className="mt-auto flex justify-end gap-3">
-            <button className="rounded-xl bg-gray-100 px-5 py-2 text-sm">
+            <button
+              onClick={() => {
+                setEnd(false);
+              }}
+              className="rounded-xl bg-gray-100 px-5 py-2 text-sm"
+            >
               취소
             </button>
-            <button className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white">
+            <button
+              onClick={() => {
+                write(title, body);
+                setEnd(false);
+              }}
+              className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white"
+            >
               출간하기
             </button>
           </div>

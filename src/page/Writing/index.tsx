@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Print, Inputheader, AiPrint } from "@/components";
+import Portfolio from "@/components/Modal/Portfolio";
 import { Ai, Line5, Out } from "@/assets";
 import AIFeedback from "@/components/Modal/AIFeedback";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ const Writing = () => {
   const [Aiasdf, setAiasdf] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [Aires, setAires] = useState<boolean>(false);
+  const [End, setEnd] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -193,12 +195,18 @@ const Writing = () => {
           <Print
             title={title ? title : "제목을 입력해 주세요."}
             body={text ? text : "내용을 입력해 주세요."}
+            setEnd={setEnd}
           />
         </>
       )}
       {Aiasdf && <AiPrint />}
       {showModal && (
         <AIFeedback setAires={setAires} setshowModal={setShowModal} />
+      )}
+      {End && (
+        <>
+          <Portfolio setEnd={setEnd} />
+        </>
       )}
     </div>
   );
