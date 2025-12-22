@@ -15,6 +15,7 @@ export default function ProfileEditPage() {
     profileImage: "",
   });
 
+  // 기존 유저 정보 불러오기
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -46,7 +47,28 @@ export default function ProfileEditPage() {
     profileImage: string;
   }) => {
     try {
-      await api.patch("/api/v1/mypage/edit", formData);
+      const accessToken = localStorage.getItem("accessToken");
+
+      const res = await api.patch(
+        "/api/v1/mypage/jeongbo",
+        {
+          nickname: formData.nickname,
+          studentId: formData.studentId,
+          major: formData.major,
+          introduce: formData.introduce,
+          profileImage: formData.profileImage,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      // 수정된 유저 정보가 담긴 토큰 저장
+      if (res.data?.token) {
+        localStorage.setItem("accessToken", res.data.token);
+      }
 
       alert("프로필이 수정되었습니다.");
       navigate("/mypage");
@@ -56,10 +78,11 @@ export default function ProfileEditPage() {
     }
   };
 
+  if (loading) return null;
+
   return (
     <ProfileEdit
       initialData={userData}
-      onSubmit={handleSubmit}
       onBack={() => navigate(-1)}
     />
   );
