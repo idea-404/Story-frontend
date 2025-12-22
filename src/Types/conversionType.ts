@@ -1,1 +1,1 @@
-export type conversionType = "stay" | "ing" | "failed";
+export type conversionType = "stay" | "ing" | "failed" | "Ok";
