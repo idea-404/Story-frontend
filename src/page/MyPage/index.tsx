@@ -45,9 +45,21 @@ export default function MyPage() {
   const [zerodogPostIds, setZerodogPostIds] = useState<number[]>([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("access-token");
+
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+
     const fetchMyPage = async () => {
       try {
-        const res = await api.get("/api/v1/mypage/view");
+        const res = await api.get("/api/v1/mypage/view", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = res.data;
 
         const portfolio: Post[] = Array.isArray(data.portfolio)
@@ -69,19 +81,26 @@ export default function MyPage() {
         );
       } catch (e) {
         console.error(e);
+        alert("마이페이지 정보를 불러오는데 실패했습니다.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchMyPage();
-  }, []);
+  }, [navigate]);
 
   const handleZerodogToggle = async (postId: number) => {
     const isOpen = zerodogPostIds.includes(postId);
+    const token = localStorage.getItem("access-token");
+    if (!token) return;
 
     try {
-      await api.patch(`/api/v1/portfolio/open/${postId}`);
+      await api.patch(`/api/v1/portfolio/open/${postId}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setZerodogPostIds((prev) =>
         isOpen ? prev.filter((id) => id !== postId) : [...prev, postId]
@@ -125,6 +144,8 @@ export default function MyPage() {
 
   const handleDeleteConfirm = async () => {
     if (!targetPostId) return;
+    const token = localStorage.getItem("access-token");
+    if (!token) return;
 
     try {
       const deleteUrl =
@@ -132,9 +153,17 @@ export default function MyPage() {
           ? `/api/v1/portfolio/delete/${targetPostId}`
           : `/api/v1/blog/delete/${targetPostId}`;
 
-      await api.delete(deleteUrl);
+      await api.delete(deleteUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      const res = await api.get("/api/v1/mypage/view");
+      const res = await api.get("/api/v1/mypage/view", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = res.data;
 
       const portfolio: Post[] = data.portfolio ?? [];
