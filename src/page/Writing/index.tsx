@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from "react";
-import { Print, Inputheader, AiPrint } from "@/components";
+import { Print, Inputheader, Stay, Ing, Failed } from "@/components";
 import Portfolio from "@/components/Modal/Portfolio";
 import { Ai, Line5, Out } from "@/assets";
 import AIFeedback from "@/components/Modal/AIFeedback";
 import { useNavigate } from "react-router-dom";
+import type { PortfolioProps } from "@/Types";
 
 const Writing = () => {
   const [text, setText] = useState<string>("");
@@ -199,7 +200,7 @@ const Writing = () => {
           />
         </>
       )}
-      {Aiasdf && <AiPrint />}
+      {Aiasdf && <Stay />}
       {showModal && (
         <AIFeedback setAires={setAires} setshowModal={setShowModal} />
       )}
