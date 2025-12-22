@@ -14,8 +14,9 @@ function App() {
       {pathname !== "/404" && <Header />}
 
       <Routes>
+        <Route path="/blog/write" element={<Writing />} />
+        <Route path="/portfolio/write" element={<Writing />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/writing" element={<Writing />} />
         <Route path="/" element={<MainPage />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
