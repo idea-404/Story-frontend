@@ -21,7 +21,7 @@ export const aireq = async (
       alert("로그인 후 이용해주세요.");
     } else if (res.status === 429) {
       setConversionType("failed");
-      alert("영역을 다시 설정해주세요.");
+      alert("영역을 800자 설정해주세요.");
     }
   } catch (error) {
     setConversionType("failed");
