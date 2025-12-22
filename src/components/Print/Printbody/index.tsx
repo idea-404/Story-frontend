@@ -24,7 +24,10 @@ const Printbody = ({
         </ReactMarkdown>
       </div>
       <div className="flex justify-end gap-[2.25rem]">
-        <button onClick={() => write(title, body)} className={buttonStyle}>
+        <button
+          onClick={() => write(title, body, body.slice(0, 64))}
+          className={buttonStyle}
+        >
           임시저장
         </button>
         <button onClick={() => setEnd(true)} className={buttonStyle}>
