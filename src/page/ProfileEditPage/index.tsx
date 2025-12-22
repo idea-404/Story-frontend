@@ -50,52 +50,6 @@ export default function ProfileEditPage() {
     fetchUserData();
   }, [navigate]);
 
-  // 프로필 수정 제출
-  const handleSubmit = async (formData: {
-    nickname: string;
-    studentId: string;
-    major: string;
-    introduce: string;
-    profileImage: string;
-  }) => {
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-
-      if (!accessToken) {
-        alert("로그인이 필요합니다.");
-        navigate("/login");
-        return;
-      }
-
-      const res = await api.patch(
-        "/api/v1/mypage/jeongbo",
-        {
-          nickname: formData.nickname,
-          studentId: formData.studentId,
-          major: formData.major,
-          introduce: formData.introduce,
-          profileImage: formData.profileImage,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      // 수정된 유저 정보가 담긴 토큰 저장
-      if (res.data?.token) {
-        localStorage.setItem("accessToken", res.data.token);
-      }
-
-      alert("프로필이 수정되었습니다.");
-      navigate("/mypage");
-    } catch (error) {
-      console.error("프로필 수정 실패:", error);
-      alert("프로필 수정에 실패했습니다.");
-    }
-  };
-
   if (loading) return <div>로딩 중...</div>;
 
   return <ProfileEdit initialData={userData} onBack={() => navigate(-1)} />;
