@@ -14,6 +14,7 @@ type Post = {
   comment: number;
   createdAt: string;
   thumbnail?: string;
+  zerodog: boolean;
 };
 
 type UserData = {
@@ -40,9 +41,8 @@ export default function MyPage() {
   const [targetPostId, setTargetPostId] = useState<number | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const [representativePostId, setRepresentativePostId] = useState<
-    number | null
-  >(null);
+  // 공개글 ID 목록
+  const [zerodogPostIds, setZerodogPostIds] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchMyPage = async () => {
@@ -50,11 +50,23 @@ export default function MyPage() {
         const res = await api.get("/api/v1/mypage/view");
         const data = res.data;
 
+        const portfolio: Post[] = Array.isArray(data.portfolio)
+          ? data.portfolio
+          : [];
+        const blog: Post[] = Array.isArray(data.blog) ? data.blog : [];
+
         setUserData({
-          ...data,
-          portfolio: Array.isArray(data.portfolio) ? data.portfolio : [],
-          blog: Array.isArray(data.blog) ? data.blog : [],
+          nickname: data.nickname,
+          studentId: data.studentId,
+          introduce: data.introduce,
+          profileImage: data.profileImage,
+          portfolio,
+          blog,
         });
+
+        setZerodogPostIds(
+          portfolio.filter((post) => post.zerodog).map((post) => post.id)
+        );
       } catch (e) {
         console.error(e);
       } finally {
@@ -65,26 +77,28 @@ export default function MyPage() {
     fetchMyPage();
   }, []);
 
-  // 대표글 설정
-  const handleRepresentativeToggle = async (postId: number) => {
-  try {
-    await api.patch(`/api/v1/portfolio/open/${postId}`);
+  const handleZerodogToggle = async (postId: number) => {
+    const isOpen = zerodogPostIds.includes(postId);
 
-    setRepresentativePostId(postId);
-  } catch (e) {
-    console.error("대표글 설정 실패", e);
-    alert("대표글 설정에 실패했습니다.");
-  }
-};
+    try {
+      await api.patch(`/api/v1/portfolio/open/${postId}`);
 
-  // 수정할때 카드 클릭
+      setZerodogPostIds((prev) =>
+        isOpen ? prev.filter((id) => id !== postId) : [...prev, postId]
+      );
+    } catch (e) {
+      console.error("공개여부 변경 실패", e);
+      alert("공개여부 변경에 실패했습니다.");
+    }
+  };
+
   const handleCardClick = (postId: number) => {
     if (mode === "edit") {
-      if (activeTab === "portfolio") {
-        navigate(`/portfolio/write/${postId}`);
-      } else {
-        navigate(`/blog/write/${postId}`);
-      }
+      navigate(
+        activeTab === "portfolio"
+          ? `/portfolio/write/${postId}`
+          : `/blog/write/${postId}`
+      );
       return;
     }
 
@@ -109,7 +123,6 @@ export default function MyPage() {
     setTargetPostId(null);
   };
 
-  // 삭제 확정
   const handleDeleteConfirm = async () => {
     if (!targetPostId) return;
 
@@ -124,11 +137,21 @@ export default function MyPage() {
       const res = await api.get("/api/v1/mypage/view");
       const data = res.data;
 
+      const portfolio: Post[] = data.portfolio ?? [];
+      const blog: Post[] = data.blog ?? [];
+
       setUserData({
-        ...data,
-        portfolio: Array.isArray(data.portfolio) ? data.portfolio : [],
-        blog: Array.isArray(data.blog) ? data.blog : [],
+        nickname: data.nickname,
+        studentId: data.studentId,
+        introduce: data.introduce,
+        profileImage: data.profileImage,
+        portfolio,
+        blog,
       });
+
+      setZerodogPostIds(
+        portfolio.filter((post) => post.zerodog).map((post) => post.id)
+      );
 
       setMode("none");
       setTargetPostId(null);
@@ -139,8 +162,7 @@ export default function MyPage() {
     }
   };
 
-  if (loading) return <div>로딩중...</div>;
-  if (!userData) return null;
+  if (loading || !userData) return null;
 
   const posts = activeTab === "portfolio" ? userData.portfolio : userData.blog;
 
@@ -160,18 +182,18 @@ export default function MyPage() {
         />
 
         {(activeTab === "blog" || activeTab === "portfolio") && (
-          <div className="absolute left-223 top-1 flex gap-3">
+          <div className="absolute left-222 top-1 flex gap-3">
             {mode === "none" ? (
               <>
                 <button
                   onClick={handleEditClick}
-                  className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-purple-100 hover:text-primary-main1"
+                  className="h-8 rounded-full border border-primary-main1 px-4 text-sm text-primary-main1 transition hover:bg-primary-main1 hover:text-white"
                 >
                   수정
                 </button>
                 <button
                   onClick={handleDeleteClick}
-                  className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-purple-100 hover:text-primary-main1"
+                  className="h-8 rounded-full border border-primary-main1 px-4 text-sm text-primary-main1 transition hover:bg-primary-main1 hover:text-white"
                 >
                   삭제
                 </button>
@@ -179,7 +201,7 @@ export default function MyPage() {
             ) : (
               <button
                 onClick={handleCancelMode}
-                className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200"
+                className="h-8 rounded-full border border-gray-300 px-4 text-sm text-gray-500 transition hover:bg-gray-200"
               >
                 취소
               </button>
@@ -208,8 +230,8 @@ export default function MyPage() {
               type={activeTab}
               time={post.createdAt}
               showFavorite={activeTab === "portfolio" && mode === "none"}
-              isFavorite={representativePostId === post.id}
-              onFavoriteClick={handleRepresentativeToggle}
+              isFavorite={zerodogPostIds.includes(post.id)}
+              onFavoriteClick={handleZerodogToggle}
               onClick={handleCardClick}
             />
           ))}
@@ -218,7 +240,11 @@ export default function MyPage() {
 
       <Delete
         isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
+        onClose={() => {
+          setIsDeleteModalOpen(false);
+          setMode("none");
+          setTargetPostId(null);
+        }}
         onConfirm={handleDeleteConfirm}
       />
     </div>
