@@ -33,3 +33,4 @@ export { default as Line5 } from "./Line5";
 export { default as Ai } from "./AI";
 export { default as Out } from "./Out";
 export { default as Back } from "./Back";
+export { default as Waitimage } from "./Waitimage";
