@@ -53,7 +53,6 @@ export default function Portfolio({
               onClick={async () => {
                 await write(title, body);
                 setEnd(false);
-                navigate("/");
               }}
               className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white"
             >
