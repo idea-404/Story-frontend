@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Print, Inputheader, Stay, Ing, Failed } from "@/components";
+import { Print, Inputheader, Stay, Ing, Failed, Ok } from "@/components";
 import Portfolio from "@/components/Modal/Portfolio";
 import { Ai, Line5, Out } from "@/assets";
 import AIFeedback from "@/components/Modal/AIFeedback";
@@ -14,6 +14,7 @@ const Writing = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [Aires, setAires] = useState<boolean>(false);
   const [End, setEnd] = useState<boolean>(false);
+  const [conversionType, setConversionType] = useState<conversionType>("stay");
 
   const navigate = useNavigate();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -200,7 +201,14 @@ const Writing = () => {
           />
         </>
       )}
-      {Aiasdf && <Stay />}
+      {Aiasdf && (
+        <div>
+          {conversionType === "stay" && <Stay />}
+          {conversionType === "ing" && <Ing />}
+          {conversionType === "failed" && <Failed />}
+          {conversionType === "Ok" && <Ok />}
+        </div>
+      )}
       {showModal && (
         <AIFeedback setAires={setAires} setshowModal={setShowModal} />
       )}
