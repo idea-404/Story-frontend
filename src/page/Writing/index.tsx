@@ -84,6 +84,24 @@ const Writing = () => {
     };
   }, [Aiasdf]);
 
+  // 페이지 이탈 방지 (새로고침, 창 닫기 등)
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // 제목이나 본문이 작성된 경우에만 경고
+      if (title.trim() || text.trim()) {
+        e.preventDefault();
+        e.returnValue = ""; // Chrome에서는 빈 문자열 필요
+        return ""; // 일부 브라우저에서 필요
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [title, text]);
+
   const handlePaste = async (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
     const items = e.clipboardData.items;
 
