@@ -19,7 +19,19 @@ export default function ProfileEditPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await api.get("/api/v1/mypage/view");
+        const accessToken = localStorage.getItem("accessToken");
+
+        if (!accessToken) {
+          alert("로그인이 필요합니다.");
+          navigate("/login");
+          return;
+        }
+
+        const res = await api.get("/api/v1/mypage/view", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
 
         setUserData({
           nickname: res.data.nickname ?? "",
@@ -36,7 +48,7 @@ export default function ProfileEditPage() {
     };
 
     fetchUserData();
-  }, []);
+  }, [navigate]);
 
   // 프로필 수정 제출
   const handleSubmit = async (formData: {
@@ -48,6 +60,12 @@ export default function ProfileEditPage() {
   }) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
+
+      if (!accessToken) {
+        alert("로그인이 필요합니다.");
+        navigate("/login");
+        return;
+      }
 
       const res = await api.patch(
         "/api/v1/mypage/jeongbo",
@@ -78,12 +96,7 @@ export default function ProfileEditPage() {
     }
   };
 
-  if (loading) return null;
+  if (loading) return <div>로딩 중...</div>;
 
-  return (
-    <ProfileEdit
-      initialData={userData}
-      onBack={() => navigate(-1)}
-    />
-  );
+  return <ProfileEdit initialData={userData} onBack={() => navigate(-1)} />;
 }
