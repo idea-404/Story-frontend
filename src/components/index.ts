@@ -11,3 +11,4 @@ export { default as Inputheader } from "./Inputheader";
 export { default as Stay } from "./AiPrint/Stay";
 export { default as Ing } from "./AiPrint/Ing";
 export { default as Failed } from "./AiPrint/Failed";
+export { default as Ok } from "./AiPrint/Ok";
