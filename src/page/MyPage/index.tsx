@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "@/API/api";
 import { ProfileHeader, MyPageHeader, MainCard, Introduce } from "@/components";
 import Delete from "@/components/Modal/Delete";
@@ -27,6 +28,8 @@ type UserData = {
 type Mode = "none" | "edit" | "delete";
 
 export default function MyPage() {
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState<"blog" | "portfolio" | "intro">(
     "blog"
   );
@@ -64,26 +67,24 @@ export default function MyPage() {
 
   // 대표글 설정
   const handleRepresentativeToggle = async (postId: number) => {
-    try {
-      const newId = representativePostId === postId ? null : postId;
+  try {
+    await api.patch(`/api/v1/portfolio/open/${postId}`);
 
-      if (newId === null) {
-        await api.delete("/api/v1/portfolio/representative");
-      } else {
-        await api.post("/api/v1/portfolio/representative", {
-          postId: newId,
-        });
-      }
+    setRepresentativePostId(postId);
+  } catch (e) {
+    console.error("대표글 설정 실패", e);
+    alert("대표글 설정에 실패했습니다.");
+  }
+};
 
-      setRepresentativePostId(newId);
-    } catch (e) {
-      console.error("대표글 설정 실패", e);
-    }
-  };
-
+  // 수정할때 카드 클릭
   const handleCardClick = (postId: number) => {
     if (mode === "edit") {
-      console.log("수정 페이지 이동:", postId);
+      if (activeTab === "portfolio") {
+        navigate(`/portfolio/write/${postId}`);
+      } else {
+        navigate(`/blog/write/${postId}`);
+      }
       return;
     }
 
@@ -105,8 +106,10 @@ export default function MyPage() {
 
   const handleCancelMode = () => {
     setMode("none");
+    setTargetPostId(null);
   };
 
+  // 삭제 확정
   const handleDeleteConfirm = async () => {
     if (!targetPostId) return;
 
@@ -158,7 +161,7 @@ export default function MyPage() {
 
         {(activeTab === "blog" || activeTab === "portfolio") && (
           <div className="absolute left-223 top-1 flex gap-3">
-            {mode === "none" && (
+            {mode === "none" ? (
               <>
                 <button
                   onClick={handleEditClick}
@@ -173,9 +176,7 @@ export default function MyPage() {
                   삭제
                 </button>
               </>
-            )}
-
-            {mode !== "none" && (
+            ) : (
               <button
                 onClick={handleCancelMode}
                 className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200"
