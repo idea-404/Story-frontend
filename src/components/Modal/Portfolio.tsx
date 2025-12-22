@@ -11,7 +11,7 @@ export default function Portfolio({
   title: string;
   body: string;
 }) {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(body.slice(0, 64));
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
