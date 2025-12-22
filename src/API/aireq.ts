@@ -1,10 +1,13 @@
 import api from "@/API/api";
 import type { conversionType } from "@/Types";
+import { AiResponse } from "@/Store/AiResponse";
+
 export const aireq = async (
   body: string,
   id: number,
   setConversionType: React.Dispatch<React.SetStateAction<conversionType>>
 ) => {
+  const { setResponse } = AiResponse();
   try {
     const res = await api.post(`/${id}`, {
       question: body,
@@ -12,6 +15,7 @@ export const aireq = async (
     setConversionType("ing");
 
     if (res.status === 200) {
+      setResponse(res.data);
       setConversionType("Ok");
     } else if (res.status === 400) {
       alert("다시시도 해주세요.");
