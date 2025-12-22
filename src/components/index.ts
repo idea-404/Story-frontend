@@ -8,4 +8,6 @@ export { default as LoginSection3 } from "./Login/section3";
 export { default as Terms } from "./Terms";
 export { default as Print } from "./Print";
 export { default as Inputheader } from "./Inputheader";
-export { default as AiPrint } from "./AiPrint";
+export { default as Stay } from "./AiPrint/Stay";
+export { default as Ing } from "./AiPrint/Ing";
+export { default as Failed } from "./AiPrint/Failed";
