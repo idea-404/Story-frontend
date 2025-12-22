@@ -1,8 +1,16 @@
 import api from "@/API/api";
 
-export const write = async (title: string, content: string) => {
+export const write = async (
+  title: string,
+  content: string,
+  introduce: string
+) => {
   try {
-    const res = await api.post(`/portfolio/write`, { title, content });
+    const res = await api.post(`/portfolio/write`, {
+      title,
+      content,
+      introduce,
+    });
     if (res.status === 201) {
       alert("포트폴리오가 성공적으로 저장되었습니다.");
     } else if (res.status === 400) {
