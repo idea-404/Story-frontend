@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import api from "@/API/api";
 import { Arrow, Camera, Star } from "@/assets";
 import Grade from "@/assets/select/Grade";
 import Class from "@/assets/select/Class";
@@ -14,19 +15,18 @@ type ProfileSettingsProps = {
     introduce: string;
     profileImage: string;
   };
-  onSubmit: (data: {
-    nickname: string;
-    studentId: string;
-    major: string;
-    introduce: string;
-    profileImage: string;
-  }) => void;
   onBack: () => void;
+};
+
+type FormValues = {
+  grade: string;
+  class: string;
+  number: string;
+  major: string;
 };
 
 export default function ProfileSettings({
   initialData,
-  onSubmit,
   onBack,
 }: ProfileSettingsProps) {
   const [profileImage, setProfileImage] = useState("");
@@ -34,7 +34,7 @@ export default function ProfileSettings({
   const [intro, setIntro] = useState("");
   const [touched, setTouched] = useState(false);
 
-  const methods = useForm({
+  const methods = useForm<FormValues>({
     defaultValues: {
       grade: "",
       class: "",
@@ -43,7 +43,8 @@ export default function ProfileSettings({
     },
   });
 
-  const { watch } = methods;
+  const { watch, setValue, getValues } = methods;
+
   const grade = watch("grade");
   const classValue = watch("class");
   const number = watch("number");
@@ -55,16 +56,16 @@ export default function ProfileSettings({
     setIntro(initialData.introduce);
 
     if (initialData.studentId) {
-      const id = initialData.studentId.toString();
-      methods.setValue("grade", id[0] || "");
-      methods.setValue("class", id[1] || "");
-      methods.setValue("number", id.slice(2) || "");
+      const id = initialData.studentId;
+      setValue("grade", id[0] ?? "");
+      setValue("class", id[1] ?? "");
+      setValue("number", id.slice(2) ?? "");
     }
 
     if (initialData.major) {
-      methods.setValue("major", initialData.major);
+      setValue("major", initialData.major);
     }
-  }, [initialData, methods]);
+  }, [initialData, setValue]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -84,41 +85,57 @@ export default function ProfileSettings({
     number !== "" &&
     major !== "";
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isFormValid) {
       setTouched(true);
       return;
     }
 
-    const values = methods.getValues();
+    const values = getValues();
     const studentId = `${values.grade}${values.class}${values.number}`;
 
-    onSubmit({
-      nickname: name,
-      studentId,
-      major: values.major,
-      introduce: intro,
-      profileImage,
-    });
+    try {
+      const res = await api.patch("/api/v1/mypage/jeongbo", {
+        nickname: name,
+        studentId,
+        major: values.major,
+        introduce: intro,
+        profileImage,
+      });
+
+      const { token, role } = res.data;
+
+      // 토큰 갱신
+      if (token) {
+        localStorage.setItem("accessToken", token);
+      }
+
+      if (role) {
+        localStorage.setItem("role", role);
+      }
+
+      alert("프로필이 수정되었습니다.");
+      onBack();
+    } catch (e) {
+      console.error(e);
+      alert("프로필 수정에 실패했습니다.");
+    }
   };
 
   const getInputClassName = (hasValue: boolean) => {
-    const baseClass =
-      "h-[3.5rem] w-full rounded-lg border px-4 shadow-none text-gray-700 focus:outline-none";
+    const base =
+      "h-[3.5rem] w-full rounded-lg border px-4 text-gray-700 focus:outline-none";
     if (touched && !hasValue) {
-      return `${baseClass} border-red-500 focus:border-red-500`;
+      return `${base} border-red-500`;
     }
-    return `${baseClass} focus:border-purple-500`;
+    return `${base} focus:border-primary-main1`;
   };
 
   return (
     <FormProvider {...methods}>
       <div className="flex min-h-screen flex-col items-center bg-white p-6">
         <div className="mb-4 w-[31.5rem]">
-          <button
-            onClick={onBack}
-            className="flex h-6 w-6 items-center justify-center"
-          >
+          <button onClick={onBack}>
             <Arrow />
           </button>
         </div>
@@ -138,7 +155,7 @@ export default function ProfileSettings({
             )}
           </div>
 
-          <label className="absolute bottom-0 right-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-purple-500 text-white hover:bg-purple-600">
+          <label className="absolute bottom-0 right-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-primary-main1 text-white">
             <Camera />
             <input
               type="file"
@@ -150,11 +167,10 @@ export default function ProfileSettings({
         </div>
 
         <div className="mb-6 w-[31.5rem]">
-          <label className="mb-2 flex items-center text-sm font-medium text-gray-900">
+          <label className="mb-2 flex items-center text-sm font-medium">
             이름 <Star />
           </label>
           <input
-            type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className={getInputClassName(name.trim() !== "")}
@@ -162,10 +178,10 @@ export default function ProfileSettings({
         </div>
 
         <div className="mb-6 w-[31.5rem]">
-          <label className="mb-2 flex items-center text-sm font-medium text-gray-900">
+          <label className="mb-2 flex items-center text-sm font-medium">
             학번 <Star />
           </label>
-          <div className="flex gap-3">
+          <div className="flex gap-12">
             <Grade error={touched && grade === ""} />
             <Class error={touched && classValue === ""} />
             <Number error={touched && number === ""} />
@@ -173,36 +189,36 @@ export default function ProfileSettings({
         </div>
 
         <div className="mb-6 w-[31.5rem]">
-          <label className="mb-2 flex items-center text-sm font-medium text-gray-900">
+          <label className="mb-2 flex items-center text-sm font-medium">
             전공 <Star />
           </label>
           <Major error={touched && major === ""} />
         </div>
 
         <div className="mb-8 w-[31.5rem]">
-          <label className="mb-2 flex items-center justify-between text-sm font-medium text-gray-900">
-            <span>소개글</span>
+          <label className="mb-2 flex justify-between text-sm font-medium">
+            소개글
             <span className="text-primary-main1">{intro.length}/128</span>
           </label>
           <textarea
             value={intro}
             onChange={(e) => setIntro(e.target.value)}
             maxLength={128}
-            className="h-[10rem] w-full resize-none rounded-lg border p-4 shadow-none text-gray-700 focus:border-primary-main1 focus:outline-none"
+            className="h-[10rem] w-full resize-none rounded-lg border p-4"
           />
-        </div>
-
-        <div className="mb-4 w-[31.5rem] flex items-center justify-end text-sm text-primary-main1">
-          <Star />
-          <span className="underline ml-1">필수 항목을 모두 입력해주세요.</span>
         </div>
 
         <button
           onClick={handleSubmit}
-          className="h-[3.5rem] w-[31.5rem] rounded-lg bg-primary-main1 font-medium text-white hover:bg-primary-main2"
+          className="h-[3.5rem] w-[31.5rem] rounded-lg bg-primary-main1 text-white"
         >
           수정
         </button>
+
+        <div className="mt-4 flex w-[31.5rem] items-center justify-end gap-1 text-sm text-primary-main1 underline decoration-primary-main1">
+          <Star />
+          <span>필수 항목을 모두 입력해 주세요.</span>
+        </div>
       </div>
     </FormProvider>
   );
