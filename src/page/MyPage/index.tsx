@@ -44,51 +44,48 @@ export default function MyPage() {
   // 공개글 ID 목록
   const [zerodogPostIds, setZerodogPostIds] = useState<number[]>([]);
 
-  useEffect(() => {
+  const fetchMyPage = async () => {
     const token = localStorage.getItem("access-token");
-
     if (!token) {
       alert("로그인이 필요합니다.");
       navigate("/login");
       return;
     }
 
-    const fetchMyPage = async () => {
-      try {
-        const res = await api.get("/api/v1/mypage/view", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = res.data;
+    try {
+      const res = await api.get("/api/v1/mypage/view", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = res.data;
 
-        const portfolio: Post[] = Array.isArray(data.portfolio)
-          ? data.portfolio
-          : [];
-        const blog: Post[] = Array.isArray(data.blog) ? data.blog : [];
+      const portfolio: Post[] = Array.isArray(data.portfolio)
+        ? data.portfolio
+        : [];
+      const blog: Post[] = Array.isArray(data.blog) ? data.blog : [];
 
-        setUserData({
-          nickname: data.nickname,
-          studentId: data.studentId,
-          introduce: data.introduce,
-          profileImage: data.profileImage,
-          portfolio,
-          blog,
-        });
+      setUserData({
+        nickname: data.nickname,
+        studentId: data.studentId,
+        introduce: data.introduce,
+        profileImage: data.profileImage,
+        portfolio,
+        blog,
+      });
 
-        setZerodogPostIds(
-          portfolio.filter((post) => post.zerodog).map((post) => post.id)
-        );
-      } catch (e) {
-        console.error(e);
-        alert("마이페이지 정보를 불러오는데 실패했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
+      setZerodogPostIds(
+        portfolio.filter((post) => post.zerodog).map((post) => post.id)
+      );
+    } catch (e) {
+      console.error(e);
+      alert("마이페이지 정보를 불러오는데 실패했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchMyPage();
-  }, [navigate]);
+  }, []);
 
   const handleZerodogToggle = async (postId: number) => {
     const isOpen = zerodogPostIds.includes(postId);
@@ -97,9 +94,7 @@ export default function MyPage() {
 
     try {
       await api.patch(`/api/v1/portfolio/open/${postId}`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       setZerodogPostIds((prev) =>
@@ -142,6 +137,7 @@ export default function MyPage() {
     setTargetPostId(null);
   };
 
+  // 게시글 삭제
   const handleDeleteConfirm = async () => {
     if (!targetPostId) return;
     const token = localStorage.getItem("access-token");
@@ -154,33 +150,11 @@ export default function MyPage() {
           : `/api/v1/blog/delete/${targetPostId}`;
 
       await api.delete(deleteUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
-      const res = await api.get("/api/v1/mypage/view", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = res.data;
-
-      const portfolio: Post[] = data.portfolio ?? [];
-      const blog: Post[] = data.blog ?? [];
-
-      setUserData({
-        nickname: data.nickname,
-        studentId: data.studentId,
-        introduce: data.introduce,
-        profileImage: data.profileImage,
-        portfolio,
-        blog,
-      });
-
-      setZerodogPostIds(
-        portfolio.filter((post) => post.zerodog).map((post) => post.id)
-      );
+      // 삭제 후 데이터 다시 불러오기
+      await fetchMyPage();
 
       setMode("none");
       setTargetPostId(null);
