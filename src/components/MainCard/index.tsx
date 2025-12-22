@@ -10,18 +10,18 @@ type MainCardProps = {
   like: number;
   view: number;
   comment: number;
-  thumbnail: string | null;
+  thumbnail?: string | null;
   type: "portfolio" | "blog";
   time: string;
   onClick?: (id: number) => void;
-  showFavorite?: boolean;
+  showFavorite?: boolean; // 포트폴리오 공개 여부 표시
   isFavorite?: boolean;
   onFavoriteClick?: (postId: number) => void;
   isSelected?: boolean;
   isEditMode?: boolean;
 };
 
-/**ISO 시간*/
+/** ISO 시간 포맷 */
 function formatTime(isoString: string) {
   const date = new Date(isoString);
   const now = new Date();
@@ -44,7 +44,6 @@ function formatTime(isoString: string) {
 
 export default function MainCard({
   postId,
-  userId,
   nickname,
   profileImage,
   title,
@@ -52,7 +51,7 @@ export default function MainCard({
   like,
   view,
   comment,
-  thumbnail,
+  thumbnail = null,
   type,
   time,
   onClick,
@@ -74,17 +73,16 @@ export default function MainCard({
       } ${isEditMode ? "cursor-pointer" : ""}`}
       onClick={() => onClick && onClick(postId)}
     >
-      {/* 즐겨찾기 버튼 */}
       {showFavorite && (
         <button
           onClick={handleFavoriteClick}
-          className="absolute top-4 left-4 z-10 focus:outline-none"
+          className="absolute top-4 right-4 z-10 focus:outline-none"
         >
           {isFavorite ? <Star /> : <StarOutline />}
         </button>
       )}
 
-      <div className={`flex-1 ${showFavorite ? "pl-6" : ""}`}>
+      <div className="flex-1">
         <div className="flex items-center gap-2 text-sm text-black">
           <img src={profileImage} className="w-8 h-8 rounded-full" />
           <span className="font-semibold">{nickname}</span>
