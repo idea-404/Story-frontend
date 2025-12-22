@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { Print, Inputheader, AiPrint } from "@/components";
 import { Ai, Line5, Out } from "@/assets";
 import AIFeedback from "@/components/Modal/AIFeedback";
+import { useNavigate } from "react-router-dom";
 
 const Writing = () => {
   const [text, setText] = useState<string>("");
@@ -11,6 +12,7 @@ const Writing = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [Aires, setAires] = useState<boolean>(false);
 
+  const navigate = useNavigate();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const selectionTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastSelectionRef = useRef<{ start: number; end: number }>({
@@ -160,7 +162,16 @@ const Writing = () => {
           className="h-[59.26vh] mt-[1rem] border-0 outline-none focus:outline-none focus:ring-0 resize-none"
         />
         <div className="flex gap-[2.25rem] items-center">
-          <button className="flex items-center gap-[0.63rem] py-[0.47rem] px-[1.81rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold">
+          <button
+            onClick={() => {
+              if (Aiasdf) {
+                setAiasdf(false);
+              } else {
+                navigate(-1);
+              }
+            }}
+            className="flex items-center gap-[0.63rem] py-[0.47rem] px-[1.81rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold"
+          >
             <Out />
             {!Aiasdf ? "나가기" : "돌아가기"}
           </button>
