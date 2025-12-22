@@ -6,6 +6,7 @@ type ProfileHeaderProps = {
   studentId: string;
   profileImage: string;
   onBack?: () => void;
+  showEditButton?: boolean;
 };
 
 export default function ProfileHeader({
@@ -13,6 +14,7 @@ export default function ProfileHeader({
   studentId,
   profileImage,
   onBack,
+  showEditButton = true,
 }: ProfileHeaderProps) {
   const navigate = useNavigate();
 
@@ -56,12 +58,14 @@ export default function ProfileHeader({
           </span>
         </div>
 
-        <button
-          onClick={handleProfileEdit}
-          className="rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-primary-main1 hover:bg-gray-200"
-        >
-          프로필 설정
-        </button>
+        {showEditButton && (
+          <button
+            onClick={handleProfileEdit}
+            className="rounded-full bg-gray-100 px-5 py-2 text-sm font-medium text-primary-main1 hover:bg-gray-200"
+          >
+            프로필 설정
+          </button>
+        )}
       </div>
     </header>
   );
