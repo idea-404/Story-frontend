@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PublishPortfolio } from "@/assets";
 import { write } from "@/API";
+import { useNavigate } from "react-router-dom";
 
 export default function Portfolio({
   setEnd,
@@ -12,6 +13,7 @@ export default function Portfolio({
   body: string;
 }) {
   const [text, setText] = useState("");
+  const navigate = useNavigate();
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
@@ -51,6 +53,7 @@ export default function Portfolio({
               onClick={() => {
                 write(title, body);
                 setEnd(false);
+                navigate("/");
               }}
               className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white"
             >
