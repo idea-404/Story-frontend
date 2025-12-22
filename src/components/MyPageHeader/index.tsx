@@ -73,26 +73,6 @@ export default function MainHeader({
           소개글
         </button>
       </div>
-
-      <div className="flex gap-6 font-bold text-gray-400">
-        {onEdit && (
-          <button
-            onClick={onEdit}
-            className="transition-colors hover:text-primary-main1"
-          >
-            수정
-          </button>
-        )}
-
-        {onDelete && (
-          <button
-            onClick={onDelete}
-            className="transition-colors hover:text-red-500"
-          >
-            삭제
-          </button>
-        )}
-      </div>
     </header>
   );
 }
