@@ -49,7 +49,7 @@ export default function Portfolio({
             </button>
             <button
               onClick={async () => {
-                await write(title, body);
+                await write(title, body, text);
                 setEnd(false);
               }}
               className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white"
