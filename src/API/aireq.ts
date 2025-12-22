@@ -1,13 +1,13 @@
 import api from "@/API/api";
 import type { conversionType } from "@/Types";
-import { AiResponse } from "@/Store/AiResponse";
+import { useAiResponseStore } from "@/Store/AiResponse";
 
 export const aireq = async (
   body: string,
   id: number,
   setConversionType: React.Dispatch<React.SetStateAction<conversionType>>
 ) => {
-  const { setResponse } = AiResponse();
+  const { setResponse } = useAiResponseStore();
   try {
     const res = await api.post(`/${id}`, {
       question: body,
