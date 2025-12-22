@@ -1,14 +1,74 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Print, Inputheader, AiPrint } from "@/components";
 import { Ai, Line5, Out } from "@/assets";
+import AIFeedback from "@/components/Modal/AIFeedback";
 
 const Writing = () => {
   const [text, setText] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [headingType, setHeadingType] = useState<string>("body");
   const [Aiasdf, setAiasdf] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [Aires, setAires] = useState<boolean>(false);
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const selectionTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const lastSelectionRef = useRef<{ start: number; end: number }>({
+    start: 0,
+    end: 0,
+  });
+
+  // 선택 영역 감지 및 5초 타이머
+  useEffect(() => {
+    if (!Aiasdf) return;
+
+    const handleSelectionChange = () => {
+      const textarea = textareaRef.current;
+      if (!textarea) return;
+
+      const currentStart = textarea.selectionStart;
+      const currentEnd = textarea.selectionEnd;
+
+      // 선택이 변경되었는지 확인
+      if (
+        currentStart !== lastSelectionRef.current.start ||
+        currentEnd !== lastSelectionRef.current.end
+      ) {
+        // 이전 타이머 클리어
+        if (selectionTimerRef.current) {
+          clearTimeout(selectionTimerRef.current);
+        }
+
+        // 새로운 선택 위치 저장
+        lastSelectionRef.current = { start: currentStart, end: currentEnd };
+
+        // 5초 타이머 시작
+        selectionTimerRef.current = setTimeout(() => {
+          setShowModal(true);
+        }, 5000);
+      }
+    };
+
+    // textarea 이벤트 리스너 등록
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.addEventListener("mouseup", handleSelectionChange);
+      textarea.addEventListener("keyup", handleSelectionChange);
+      textarea.addEventListener("select", handleSelectionChange);
+    }
+
+    // 클린업
+    return () => {
+      if (selectionTimerRef.current) {
+        clearTimeout(selectionTimerRef.current);
+      }
+      if (textarea) {
+        textarea.removeEventListener("mouseup", handleSelectionChange);
+        textarea.removeEventListener("keyup", handleSelectionChange);
+        textarea.removeEventListener("select", handleSelectionChange);
+      }
+    };
+  }, [Aiasdf]);
 
   const handlePaste = async (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
     const items = e.clipboardData.items;
@@ -126,6 +186,9 @@ const Writing = () => {
         </>
       )}
       {Aiasdf && <AiPrint />}
+      {showModal && (
+        <AIFeedback setAires={setAires} setshowModal={setShowModal} />
+      )}
     </div>
   );
 };
