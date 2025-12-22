@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { PublishBlog } from "@/assets";
+import { write } from "@/API";
 
 export default function Blog({
   setEnd,
@@ -42,7 +43,13 @@ export default function Blog({
             >
               취소
             </button>
-            <button className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white">
+            <button
+              onClick={async () => {
+                await write(title, body, text);
+                setEnd(false);
+              }}
+              className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white"
+            >
               출간하기
             </button>
           </div>
