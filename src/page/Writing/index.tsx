@@ -3,8 +3,9 @@ import { Print, Inputheader, Stay, Ing, Failed, Ok } from "@/components";
 import Portfolio from "@/components/Modal/Portfolio";
 import { Ai, Line5, Out } from "@/assets";
 import AIFeedback from "@/components/Modal/AIFeedback";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import type { conversionType } from "@/Types";
+import Blog from "@/components/Modal/Blog";
 
 const Writing = () => {
   const [text, setText] = useState<string>("");
@@ -17,6 +18,13 @@ const Writing = () => {
   const [conversionType, setConversionType] = useState<conversionType>("stay");
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const writeType = location.pathname.includes("/blog/write")
+    ? "blog"
+    : location.pathname.includes("/portfolio/write")
+    ? "portfolio"
+    : "unknown";
+
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const selectionTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastSelectionRef = useRef<{ start: number; end: number }>({
@@ -220,9 +228,14 @@ const Writing = () => {
           setConversionType={setConversionType}
         />
       )}
-      {End && (
+      {End && writeType === "portfolio" && (
         <>
           <Portfolio title={title} body={text} setEnd={setEnd} />
+        </>
+      )}
+      {End && writeType === "blog" && (
+        <>
+          <Blog title={title} body={text} setEnd={setEnd} />
         </>
       )}
     </div>
