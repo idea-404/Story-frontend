@@ -50,8 +50,8 @@ export default function Portfolio({
               취소
             </button>
             <button
-              onClick={() => {
-                write(title, body);
+              onClick={async () => {
+                await write(title, body);
                 setEnd(false);
                 navigate("/");
               }}
