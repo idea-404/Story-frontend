@@ -213,7 +213,10 @@ const Writing = () => {
         <AIFeedback
           setAires={setAires}
           setshowModal={setShowModal}
-          body={text}
+          body={text.slice(
+            lastSelectionRef.current.start,
+            lastSelectionRef.current.end
+          )}
           setConversionType={setConversionType}
         />
       )}
