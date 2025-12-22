@@ -205,7 +205,7 @@ const Writing = () => {
       )}
       {End && (
         <>
-          <Portfolio setEnd={setEnd} />
+          <Portfolio title={title} body={text} setEnd={setEnd} />
         </>
       )}
     </div>
