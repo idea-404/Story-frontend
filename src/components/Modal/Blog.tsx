@@ -100,7 +100,7 @@ export default function Blog({
             </button>
             <button
               onClick={async () => {
-                await blogwrite(title, body, text);
+                await blogwrite(title, body, text, thumbnailUrl);
                 setEnd(false);
               }}
               className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white"
