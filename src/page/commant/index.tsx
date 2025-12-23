@@ -33,7 +33,7 @@ const Commant = () => {
           </ReactMarkdown>
         </div>
       </div>
-      <hr className="mt-[4.63rem] h-[0.125rem] bg-[#CBCCCE] w-[35.75rem]" />
+      <hr className="mt-[4.63rem] mb-[1.25rem] h-[0.125rem] bg-[#CBCCCE] w-[35.75rem]" />
       asdf
     </div>
   );
