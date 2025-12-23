@@ -11,7 +11,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [whiteMode, setWhiteMode] = useState(false);
   const { pathname } = useLocation();
-  const { clearAuth } = useTokenStore();
+  const { auth, clearAuth } = useTokenStore();
   return (
     <header className="flex justify-center border-b-[0.125rem] border-[#EFF0F2]">
       <div className="flex w-[37.5rem] h-[5.375rem] justify-between items-center">
@@ -25,7 +25,13 @@ const Header = () => {
                 className={
                   "flex items-center gap-[0.625rem] py-[0.375rem] px-[0.875rem] border-[0.025rem] rounded-[1.5rem] font-medium text-[#3C3C3E] hover:bg-[#3C3C3E] hover:text-white transition-colors"
                 }
-                onClick={() => setWhiteMode(true)}
+                onClick={() => {
+                  if (!auth.token) {
+                    navigate("/login");
+                  } else {
+                    setWhiteMode(true);
+                  }
+                }}
               >
                 글 작성 <Pen />
               </button>
