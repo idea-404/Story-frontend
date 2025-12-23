@@ -38,6 +38,8 @@ type Post = {
 };
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const verifyToken = async () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -47,19 +49,18 @@ const MainPage = () => {
         try {
           const res = await api.post("/auth/verify", { token });
           console.log("토큰 검증 성공:", res.data);
+
+          if (res.data.role === "UNVERIFIED") {
+            navigate("/info");
+          }
         } catch (verifyError) {
           console.error("토큰 검증 오류:", verifyError);
         }
-
-        if (res.data.role === "UNVERIFIED") {
-          window.location.href = "/info";
-        }
       }
-      verifyToken();
     };
-  }, []);
 
-  const navigate = useNavigate();
+    verifyToken();
+  }, [navigate]);
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [lastId, setLastId] = useState<number | null>(null);
