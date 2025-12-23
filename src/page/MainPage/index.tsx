@@ -1,5 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "@/API/api";
 import MainCard from "@/components/MainCard";
 import MainHeader from "@/components/MainHeader";
 
@@ -36,6 +38,30 @@ type Post = {
 };
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+
+      if (token) {
+        try {
+          const res = await api.post("/auth/verify", { token });
+          console.log("토큰 검증 성공:", res.data);
+
+          if (res.data.role === "UNVERIFIED") {
+            navigate("/info");
+          }
+        } catch (verifyError) {
+          console.error("토큰 검증 오류:", verifyError);
+        }
+      }
+    };
+
+    verifyToken();
+  }, [navigate]);
+
   const [posts, setPosts] = useState<Post[]>([]);
   const [lastId, setLastId] = useState<number | null>(null);
   const [limit] = useState(10);
@@ -63,6 +89,7 @@ const MainPage = () => {
             size: limit,
           },
         });
+
         const newPosts: Post[] = (response.data.data ?? []).map(
           (
             item: Omit<Post, "id"> & { blog_id?: number; portfolio_id?: number }
@@ -100,9 +127,6 @@ const MainPage = () => {
     [limit, sortType, tab, loading, hasMore, lastId]
   );
 
-  /**
-   * 탭/정렬 변경 시 초기화
-   */
   useEffect(() => {
     setPosts([]);
     setHasMore(true);
@@ -124,12 +148,15 @@ const MainPage = () => {
     );
 
     observer.observe(observerRef.current);
-
     return () => observer.disconnect();
   }, [fetchPosts, loading, hasMore, lastId, tab]);
 
   const handleCardClick = (id: number) => {
-    console.log(`Card with id ${id} clicked`);
+    if (tab === "blog") {
+      navigate(`/blog/${id}`);
+    } else {
+      navigate(`/portfolio/${id}`);
+    }
   };
 
   const handleTabChange = (newTab: "blog" | "portfolio") => {
