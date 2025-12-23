@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PublishBlog } from "@/assets";
-import { write } from "@/API";
+import { blogwrite } from "@/API";
 
 export default function Blog({
   setEnd,
@@ -45,7 +45,7 @@ export default function Blog({
             </button>
             <button
               onClick={async () => {
-                await write(title, body, text);
+                await blogwrite(title, body, text);
                 setEnd(false);
               }}
               className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white"
