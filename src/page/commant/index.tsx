@@ -5,6 +5,7 @@ import rehypeSanitize from "rehype-sanitize";
 import Printheader from "./Printheader";
 import { Arrow } from "@/assets";
 import { useNavigate } from "react-router-dom";
+import Commantintput from "./comment";
 const Commant = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("asdfasdf");
@@ -34,7 +35,7 @@ const Commant = () => {
         </div>
       </div>
       <hr className="mt-[4.63rem] mb-[1.25rem] h-[0.125rem] bg-[#CBCCCE] w-[35.75rem]" />
-      asdf
+      <Commantintput />
     </div>
   );
 };
