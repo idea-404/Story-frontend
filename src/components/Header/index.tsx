@@ -2,6 +2,7 @@ import { Logo, Person, Pen } from "@/assets";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import SelectWrite from "@/components/Modal/SelectWrite";
+import { set } from "zod";
 
 const nooutput = ["/blog/write", "/portfolio/write"];
 const nooutput2 = ["/login", "/signin", "/info"];
@@ -23,7 +24,7 @@ const Header = () => {
                 className={
                   "flex items-center gap-[0.625rem] py-[0.375rem] px-[0.875rem] border-[0.025rem] rounded-[1.5rem] font-medium text-[#3C3C3E] hover:bg-[#3C3C3E] hover:text-white transition-colors"
                 }
-                onClick={() => navigate("/blog/write")}
+                onClick={() => setWhiteMode(true)}
               >
                 글 작성 <Pen />
               </button>
