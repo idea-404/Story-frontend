@@ -19,6 +19,7 @@ interface BlogData {
   view: number;
   createdAt: string;
   comment: number;
+  studentNumber: string;
 }
 
 const Commant = () => {
@@ -51,7 +52,7 @@ const Commant = () => {
       <button onClick={() => navigate(-1)} className="w-[37.5rem] mt-[1.88rem]">
         <Arrow />
       </button>
-      <Printheader nickname={data.nickname} date={data.createdAt} />
+      <Printheader nickname={data.nickname} date={data.createdAt} studentNumber={data.studentNumber}studentNumber />
       <div>
         <h1 className="flex justify-between text-[#3C3C3E] text-[1.875rem] font-medium leading-normal pb-[0.87rem]">
           <div>{title}</div>
