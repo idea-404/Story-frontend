@@ -1,12 +1,28 @@
 import api from "@/API/api";
 import axios from "axios";
 
-export const WriteCheck = async (id: number, type: string) => {
+interface BlogData {
+  blog_id: number;
+  nickname: string;
+  title: string;
+  introduce: string;
+  content: string;
+  like: number;
+  view: number;
+  createdAt: string;
+  comment: number;
+}
+
+export const WriteCheck = async (
+  id: number,
+  type: string
+): Promise<BlogData | null> => {
   try {
     const res = await api.post(`/${type}/${id}`, {});
     if (res.status === 200) {
       return res.data;
     }
+    return null;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       const status = error.response.status;
@@ -18,5 +34,6 @@ export const WriteCheck = async (id: number, type: string) => {
       console.error("포트폴리오 저장 오류:", error);
       alert("예상치 못한 오류가 발생했습니다.");
     }
+    return null;
   }
 };
