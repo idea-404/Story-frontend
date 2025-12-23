@@ -5,6 +5,7 @@ import { ProfileHeader, MyPageHeader, MainCard, Introduce } from "@/components";
 import Delete from "@/components/Modal/Delete";
 
 type Post = {
+  userid: number;
   id: number;
   nickname: string;
   title: string;
@@ -219,6 +220,7 @@ export default function MyPage() {
         <div className="mt-10 flex flex-col gap-6">
           {posts.map((post) => (
             <MainCard
+              userId={post.userid}
               key={post.id}
               postId={post.id}
               nickname={post.nickname}

@@ -4,6 +4,7 @@ import api from "@/API/api";
 import { ProfileHeader, MyPageHeader, MainCard, Introduce } from "@/components";
 
 type Post = {
+  userid: number;
   id: number;
   nickname: string;
   title: string;
@@ -83,7 +84,7 @@ export default function UserPage() {
             <MainCard
               key={post.id}
               postId={post.id}
-              userId={id ? parseInt(id, 10) : 0}
+              userId={post.userid}
               nickname={post.nickname}
               profileImage={userData.profileImage}
               title={post.title}
