@@ -34,7 +34,7 @@ const Header = () => {
           </div>
         )}
       </div>
-      {whiteMode && <SelectWrite />}
+      {whiteMode && <SelectWrite setwritemode={setWhiteMode} />}
     </header>
   );
 };

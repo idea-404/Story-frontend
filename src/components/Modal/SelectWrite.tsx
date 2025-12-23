@@ -1,6 +1,10 @@
 import { Portfolio, Blog } from "@/assets";
 
-export default function SelectWrite() {
+export default function SelectWrite({
+  setwritemode,
+}: {
+  setwritemode: React.Dispatch<React.SetStateAction<emailType>>;
+}) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="w-[280px] rounded-xl bg-white px-6 py-5 text-center">
