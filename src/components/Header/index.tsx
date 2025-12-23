@@ -1,4 +1,4 @@
-import { Logo, Person, Pen } from "@/assets";
+import { Logo, Person, Pen, Logout } from "@/assets";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import SelectWrite from "@/components/Modal/SelectWrite";
@@ -32,6 +32,11 @@ const Header = () => {
               <Person />
             </button>
           </div>
+        )}
+        {pathname === "/profile-edit" && (
+          <button className="flex gap-[0.37rem] text-primary-main1 font-bold rounded-[0.9375rem] bg-[#EFF0F2] px-[1.06rem] py-[0.25rem]">
+            로그아웃 <Logout />
+          </button>
         )}
       </div>
       {whiteMode && <SelectWrite setwritemode={setWhiteMode} />}
