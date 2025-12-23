@@ -18,7 +18,7 @@ export const GetComments = async (
   type: string
 ): Promise<CommentResponse | null> => {
   try {
-    const res = await api.get(`/${type}/${id}/comments`);
+    const res = await api.get(`/${type}/${id}`);
     if (res.status === 201) {
       return res.data;
     }
