@@ -4,12 +4,16 @@ import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
 import Printheader from "./Printheader";
 import { Arrow } from "@/assets";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import Commantintput from "./comment";
 import Commantcomponents from "./commantcomponents";
 
 const Commant = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const location = useLocation();
+  const pageType = location.pathname.includes("/blog") ? "blog" : "portfolio";
+  
   const [title, setTitle] = useState("asdfasdf");
   const [body, setBody] = useState("# asdfasdf");
 
