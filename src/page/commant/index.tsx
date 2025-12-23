@@ -34,12 +34,19 @@ const Commant = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const result = await WriteCheck(Number(id), pageType);
-      setData(result);
-      setLoading(false);
+      try {
+        const result = await WriteCheck(Number(id), pageType);
+        setData(result);
+      } catch (error: any) {
+        if (error?.status === 404) {
+          navigate("/404");
+        }
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
-  }, [id, pageType]);
+  }, [id, pageType, navigate]);
 
   if (loading) return <div>로딩 중...</div>;
   if (!data) return <div>데이터를 불러올 수 없습니다.</div>;
