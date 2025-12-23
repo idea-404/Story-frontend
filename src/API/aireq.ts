@@ -1,6 +1,7 @@
 import api from "@/API/api";
 import type { conversionType } from "@/Types";
 import { useAiResponseStore } from "@/Store/AiResponse";
+import axios from "axios";
 
 export const Aireq = async (
   body: string,
@@ -12,23 +13,27 @@ export const Aireq = async (
       question: body,
     });
     setConversionType("ing");
-
     if (res.status === 200) {
       useAiResponseStore.getState().setResponse(res.data);
       setConversionType("Ok");
-    } else if (res.status === 400) {
-      alert("다시시도 해주세요.");
-      setConversionType("failed");
-    } else if (res.status === 401) {
-      setConversionType("failed");
-      alert("로그인 후 이용해주세요.");
-    } else if (res.status === 429) {
-      setConversionType("failed");
-      alert("영역을 800자 설정해주세요.");
     }
   } catch (error) {
     setConversionType("failed");
-    console.error("포트폴리오 저장 오류:", error);
-    alert("백엔드 서버 비상!!!!!!!!!");
+    if (axios.isAxiosError(error) && error.response) {
+      const status = error.response.status;
+      if (status === 400) {
+        alert("다시시도 해주세요.");
+      } else if (status === 401) {
+        alert("로그인 후 이용해주세요.");
+      } else if (status === 429) {
+        alert("영역을 800자 설정해주세요.");
+      } else {
+        alert("백엔드 서버 비상!!!!!!!!!");
+      }
+      console.error("포트폴리오 저장 오류:", error);
+    } else {
+      console.error("포트폴리오 저장 오류:", error);
+      alert("예상치 못한 오류가 발생했습니다.");
+    }
   }
 };
