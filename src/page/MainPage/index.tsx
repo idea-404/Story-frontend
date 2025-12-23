@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "@/API/api";
 import MainCard from "@/components/MainCard";
 import MainHeader from "@/components/MainHeader";
 
@@ -38,6 +39,28 @@ type Post = {
 
 const MainPage = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+
+      if (token) {
+        try {
+          const res = await api.post("/auth/verify", { token });
+          console.log("토큰 검증 성공:", res.data);
+
+          if (res.data.role === "UNVERIFIED") {
+            navigate("/info");
+          }
+        } catch (verifyError) {
+          console.error("토큰 검증 오류:", verifyError);
+        }
+      }
+    };
+
+    verifyToken();
+  }, [navigate]);
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [lastId, setLastId] = useState<number | null>(null);
