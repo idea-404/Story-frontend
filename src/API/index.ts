@@ -4,3 +4,6 @@ export * from "./tokenCode";
 export * from "./info";
 export * from "./portfolio";
 export * from "./blogwrite";
+export * from "./login";
+export * from "./writecheck";
+export * from "./Comment";
