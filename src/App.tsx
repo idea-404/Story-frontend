@@ -18,7 +18,6 @@ function App() {
       <Routes>
         <Route path="/blog/:id" element={<Commant />} />
         <Route path="/portfolio/:id" element={<Commant />} />
-        <Route path="/commant" element={<Commant />} />
         <Route path="/blog/write" element={<Writing />} />
         <Route path="/portfolio/write" element={<Writing />} />
         <Route path="/search" element={<SearchPage />} />
