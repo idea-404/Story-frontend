@@ -34,11 +34,9 @@ const Section2 = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     console.log("폼 데이터:", data);
-
+    setEmailState("second");
     const type = pathname === "/login" ? "login" : "signin";
     await Login(data.email, type);
-
-    setEmailState("second");
   };
 
   return (
