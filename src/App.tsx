@@ -5,8 +5,8 @@ import MainPage from "@/page/MainPage";
 import { Login } from "./page";
 import NotFound from "./pageContainer/NotFoundPage";
 import { Signin } from "@/page";
-import { MyPage, UserPage } from "@/page";
-import { ProfileEditPage } from "@/page";
+import { MyPage, UserPage, ProfileEditPage } from "@/page";
+
 function App() {
   const { pathname } = useLocation();
 
