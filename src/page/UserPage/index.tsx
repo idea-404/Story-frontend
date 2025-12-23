@@ -84,8 +84,8 @@ export default function UserPage() {
             <MainCard
               key={post.id}
               postId={post.id}
-              userId={id ? parseInt(id, 10) : 0}
-              nickname={post.nickname}
+              userId={post.userid}
+              nickname={userData.nickname}
               profileImage={userData.profileImage}
               title={post.title}
               content={post.content}
