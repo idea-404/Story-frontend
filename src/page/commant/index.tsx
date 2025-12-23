@@ -12,7 +12,7 @@ const Commant = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <button onClick={() => navigate(-1)} className="w-[37.5rem]">
+      <button onClick={() => navigate(-1)} className="w-[37.5rem] mt-[1.88rem]">
         <Arrow />
       </button>
       <Printheader />
