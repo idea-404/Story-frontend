@@ -4,7 +4,7 @@ import SearchPage from "@/page/Search";
 import MainPage from "@/page/MainPage";
 import { Login, Writing } from "./page";
 import NotFound from "./pageContainer/NotFoundPage";
-import { Signin } from "@/page";
+import { Signin, Commant } from "@/page";
 
 function App() {
   const { pathname } = useLocation();
@@ -14,6 +14,7 @@ function App() {
       {pathname !== "/404" && <Header />}
 
       <Routes>
+        <Route path="/commant" element={<Commant />} />
         <Route path="/blog/write" element={<Writing />} />
         <Route path="/portfolio/write" element={<Writing />} />
         <Route path="/search" element={<SearchPage />} />
