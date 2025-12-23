@@ -1,11 +1,14 @@
 import { Logo, Person, Pen } from "@/assets";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import SelectWrite from "@/components/Modal/SelectWrite";
 
 const nooutput = ["/blog/write", "/portfolio/write"];
 const nooutput2 = ["/login", "/signin", "/info"];
 
 const Header = () => {
   const navigate = useNavigate();
+  const [whiteMode, setWhiteMode] = useState(false);
   const { pathname } = useLocation();
   return (
     <header className="flex justify-center border-b-[0.125rem] border-[#EFF0F2]">
@@ -31,6 +34,7 @@ const Header = () => {
           </div>
         )}
       </div>
+      {whiteMode && <SelectWrite />}
     </header>
   );
 };
