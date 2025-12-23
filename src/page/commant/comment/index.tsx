@@ -9,6 +9,11 @@ const Commantintput = () => {
         />
         <div className="flex justify-end text-primary-main1">123/160</div>
       </div>
+      <div className="flex justify-end ">
+        <button className="bg-primary-main3 px-[1rem] py-[0.13rem] rounded-[0.4375rem] mt-[0.75rem]">
+          댓글 작성
+        </button>
+      </div>
     </div>
   );
 };
