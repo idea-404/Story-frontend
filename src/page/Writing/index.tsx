@@ -118,17 +118,25 @@ const Writing = () => {
   };
 
   const uploadImageAndInsert = async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-    const { url } = await res.json();
+      if (!res.ok) {
+        throw new Error(`업로드 실패: ${res.status}`);
+      }
 
-    insertAtCursor(`![image](${url})`);
+      const { url } = await res.json();
+      insertAtCursor(`![image](${url})`);
+    } catch (error) {
+      console.error("이미지 업로드 실패:", error);
+      alert("이미지 업로드에 실패했습니다.");
+    }
   };
 
   const insertAtCursor = (value: string) => {
