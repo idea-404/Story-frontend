@@ -18,7 +18,7 @@ export const WriteCheck = async (
   type: string
 ): Promise<BlogData | null> => {
   try {
-    const res = await api.post(`/${type}/${id}`, {});
+    const res = await api.get(`/${type}/${id}`, {});
     if (res.status === 200) {
       return res.data;
     }
