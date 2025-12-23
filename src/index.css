@@ -280,4 +280,14 @@ body {
   .prose blockquote p {
     margin: 0.5rem 0;
   }
+
+  .prose a {
+    color: #2563eb; /* blue-600 */
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .prose a:hover {
+    color: #1d4ed8; /* blue-700 */
+  }
 }
