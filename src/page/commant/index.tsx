@@ -51,11 +51,11 @@ const Commant = () => {
       <button onClick={() => navigate(-1)} className="w-[37.5rem] mt-[1.88rem]">
         <Arrow />
       </button>
-      <Printheader />
+      <Printheader nickname={data.nickname} date={data.createdAt} />
       <div>
         <h1 className="flex justify-between text-[#3C3C3E] text-[1.875rem] font-medium leading-normal pb-[0.87rem]">
           <div>{title}</div>
-          <div className="text-[1rem] text-[#828387]">조회 12</div>
+          <div className="text-[1rem] text-[#828387]">조회 {data.view}</div>
         </h1>
         <hr className="h-[0.125rem] bg-[#CBCCCE] w-[35.75rem]" />
       </div>
