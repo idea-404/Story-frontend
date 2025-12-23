@@ -4,7 +4,7 @@ import { useState } from "react";
 import SelectWrite from "@/components/Modal/SelectWrite";
 
 const nooutput = ["/blog/write", "/portfolio/write"];
-const nooutput2 = ["/login", "/signin", "/info"];
+const nooutput2 = ["/login", "/signin", "/info", "/profile-edit"];
 
 const Header = () => {
   const navigate = useNavigate();
