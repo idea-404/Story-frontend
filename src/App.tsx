@@ -6,7 +6,7 @@ import { Login, Writing } from "./page";
 import NotFound from "./pageContainer/NotFoundPage";
 import { Signin } from "@/page";
 import { MyPage, UserPage, ProfileEditPage } from "@/page";
-import { Signin, Commant } from "@/page";
+import { Commant } from "@/page";
 
 function App() {
   const { pathname } = useLocation();
