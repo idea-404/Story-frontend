@@ -54,9 +54,7 @@ export default function MyPage() {
     }
 
     try {
-      const res = await api.get("/api/v1/mypage/view", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await api.get("/api/v1/mypage/view");
       const data = res.data;
 
       const portfolio: Post[] = Array.isArray(data.portfolio)
