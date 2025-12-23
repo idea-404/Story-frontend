@@ -7,7 +7,7 @@ const Commantintput = () => {
           placeholder="댓글을 입력하세요."
           className="h-[4rem] w-[30rem]"
         />
-        <div className="flex justify-end">asdf</div>
+        <div className="flex justify-end text-primary-main1">123/160</div>
       </div>
     </div>
   );
