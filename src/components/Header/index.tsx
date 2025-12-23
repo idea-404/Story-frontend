@@ -1,12 +1,17 @@
-import { Logo, Person, Pen } from "@/assets";
+import { Logo, Person, Pen, Logout } from "@/assets";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import SelectWrite from "@/components/Modal/SelectWrite";
+import useTokenStore from "@/Store/token";
 
 const nooutput = ["/blog/write", "/portfolio/write"];
-const nooutput2 = ["/login", "/signin", "/info"];
+const nooutput2 = ["/login", "/signin", "/info", "/profile-edit"];
 
 const Header = () => {
   const navigate = useNavigate();
+  const [whiteMode, setWhiteMode] = useState(false);
   const { pathname } = useLocation();
+  const { clearAuth } = useTokenStore();
   return (
     <header className="flex justify-center border-b-[0.125rem] border-[#EFF0F2]">
       <div className="flex w-[37.5rem] h-[5.375rem] justify-between items-center">
@@ -20,7 +25,7 @@ const Header = () => {
                 className={
                   "flex items-center gap-[0.625rem] py-[0.375rem] px-[0.875rem] border-[0.025rem] rounded-[1.5rem] font-medium text-[#3C3C3E] hover:bg-[#3C3C3E] hover:text-white transition-colors"
                 }
-                onClick={() => navigate("/blog/write")}
+                onClick={() => setWhiteMode(true)}
               >
                 글 작성 <Pen />
               </button>
@@ -30,7 +35,19 @@ const Header = () => {
             </button>
           </div>
         )}
+        {pathname === "/profile-edit" && (
+          <button
+            onClick={() => {
+              clearAuth();
+              navigate("/login");
+            }}
+            className="flex gap-[0.37rem] text-primary-main1 font-bold rounded-[0.9375rem] bg-[#EFF0F2] px-[1.06rem] py-[0.25rem]"
+          >
+            로그아웃 <Logout />
+          </button>
+        )}
       </div>
+      {whiteMode && <SelectWrite setwritemode={setWhiteMode} />}
     </header>
   );
 };

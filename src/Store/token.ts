@@ -1,5 +1,7 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { jwtDecode } from "jwt-decode";
+
 //토큰 타입 정의
 interface DecodedToken {
   sub: string;
@@ -21,29 +23,36 @@ interface AuthState {
   clearAuth: () => void;
 }
 
-const useTokenStore = create<AuthState>((set) => ({
-  auth: { token: null, user: null },
-  setAuthWithToken: (token: string) => {
-    try {
-      const decoded: DecodedToken = jwtDecode(token);
-      set({
-        auth: {
-          token: token,
-          user: decoded,
-        },
-      });
-    } catch (err) {
-      console.error("JWT decode error:", err);
-      set({
-        auth: { token: null, user: null },
-      });
-    }
-  },
-
-  clearAuth: () => {
-    set({
+const useTokenStore = create<AuthState>()(
+  persist(
+    (set) => ({
       auth: { token: null, user: null },
-    });
-  },
-}));
+      setAuthWithToken: (token: string) => {
+        try {
+          const decoded: DecodedToken = jwtDecode(token);
+          set({
+            auth: {
+              token: token,
+              user: decoded,
+            },
+          });
+        } catch (err) {
+          console.error("JWT decode error:", err);
+          set({
+            auth: { token: null, user: null },
+          });
+        }
+      },
+
+      clearAuth: () => {
+        set({
+          auth: { token: null, user: null },
+        });
+      },
+    }),
+    {
+      name: "auth-storage", // localStorage 키 이름
+    }
+  )
+);
 export default useTokenStore;

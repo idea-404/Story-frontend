@@ -9,6 +9,7 @@ import { Check } from "@/assets";
 import { useTermsStore } from "@/Store/terms";
 import ResendMail from "../Modal/ResendMail";
 import TermsModal from "../Terms";
+import { Login } from "@/API";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
@@ -31,11 +32,11 @@ const Section2 = () => {
     mode: "onChange",
   });
 
-  const onSubmit = (data: LoginFormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     console.log("폼 데이터:", data);
     setEmailState("second");
-
-    // 로그인/회원가입 API 호출
+    const type = pathname === "/login" ? "login" : "signin";
+    await Login(data.email, type);
   };
 
   return (
@@ -65,6 +66,7 @@ const Section2 = () => {
         )}
 
         <button
+          type="submit"
           className={`w-full h-[3rem] text-white rounded-[0.625rem] text-[1.25rem] font-bold ${
             !isValid || !isAgreed
               ? "bg-primary-main3 cursor-not-allowed"
