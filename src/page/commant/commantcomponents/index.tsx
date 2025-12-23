@@ -1,17 +1,32 @@
 import { Person } from "@/assets";
+import { useState, useEffect } from "react";
+import { GetComments } from "@/API/Comment";
 
 interface Comment {
-  comment_id?: number;
-  user_id?: number;
-  content?: string;
-  createAt?: string;
+  comment_id: number;
+  nickname: string;
+  content: string;
+  createAt: string;
 }
 
-interface CommantcomponentsProps {
-  comments: Comment[];
-}
+const Commantcomponents = ({ id, type }: { id: number; type: string }) => {
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [loading, setLoading] = useState(true);
 
-const Commantcomponents = ({ comments }: CommantcomponentsProps) => {
+  useEffect(() => {
+    const fetchComments = async () => {
+      setLoading(true);
+      const result = await GetComments(id, type);
+      if (result) {
+        setComments(result.comment);
+      }
+      setLoading(false);
+    };
+    fetchComments();
+  }, [id, type]);
+
+  if (loading) return <div>댓글 로딩 중...</div>;
+
   return (
     <div className="flex flex-col">
       {comments.map((comment) => (
@@ -19,7 +34,9 @@ const Commantcomponents = ({ comments }: CommantcomponentsProps) => {
           <div className="flex justify-between w-[32rem] mt-[3.75rem] mb-[1.25rem]">
             <div className="flex items-center gap-[0.96rem]">
               <Person h={40} />
-              <div className="text-black text-[1.25rem]">{comment.user_id}</div>
+              <div className="text-black text-[1.25rem]">
+                {comment.nickname}
+              </div>
             </div>
             <div className="flex items-center text-[#828387]">
               {comment.createAt}
