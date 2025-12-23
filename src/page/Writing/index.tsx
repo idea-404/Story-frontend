@@ -206,7 +206,7 @@ const Writing = () => {
             {!Aiasdf ? "나가기" : "돌아가기"}
           </button>
 
-          {!Aiasdf && (
+          {!Aiasdf && writeType === "portfolio" && (
             <button
               onClick={() => setAiasdf(true)}
               className="flex items-center gap-[0.63rem] py-[0.47rem] px-[1.03rem] bg-[#EFF0F2] rounded-[0.9375rem] text-primary-main1 font-bold"
