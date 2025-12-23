@@ -1,8 +1,8 @@
-import { Like, Comment } from "@/assets";
+import { Like, Comment, Star, StarOutline } from "@/assets";
 
 type MainCardProps = {
-  postId: number;
-  userId: number;
+  userId: number; //해당 게시글 작성한 유저의 ID
+  postId: number; //게시글 ID
   nickname: string;
   profileImage: string;
   title: string;
@@ -10,13 +10,18 @@ type MainCardProps = {
   like: number;
   view: number;
   comment: number;
-  thumbnail: string | null;
+  thumbnail?: string | null;
   type: "portfolio" | "blog";
   time: string;
   onClick?: (id: number) => void;
+  showFavorite?: boolean; // 포트폴리오 공개 여부 표시
+  isFavorite?: boolean;
+  onFavoriteClick?: (postId: number) => void;
+  isSelected?: boolean;
+  isEditMode?: boolean;
 };
 
-/**ISO 시간*/
+/** ISO 시간 포맷 */
 function formatTime(isoString: string) {
   const date = new Date(isoString);
   const now = new Date();
@@ -39,7 +44,6 @@ function formatTime(isoString: string) {
 
 export default function MainCard({
   postId,
-  userId,
   nickname,
   profileImage,
   title,
@@ -47,16 +51,37 @@ export default function MainCard({
   like,
   view,
   comment,
-  thumbnail,
+  thumbnail = null,
   type,
   time,
   onClick,
+  showFavorite = false,
+  isFavorite = false,
+  onFavoriteClick,
+  isSelected = false,
+  isEditMode = false,
 }: MainCardProps) {
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onFavoriteClick && onFavoriteClick(postId);
+  };
+
   return (
     <div
-      className="w-[600px] h-[208px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4 flex justify-between items-start"
+      className={`w-[600px] h-[208px] rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-4 flex justify-between items-start relative transition-colors ${
+        isSelected ? "bg-purple-100 border-2 border-primary-main1" : "bg-white"
+      } ${isEditMode ? "cursor-pointer" : ""}`}
       onClick={() => onClick && onClick(postId)}
     >
+      {showFavorite && (
+        <button
+          onClick={handleFavoriteClick}
+          className="absolute top-4 right-4 z-10 focus:outline-none"
+        >
+          {isFavorite ? <Star /> : <StarOutline />}
+        </button>
+      )}
+
       <div className="flex-1">
         <div className="flex items-center gap-2 text-sm text-black">
           <img src={profileImage} className="w-8 h-8 rounded-full" />
