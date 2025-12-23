@@ -2,6 +2,7 @@ import { Logo, Person, Pen, Logout } from "@/assets";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import SelectWrite from "@/components/Modal/SelectWrite";
+import useTokenStore from "@/Store/token";
 
 const nooutput = ["/blog/write", "/portfolio/write"];
 const nooutput2 = ["/login", "/signin", "/info", "/profile-edit"];
@@ -10,6 +11,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [whiteMode, setWhiteMode] = useState(false);
   const { pathname } = useLocation();
+  const { clearAuth } = useTokenStore();
   return (
     <header className="flex justify-center border-b-[0.125rem] border-[#EFF0F2]">
       <div className="flex w-[37.5rem] h-[5.375rem] justify-between items-center">
@@ -34,7 +36,13 @@ const Header = () => {
           </div>
         )}
         {pathname === "/profile-edit" && (
-          <button className="flex gap-[0.37rem] text-primary-main1 font-bold rounded-[0.9375rem] bg-[#EFF0F2] px-[1.06rem] py-[0.25rem]">
+          <button
+            onClick={() => {
+              clearAuth();
+              navigate("/login");
+            }}
+            className="flex gap-[0.37rem] text-primary-main1 font-bold rounded-[0.9375rem] bg-[#EFF0F2] px-[1.06rem] py-[0.25rem]"
+          >
             로그아웃 <Logout />
           </button>
         )}
