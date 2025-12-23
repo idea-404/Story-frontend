@@ -1,6 +1,7 @@
+import { Commentpush } from "@/API/commentpush";
 import { useState } from "react";
 
-const Commantintput = () => {
+const Commantintput = (id: number, type: string) => {
   const [text, settext] = useState("");
   return (
     <div className="flex flex-col justify-center w-[32rem]">
@@ -17,7 +18,10 @@ const Commantintput = () => {
         </div>
       </div>
       <div className="flex justify-end ">
-        <button className="bg-primary-main3 px-[1rem] py-[0.13rem] rounded-[0.4375rem] mt-[0.75rem]">
+        <button
+          onClick={() => Commentpush(id, type, text)}
+          className="bg-primary-main3 px-[1rem] py-[0.13rem] rounded-[0.4375rem] mt-[0.75rem]"
+        >
           댓글 작성
         </button>
       </div>
