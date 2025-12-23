@@ -48,8 +48,33 @@ const Inputheader = ({
     }, 0);
   };
 
+  const uploadImageAndInsert = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const { url } = await res.json();
+
+    insertMarkdown(`![image](${url})`);
+  };
+
   return (
     <div className="flex gap-[0.55rem] items-center w-[37.5rem]">
+      <input
+        type="file"
+        className="hidden"
+        id="imageUpload"
+        onChange={async (e) => {
+          const file = e.target.files?.[0];
+          if (file) {
+            await uploadImageAndInsert(file);
+          }
+        }}
+      />
       <div>
         <HeadingSelect
           value={headingType}
@@ -99,7 +124,11 @@ const Inputheader = ({
         <button onClick={() => insertMarkdown("[]() ", false)}>
           <Link />
         </button>
-        <button>
+        <button
+          onClick={() => {
+            document.getElementById("imageUpload")?.click();
+          }}
+        >
           <Image />
         </button>
       </div>
