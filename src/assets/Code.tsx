@@ -10,11 +10,12 @@ const Code = () => {
       <path
         d="M12 16L8 20L12 24M22 16L26 20L22 24M19 12L15 28"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
 };
+
 export default Code;
