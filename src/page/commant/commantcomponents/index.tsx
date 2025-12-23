@@ -1,10 +1,10 @@
 import { Person } from "@/assets";
 
 interface Comment {
-  comment_id: number;
-  user_id: number;
-  content: string;
-  createAt: string;
+  comment_id?: number;
+  user_id?: number;
+  content?: string;
+  createAt?: string;
 }
 
 interface CommantcomponentsProps {
