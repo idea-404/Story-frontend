@@ -1,7 +1,7 @@
 import { Commentpush } from "@/API/commentpush";
 import { useState } from "react";
 
-const Commantintput = (id: number, type: string) => {
+const Commantintput = ({ id, type }: { id: number; type: string }) => {
   const [text, settext] = useState("");
   return (
     <div className="flex flex-col justify-center w-[32rem]">
