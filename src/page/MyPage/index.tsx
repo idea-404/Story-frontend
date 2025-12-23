@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "@/API/api";
+import useTokenStore from "@/Store/token";
 import { ProfileHeader, MyPageHeader, MainCard, Introduce } from "@/components";
 import Delete from "@/components/Modal/Delete";
 
@@ -31,6 +32,7 @@ type Mode = "none" | "edit" | "delete";
 
 export default function MyPage() {
   const navigate = useNavigate();
+  const { auth } = useTokenStore(); // Zustand store 사용
 
   const [activeTab, setActiveTab] = useState<"blog" | "portfolio" | "intro">(
     "blog"
@@ -42,12 +44,10 @@ export default function MyPage() {
   const [targetPostId, setTargetPostId] = useState<number | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  // 공개글 ID 목록
   const [zerodogPostIds, setZerodogPostIds] = useState<number[]>([]);
 
   const fetchMyPage = async () => {
-    const token = localStorage.getItem("access-token");
-    if (!token) {
+    if (!auth.token) {
       alert("로그인이 필요합니다.");
       navigate("/login");
       return;
@@ -55,7 +55,7 @@ export default function MyPage() {
 
     try {
       const res = await api.get("/api/v1/mypage/view", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${auth.token}` },
       });
       const data = res.data;
 
@@ -90,12 +90,11 @@ export default function MyPage() {
 
   const handleZerodogToggle = async (postId: number) => {
     const isOpen = zerodogPostIds.includes(postId);
-    const token = localStorage.getItem("access-token");
-    if (!token) return;
+    if (!auth.token) return;
 
     try {
       await api.patch(`/api/v1/portfolio/open/${postId}`, null, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${auth.token}` },
       });
 
       setZerodogPostIds((prev) =>
@@ -138,11 +137,8 @@ export default function MyPage() {
     setTargetPostId(null);
   };
 
-  // 게시글 삭제
   const handleDeleteConfirm = async () => {
-    if (!targetPostId) return;
-    const token = localStorage.getItem("access-token");
-    if (!token) return;
+    if (!targetPostId || !auth.token) return;
 
     try {
       const deleteUrl =
@@ -151,10 +147,9 @@ export default function MyPage() {
           : `/api/v1/blog/delete/${targetPostId}`;
 
       await api.delete(deleteUrl, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${auth.token}` },
       });
 
-      // 삭제 후 데이터 다시 불러오기
       await fetchMyPage();
 
       setMode("none");
