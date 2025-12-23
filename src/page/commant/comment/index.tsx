@@ -10,7 +10,7 @@ const Commantintput = () => {
           value={text}
           onChange={(e) => settext(e.target.value.slice(0, 160))}
           placeholder="댓글을 입력하세요."
-          className="h-[4rem] w-[30rem]"
+          className="h-[4rem] w-[30rem] border-0 outline-none focus:outline-none resize-none bg-transparent"
         />
         <div className="flex justify-end text-primary-main1">
           {text.length}/160
