@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import MainCard from "@/components/MainCard";
 import MainHeader from "@/components/MainHeader";
@@ -36,6 +37,8 @@ type Post = {
 };
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
   const [posts, setPosts] = useState<Post[]>([]);
   const [lastId, setLastId] = useState<number | null>(null);
   const [limit] = useState(10);
@@ -63,6 +66,7 @@ const MainPage = () => {
             size: limit,
           },
         });
+
         const newPosts: Post[] = (response.data.data ?? []).map(
           (
             item: Omit<Post, "id"> & { blog_id?: number; portfolio_id?: number }
@@ -100,9 +104,6 @@ const MainPage = () => {
     [limit, sortType, tab, loading, hasMore, lastId]
   );
 
-  /**
-   * 탭/정렬 변경 시 초기화
-   */
   useEffect(() => {
     setPosts([]);
     setHasMore(true);
@@ -124,12 +125,15 @@ const MainPage = () => {
     );
 
     observer.observe(observerRef.current);
-
     return () => observer.disconnect();
   }, [fetchPosts, loading, hasMore, lastId, tab]);
 
   const handleCardClick = (id: number) => {
-    console.log(`Card with id ${id} clicked`);
+    if (tab === "blog") {
+      navigate(`/blog/${id}`);
+    } else {
+      navigate(`/portfolio/${id}`);
+    }
   };
 
   const handleTabChange = (newTab: "blog" | "portfolio") => {
