@@ -5,3 +5,4 @@ export * from "./info";
 export * from "./portfolio";
 export * from "./blogwrite";
 export * from "./writecheck";
+export * from "./Comment";
