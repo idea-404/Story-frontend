@@ -38,3 +38,4 @@ export { default as Out } from "./Out";
 export { default as Back } from "./Back";
 export { default as Waitimage } from "./Waitimage";
 export { default as Re } from "./Re";
+export { default as Logout } from "./Logout";
