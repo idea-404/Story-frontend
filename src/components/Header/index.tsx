@@ -2,7 +2,6 @@ import { Logo, Person, Pen } from "@/assets";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import SelectWrite from "@/components/Modal/SelectWrite";
-import { set } from "zod";
 
 const nooutput = ["/blog/write", "/portfolio/write"];
 const nooutput2 = ["/login", "/signin", "/info"];
