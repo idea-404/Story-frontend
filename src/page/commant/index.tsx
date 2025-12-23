@@ -24,7 +24,7 @@ const Commant = () => {
         <hr className="h-[0.125rem] bg-[#CBCCCE] w-[35.75rem]" />
       </div>
       <div className="flex flex-col gap-[2.75rem]">
-        <div className="w-[35.75rem] h-[59.26vh] mt-[1rem] prose">
+        <div className="w-[35.75rem] mt-[1rem] prose">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeSanitize]}
@@ -33,6 +33,8 @@ const Commant = () => {
           </ReactMarkdown>
         </div>
       </div>
+      <hr className="mt-[4.63rem] h-[0.125rem] bg-[#CBCCCE] w-[35.75rem]" />
+      asdf
     </div>
   );
 };
