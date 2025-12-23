@@ -1,7 +1,8 @@
 import { Like, Comment, Star, StarOutline } from "@/assets";
 
 type MainCardProps = {
-  postId: number;
+  userId: number; //해당 게시글 작성한 유저의 ID
+  postId: number; //게시글 ID
   nickname: string;
   profileImage: string;
   title: string;
