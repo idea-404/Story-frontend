@@ -13,7 +13,7 @@ const Commant = () => {
   const { id } = useParams();
   const location = useLocation();
   const pageType = location.pathname.includes("/blog") ? "blog" : "portfolio";
-  
+  const data = 
   const [title, setTitle] = useState("asdfasdf");
   const [body, setBody] = useState("# asdfasdf");
 
