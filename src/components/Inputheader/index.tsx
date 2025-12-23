@@ -96,7 +96,7 @@ const Inputheader = ({
       </div>
       <Line4 />
       <div className="flex gap-[1.88rem] px-[0.89rem]">
-        <button>
+        <button onClick={() => insertMarkdown("[]() ", false)}>
           <Link />
         </button>
         <button>
