@@ -7,7 +7,7 @@ export default function SearchPage() {
   const [keyword, setKeyword] = useState("");
   const [result, setResult] = useState([]);
   const [lastId, setLastId] = useState(0);
-
+  const [hasSearched, setHasSearched] = useState(false);
   const handleSearch = async () => {
     try {
       const res = await api.get(`/search`, {
@@ -20,6 +20,7 @@ export default function SearchPage() {
 
       const data = res.data.data || [];
       setResult(data);
+      setHasSearched(true);
 
       if (data.length > 0) {
         const nextLastId = data[data.length - 1].id;
@@ -40,7 +41,7 @@ export default function SearchPage() {
       />
 
       <div className="flex flex-col gap-4 mt-6">
-        {result.length === 0 && (
+        {hasSearched && result.length === 0 && (
           <p className="text-sm text-center text-gray-500">
             더 이상 표시할 글이 없습니다.
           </p>
