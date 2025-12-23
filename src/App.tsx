@@ -2,7 +2,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Header } from "./components";
 import SearchPage from "@/page/Search";
 import MainPage from "@/page/MainPage";
-import { Login } from "./page";
+import { Login, Writing } from "./page";
 import NotFound from "./pageContainer/NotFoundPage";
 import { Signin } from "@/page";
 import { MyPage, UserPage, ProfileEditPage } from "@/page";
@@ -15,6 +15,8 @@ function App() {
       {pathname !== "/404" && <Header />}
 
       <Routes>
+        <Route path="/blog/write" element={<Writing />} />
+        <Route path="/portfolio/write" element={<Writing />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/" element={<MainPage />} />
         <Route path="/main" element={<MainPage />} />
