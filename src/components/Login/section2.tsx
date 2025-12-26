@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schema/email";
 import { z } from "zod";
 import type { emailType } from "@/Types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check } from "@/assets";
 import { useTermsStore } from "@/Store/terms";
 import ResendMail from "../Modal/ResendMail";
@@ -23,8 +23,9 @@ const Section2 = () => {
   const [modal, setModal] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
 
-  setIsAgreed(start ? true : false);
-
+  useEffect(() => {
+    setIsAgreed(start ? true : false);
+  }, [pathname, setIsAgreed, start]);
   const {
     register,
     handleSubmit,
