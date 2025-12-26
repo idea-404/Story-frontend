@@ -23,7 +23,7 @@ const Section2 = () => {
   const [modal, setModal] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
 
-  setIsAgreed(start ? true : isAgreed);
+  setIsAgreed(start ? true : false);
 
   const {
     register,
