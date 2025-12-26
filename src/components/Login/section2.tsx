@@ -19,9 +19,11 @@ const Section2 = () => {
   const loginType = pathname === "/login" ? "로그인" : "회원가입";
   const start = pathname === "/login" ? true : false;
   const [emailState, setEmailState] = useState<emailType>("first");
-  const { isAgreed } = useTermsStore();
+  const { isAgreed, setIsAgreed } = useTermsStore();
   const [modal, setModal] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
+
+  setIsAgreed(start ? true : isAgreed);
 
   const {
     register,
