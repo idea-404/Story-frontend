@@ -4,7 +4,7 @@ import api from "./api";
 
 export const TokenCode = async (code: string, type: oauthType) => {
   try {
-    const res = await api.post(`/v1/auth/${type}`, { code: code });
+    const res = await api.post(`/auth/${type}`, { code: code });
     const tokenValue = res.data.token;
     useTokenStore.getState().setAuthWithToken(tokenValue);
     // console.log("받은 토큰:", tokenValue);
