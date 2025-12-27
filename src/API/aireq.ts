@@ -9,7 +9,7 @@ export const Aireq = async (
   setConversionType: React.Dispatch<React.SetStateAction<conversionType>>
 ) => {
   try {
-    const res = await api.post(`/${id}`, {
+    const res = await api.post(`/ola/${id}`, {
       question: body,
     });
     setConversionType("ing");
