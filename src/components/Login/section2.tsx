@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schema/email";
 import { z } from "zod";
 import type { emailType } from "@/Types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check } from "@/assets";
 import { useTermsStore } from "@/Store/terms";
 import ResendMail from "../Modal/ResendMail";
@@ -19,10 +19,13 @@ const Section2 = () => {
   const loginType = pathname === "/login" ? "로그인" : "회원가입";
   const start = pathname === "/login" ? true : false;
   const [emailState, setEmailState] = useState<emailType>("first");
-  const { isAgreed } = useTermsStore();
+  const { isAgreed, setIsAgreed } = useTermsStore();
   const [modal, setModal] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
 
+  useEffect(() => {
+    setIsAgreed(start ? true : false);
+  }, [pathname, setIsAgreed, start]);
   const {
     register,
     handleSubmit,
@@ -35,7 +38,7 @@ const Section2 = () => {
   const onSubmit = async (data: LoginFormData) => {
     console.log("폼 데이터:", data);
     setEmailState("second");
-    const type = pathname === "/login" ? "login" : "signin";
+    const type = pathname === "/login" ? "login" : "sign";
     await Login(data.email, type);
   };
 

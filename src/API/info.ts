@@ -9,7 +9,7 @@ interface FormState {
 
 export const info = async (form: FormState, introduce: string) => {
   try {
-    const res = await api.post(`/signup/inform`, {
+    const res = await api.post(`/auth/signup/inform`, {
       nickname: form.user_name,
       studentId: form.student_id,
       major: form.major,
