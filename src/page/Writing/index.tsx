@@ -56,6 +56,8 @@ const Writing = () => {
 
         // 5초 타이머 시작
         selectionTimerRef.current = setTimeout(() => {
+          if (Aires) return;
+          if (conversionType !== "stay" && conversionType !== "failed") return;
           setShowModal(true);
         }, 5000);
       }
