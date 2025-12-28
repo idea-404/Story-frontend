@@ -57,12 +57,11 @@ export default function MyPage() {
       const res = await api.get("/api/v1/mypage/view", {
         headers: { Authorization: `Bearer ${auth.token}` },
       });
+
       const data = res.data;
 
-      const portfolio: Post[] = Array.isArray(data.portfolio)
-        ? data.portfolio
-        : [];
-      const blog: Post[] = Array.isArray(data.blog) ? data.blog : [];
+      const portfolio = Array.isArray(data.portfolio) ? data.portfolio : [];
+      const blog = Array.isArray(data.blog) ? data.blog : [];
 
       setUserData({
         nickname: data.nickname,
@@ -74,9 +73,19 @@ export default function MyPage() {
       });
 
       setZerodogPostIds(
-        portfolio.filter((post) => post.zerodog).map((post) => post.id)
+        portfolio
+          .filter((post: Post) => post.zerodog)
+          .map((post: Post) => post.id)
       );
-    } catch (e) {
+    } catch (e: any) {
+      const status = e.response?.status;
+
+      if (status === 400 || status === 403) {
+        alert("정보 입력이 필요합니다.");
+        navigate("/info");
+        return;
+      }
+
       console.error(e);
       alert("마이페이지 정보를 불러오는데 실패했습니다.");
     } finally {
@@ -101,7 +110,7 @@ export default function MyPage() {
         isOpen ? prev.filter((id) => id !== postId) : [...prev, postId]
       );
     } catch (e) {
-      console.error("공개여부 변경 실패", e);
+      console.error(e);
       alert("공개여부 변경에 실패했습니다.");
     }
   };
@@ -161,7 +170,15 @@ export default function MyPage() {
     }
   };
 
-  if (loading || !userData) return null;
+  if (loading) return null;
+
+  if (!userData) {
+    return (
+      <div className="mt-20 text-center text-gray-500">
+        마이페이지 정보를 불러올 수 없습니다.
+      </div>
+    );
+  }
 
   const posts = activeTab === "portfolio" ? userData.portfolio : userData.blog;
 
