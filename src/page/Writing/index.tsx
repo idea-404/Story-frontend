@@ -56,8 +56,13 @@ const Writing = () => {
 
         // 5초 타이머 시작
         selectionTimerRef.current = setTimeout(() => {
-          if (Aires) return;
-          if (conversionType !== "stay" && conversionType !== "failed") return;
+          // Aires가 이미 실행 중이거나, conversionType이 stay나 failed가 아니면 팝업 안띄움
+          if (
+            Aires ||
+            (conversionType !== "stay" && conversionType !== "failed")
+          ) {
+            return;
+          }
           setShowModal(true);
         }, 5000);
       }
