@@ -4,6 +4,8 @@ import axios from "axios";
 import api from "@/API/api";
 import MainCard from "@/components/MainCard";
 import MainHeader from "@/components/MainHeader";
+import useTokenStore from "@/Store/token";
+
 
 axios.defaults.baseURL = "/api/v1/main";
 
@@ -47,8 +49,9 @@ const MainPage = () => {
 
       if (token) {
         try {
-          const res = await api.post("/auth/verify", { token });
+          const res = await api.post(`/auth/verify?token=${token}`);
           console.log("토큰 검증 성공:", res.data);
+          useTokenStore.getState().setAuthWithToken(res.data.token);
 
           if (res.data.role === "UNVERIFIED") {
             navigate("/info");
