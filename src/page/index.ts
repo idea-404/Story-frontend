@@ -6,3 +6,4 @@ export { default as MyPage } from "./MyPage";
 export { default as UserPage } from "./UserPage";
 export { default as ProfileEditPage } from "./ProfileEditPage";
 export { default as Writing } from "./Writing";
+export { default as Commant } from "./commant";

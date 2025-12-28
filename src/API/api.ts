@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: `${import.meta.env.VITE_APP_API_BASE_URL}/v1`,
+  baseURL: `${import.meta.env.VITE_APP_API_BASE_URL}v1`,
 });
 
 // 요청 인터셉터: 모든 요청에 토큰 자동 추가
@@ -13,7 +13,7 @@ api.interceptors.request.use(
       try {
         const parsedData = JSON.parse(storedData);
         const token = parsedData?.state?.auth?.token;
-        
+
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }

@@ -6,6 +6,7 @@ import { Login, Writing } from "./page";
 import NotFound from "./pageContainer/NotFoundPage";
 import { Signin } from "@/page";
 import { MyPage, UserPage, ProfileEditPage } from "@/page";
+import { Commant } from "@/page";
 
 function App() {
   const { pathname } = useLocation();
@@ -15,6 +16,8 @@ function App() {
       {pathname !== "/404" && <Header />}
 
       <Routes>
+        <Route path="/blog/:id" element={<Commant />} />
+        <Route path="/portfolio/:id" element={<Commant />} />
         <Route path="/blog/write" element={<Writing />} />
         <Route path="/portfolio/write" element={<Writing />} />
         <Route path="/search" element={<SearchPage />} />
