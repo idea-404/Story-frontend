@@ -16,6 +16,7 @@ function App() {
       {pathname !== "/404" && <Header />}
 
       <Routes>
+        <Route path="/login/oauth2/code/google" element={<Login />} />
         <Route path="/blog/:id" element={<Commant />} />
         <Route path="/portfolio/:id" element={<Commant />} />
         <Route path="/blog/write" element={<Writing />} />
