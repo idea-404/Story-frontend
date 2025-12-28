@@ -14,7 +14,7 @@ export const Aireq = async (
     });
     setConversionType("ing");
     if (res.status === 200) {
-      useAiResponseStore.getState().setResponse(res.data);
+      useAiResponseStore.getState().setResponse(res.data.answer); //응답 확인하기
       setConversionType("Ok");
     }
   } catch (error) {
