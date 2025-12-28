@@ -1,6 +1,7 @@
 import { SigninPerson, Star, Class, Grade, Number, Major } from "@/assets";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { info } from "@/API";
 
 interface FormState {
@@ -16,6 +17,8 @@ type ID = {
 };
 
 const Signin = () => {
+  const navigate = useNavigate();
+
   /*소개글 설정*/
   const MAX = 128;
   const [introduce, setintroduce] = useState("");
@@ -132,7 +135,7 @@ const Signin = () => {
             className={`w-full text-white py-[0.875rem] rounded-[0.75rem] font-bold text-[20px] ${
               button ? " bg-primary-main2" : "bg-primary-main3"
             }`}
-            onClick={() => info(form, introduce)}
+            onClick={() => info(form, introduce, navigate)}
           >
             완료
           </button>
