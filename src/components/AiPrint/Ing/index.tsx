@@ -5,7 +5,7 @@ const Ing = () => {
       <div className="flex flex-col items-center gap-4">
         <Re />
         <img
-          src="/public/Ols_veryhappy.png"
+          src="public/Ola_veryhappy.png"
           className="w-[7.8125rem] h-[8.75rem]"
         />
       </div>
