@@ -1,6 +1,7 @@
 import type { oauthType } from "@/Types";
 import useTokenStore from "@/Store/token";
 import api from "./api";
+import type { NavigateFunction } from "react-router-dom";
 
 export const TokenCode = async (code: string, type: oauthType) => {
   try {
@@ -8,6 +9,9 @@ export const TokenCode = async (code: string, type: oauthType) => {
     const tokenValue = res.data.token;
     useTokenStore.getState().setAuthWithToken(tokenValue);
     // console.log("받은 토큰:", tokenValue);
+    if (res.data.role === "UNVERIFIED") {
+      navigate("/info");
+    }
   } catch (error) {
     console.error("Error fetching token:", error);
   }
