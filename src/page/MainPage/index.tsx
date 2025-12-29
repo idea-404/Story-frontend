@@ -23,7 +23,6 @@ axios.defaults.baseURL = "/api/v1/main";
  * @property {string|null} thumbnail - 썸네일 이미지 URL (없으면 null)
  * @property {string} time - 업로드 시간
  */
-
 type Post = {
   id: number;
   userId: number;
@@ -48,7 +47,6 @@ const MainPage = () => {
   const [lastId, setLastId] = useState<number | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
-
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
   const [sortType, setSortType] = useState<SortType>("view");
   const [isFirstLoad, setIsFirstLoad] = useState(true);
@@ -70,9 +68,11 @@ const MainPage = () => {
       setLoading(true);
 
       const actualSort = isFirstLoad ? "latest" : sortType;
+      // API 엔드포인트를 /blog/id 형식으로 변경
+      const endpoint = actualSort === "latest" ? "latest" : "id";
 
       try {
-        const res = await axios.get(`/${tab}/${actualSort}`, {
+        const res = await axios.get(`/${tab}/${endpoint}`, {
           params: {
             lastId: cursor,
             size: 10,
@@ -175,7 +175,6 @@ const MainPage = () => {
 
       {loading && <p>로딩 중...</p>}
       {!loading && !hasMore && <p>더 이상 글이 없습니다.</p>}
-
       <div ref={observerRef} className="h-10" />
     </div>
   );
