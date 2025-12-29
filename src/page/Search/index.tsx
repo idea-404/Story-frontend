@@ -55,38 +55,40 @@ export default function SearchPage() {
   };
 
   return (
-    <div>
-      <Search
-        value={keyword}
-        onChange={(v) => setKeyword(v)}
-        onSearch={handleSearch}
-      />
+    <div className="w-full flex justify-center">
+      <div className="w-full max-w-3xl px-4 py-6">
+        <Search
+          value={keyword}
+          onChange={(v) => setKeyword(v)}
+          onSearch={handleSearch}
+        />
 
-      <div className="flex flex-col gap-4 mt-6">
-        {hasSearched && result.length === 0 && (
-          <p className="text-sm text-center text-gray-500">
-            더 이상 표시할 글이 없습니다.
-          </p>
-        )}
+        <div className="w-full flex flex-col gap-10 mt-6">
+          {hasSearched && result.length === 0 && (
+            <p className="text-sm text-center text-gray-500">
+              더 이상 표시할 글이 없습니다.
+            </p>
+          )}
 
-        {result.map((item) => (
-          <MainCard
-            key={`${item.__type}-${item.id}`}
-            postId={item.id}
-            type={item.__type}
-            userId={item.userId}
-            nickname={item.nickname}
-            profileImage={item.profileImage ?? ""}
-            title={item.title}
-            content={item.content}
-            like={item.like}
-            view={item.view}
-            comment={item.comment}
-            thumbnail={item.thumbnail}
-            time={item.createdAt ?? ""}
-            onClick={(id) => console.log(id)}
-          />
-        ))}
+          {result.map((item) => (
+            <MainCard
+              key={`${item.__type}-${item.id}`}
+              postId={item.id}
+              type={item.__type}
+              userId={item.userId}
+              nickname={item.nickname}
+              profileImage={item.profileImage ?? ""}
+              title={item.title}
+              content={item.content}
+              like={item.like}
+              view={item.view}
+              comment={item.comment}
+              thumbnail={item.thumbnail}
+              time={item.createdAt ?? ""}
+              onClick={(id) => console.log(id)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
