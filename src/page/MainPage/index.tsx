@@ -1,28 +1,10 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import api from "@/API/api";
 import MainCard from "@/components/MainCard";
 import MainHeader from "@/components/MainHeader";
 import useTokenStore from "@/Store/token";
 
-axios.defaults.baseURL = "/api/v1/main";
-
-/**
- * 게시글 타입
- * @typedef {Object} Post
- * @property {number} id - 게시글 ID
- * @property {number} userId - 작성자(유저) ID
- * @property {string} nickname - 작성자 닉네임
- * @property {string} profileImage - 작성자 프사 URL
- * @property {string} title - 글 제목
- * @property {string} content - 글 미리보기
- * @property {number} like - 좋아요 수
- * @property {number} view - 조회 수
- * @property {number} comment - 댓글 수
- * @property {string|null} thumbnail - 썸네일 이미지 URL (없으면 null)
- * @property {string} time - 업로드 시간
- */
 type Post = {
   id: number;
   userId: number;
@@ -67,7 +49,7 @@ const MainPage = () => {
       setLoading(true);
 
       try {
-        const res = await axios.get(`/${tab}/${sortType}`, {
+        const res = await api.get(`/main/${tab}/${sortType}`, {
           params: {
             lastId: cursor,
             size: 10,
@@ -92,12 +74,13 @@ const MainPage = () => {
 
         if (newPosts.length === 0) {
           setHasMore(false);
-        } else {
-          setPosts((prev) =>
-            cursor === null ? newPosts : [...prev, ...newPosts]
-          );
-          setLastId(newPosts[newPosts.length - 1].id);
+          return;
         }
+
+        setPosts((prev) =>
+          cursor === null ? newPosts : [...prev, ...newPosts]
+        );
+        setLastId(newPosts[newPosts.length - 1].id);
       } catch {
         setHasMore(false);
       } finally {
@@ -112,7 +95,7 @@ const MainPage = () => {
     setLastId(null);
     setHasMore(true);
     fetchPosts(null);
-  }, [tab, sortType]);
+  }, [tab, sortType, fetchPosts]);
 
   useEffect(() => {
     if (!observerRef.current) return;
@@ -123,7 +106,7 @@ const MainPage = () => {
           fetchPosts(lastId);
         }
       },
-      { threshold: 1 }
+      { threshold: 0 }
     );
 
     observer.observe(observerRef.current);
@@ -166,7 +149,11 @@ const MainPage = () => {
       </div>
 
       {loading && <p>로딩 중...</p>}
-      {!loading && !hasMore && <p>더 이상 글이 없습니다.</p>}
+      {!loading && posts.length === 0 && <p>게시글이 없습니다.</p>}
+      {!loading && !hasMore && posts.length > 0 && (
+        <p>더 이상 글이 없습니다.</p>
+      )}
+
       <div ref={observerRef} className="h-10" />
     </div>
   );
