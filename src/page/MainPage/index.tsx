@@ -40,15 +40,11 @@ const MainPage = () => {
   }, [navigate]);
 
   const fetchPosts = useCallback(async () => {
-    if (loading) return;
-
     setLoading(true);
 
     try {
       const res = await api.get(`/main/${tab}/${sortType}`, {
-        params: {
-          size: 10,
-        },
+        params: { size: 10 },
       });
 
       const list =
@@ -74,10 +70,9 @@ const MainPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [tab, sortType, loading]);
+  }, [tab, sortType]);
 
   useEffect(() => {
-    setPosts([]);
     fetchPosts();
   }, [tab, sortType, fetchPosts]);
 
