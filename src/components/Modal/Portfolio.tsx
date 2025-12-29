@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PublishPortfolio } from "@/assets";
 import { write } from "@/API";
+import { useNavigate } from "react-router-dom";
 
 export default function Portfolio({
   setEnd,
@@ -11,6 +12,7 @@ export default function Portfolio({
   title: string;
   body: string;
 }) {
+  const navigate = useNavigate();
   const [text, setText] = useState(body.slice(0, 64));
 
   return (
@@ -51,6 +53,7 @@ export default function Portfolio({
               onClick={async () => {
                 await write(title, body, text);
                 setEnd(false);
+                navigate("/mypage");
               }}
               className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white"
             >

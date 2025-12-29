@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { PublishBlog } from "@/assets";
 import { blogwrite } from "@/API";
+import { useNavigate } from "react-router-dom";
 
 export default function Blog({
   setEnd,
@@ -11,6 +12,7 @@ export default function Blog({
   title: string;
   body: string;
 }) {
+  const navigate = useNavigate();
   const [text, setText] = useState(body.slice(0, 64));
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
 
@@ -102,6 +104,7 @@ export default function Blog({
               onClick={async () => {
                 await blogwrite(title, body, text, thumbnailUrl);
                 setEnd(false);
+                navigate("/mypage");
               }}
               className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white"
             >

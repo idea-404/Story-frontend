@@ -46,7 +46,12 @@ const Printbody = ({
             임시저장
           </button>
         )}
-        <button onClick={() => setEnd(true)} className={buttonStyle}>
+        <button
+          onClick={() => {
+            setEnd(true);
+          }}
+          className={buttonStyle}
+        >
           작성완료
         </button>
       </div>
