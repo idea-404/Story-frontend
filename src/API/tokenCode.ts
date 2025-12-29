@@ -4,12 +4,11 @@ import api from "./api";
 import type { NavigateFunction } from "react-router-dom";
 
 export const TokenCode = async (
-  code: string,
   type: oauthType,
   navigate: NavigateFunction
 ) => {
   try {
-    const res = await api.post(`/auth//oauth/success`, { code: code });
+    const res = await api.post(`/auth//oauth/success`);
     const tokenValue = res.data.token;
     useTokenStore.getState().setAuthWithToken(tokenValue);
     console.log(type);
