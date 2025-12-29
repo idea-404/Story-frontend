@@ -6,6 +6,7 @@ import AIFeedback from "@/components/Modal/AIFeedback";
 import { useNavigate, useLocation } from "react-router-dom";
 import type { conversionType } from "@/Types";
 import Blog from "@/components/Modal/Blog";
+import api from "@/API/api";
 
 const Writing = () => {
   const [text, setText] = useState<string>("");
@@ -126,16 +127,13 @@ const Writing = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
+      const res = await api.post("/image/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      if (!res.ok) {
-        throw new Error(`업로드 실패: ${res.status}`);
-      }
-
-      const { url } = await res.json();
+      const { url } = res.data;
       insertAtCursor(`![image](${url})`);
     } catch (error) {
       console.error("이미지 업로드 실패:", error);
