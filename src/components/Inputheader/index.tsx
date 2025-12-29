@@ -1,6 +1,7 @@
 import { RefObject, useState } from "react";
 import HeadingSelect from "@/assets/select/HeadingSelect";
 import { Line3, Line4, Dotline, Quotes, Code, Link, Image } from "@/assets";
+import api from "@/API/api";
 
 interface InputheaderProps {
   textareaRef: RefObject<HTMLTextAreaElement>;
@@ -49,17 +50,22 @@ const Inputheader = ({
   };
 
   const uploadImageAndInsert = async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
+      const res = await api.post("/image/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-    const { url } = await res.json();
-
-    insertMarkdown(`![image](${url})`);
+      const { url } = res.data;
+      insertMarkdown(`![image](${url})`);
+    } catch (error) {
+      console.error("이미지 업로드 실패:", error);
+      alert("이미지 업로드에 실패했습니다.");
+    }
   };
 
   return (
