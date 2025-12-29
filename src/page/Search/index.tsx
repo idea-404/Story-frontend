@@ -12,10 +12,10 @@ type SearchItem = {
   like: number;
   view: number;
   comment: number;
-  createdAt: string;
+  createdAt?: string;
   thumbnail: string | null;
-  portfolio_id?: number | null;
   profileImage?: string | null;
+
   __type: "portfolio" | "blog";
 };
 
@@ -33,9 +33,12 @@ export default function SearchPage() {
         },
       });
 
-      const data = res.data?.data ?? {};
-      const portfolio = Array.isArray(data.portfolio) ? data.portfolio : [];
-      const blog = Array.isArray(data.blog) ? data.blog : [];
+      const payload = res.data?.data ?? res.data ?? {};
+
+      const portfolio = Array.isArray(payload.portfolio)
+        ? payload.portfolio
+        : [];
+      const blog = Array.isArray(payload.blog) ? payload.blog : [];
 
       const merged: SearchItem[] = [
         ...portfolio.map((x: any) => ({ ...x, __type: "portfolio" as const })),
@@ -73,14 +76,14 @@ export default function SearchPage() {
             type={item.__type}
             userId={item.userId}
             nickname={item.nickname}
-            profileImage={item.profileImage || ""}
+            profileImage={item.profileImage ?? ""}
             title={item.title}
             content={item.content}
             like={item.like}
             view={item.view}
             comment={item.comment}
             thumbnail={item.thumbnail}
-            time={item.createdAt}
+            time={item.createdAt ?? ""}
             onClick={(id) => console.log(id)}
           />
         ))}
