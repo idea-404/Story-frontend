@@ -51,9 +51,11 @@ export default function Portfolio({
             </button>
             <button
               onClick={async () => {
-                await write(title, body, text);
-                setEnd(false);
-                navigate("/mypage");
+                const success = await write(title, body, text);
+                if (success) {
+                  setEnd(false);
+                  navigate("/mypage");
+                }
               }}
               className="rounded-xl bg-primary-main1 px-5 py-2 text-sm text-white"
             >

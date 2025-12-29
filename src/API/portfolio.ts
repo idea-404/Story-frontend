@@ -5,7 +5,7 @@ export const write = async (
   title: string,
   content: string,
   introduce: string
-) => {
+): Promise<boolean> => {
   try {
     const res = await api.post(`/portfolio/write`, {
       title,
@@ -14,7 +14,9 @@ export const write = async (
     });
     if (res.status === 201) {
       alert("포트폴리오가 성공적으로 저장되었습니다.");
+      return true;
     }
+    return false;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       const status = error.response.status;
@@ -30,5 +32,6 @@ export const write = async (
       console.error("포트폴리오 저장 오류:", error);
       alert("예상치 못한 오류가 발생했습니다.");
     }
+    return false;
   }
 };
