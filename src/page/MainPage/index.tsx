@@ -6,7 +6,6 @@ import MainCard from "@/components/MainCard";
 import MainHeader from "@/components/MainHeader";
 import useTokenStore from "@/Store/token";
 
-
 axios.defaults.baseURL = "/api/v1/main";
 
 /**
@@ -39,145 +38,121 @@ type Post = {
   time: string;
 };
 
+type SortType = "view" | "like" | "comment";
+
 const MainPage = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const verifyToken = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get("token");
-
-      if (token) {
-        try {
-          const res = await api.post(`/auth/verify?token=${token}`);
-          console.log("토큰 검증 성공:", res.data);
-          useTokenStore.getState().setAuthWithToken(res.data.token);
-
-          if (res.data.role === "UNVERIFIED") {
-            navigate("/info");
-          }
-        } catch (verifyError) {
-          console.error("토큰 검증 오류:", verifyError);
-        }
-      }
-    };
-
-    verifyToken();
-  }, [navigate]);
+  const observerRef = useRef<HTMLDivElement | null>(null);
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [lastId, setLastId] = useState<number | null>(null);
-  const [limit] = useState(10);
-  const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [tab, setTab] = useState<"blog" | "portfolio">("blog");
-  const [sortType, setSortType] = useState<"view" | "like" | "comment">("view");
+  const [loading, setLoading] = useState(false);
 
-  const observerRef = useRef<HTMLDivElement | null>(null);
+  const [tab, setTab] = useState<"blog" | "portfolio">("blog");
+  const [sortType, setSortType] = useState<SortType>("view");
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get("token");
+    if (!token) return;
+
+    api.post(`/auth/verify?token=${token}`).then((res) => {
+      useTokenStore.getState().setAuthWithToken(res.data.token);
+      if (res.data.role === "UNVERIFIED") navigate("/info");
+    });
+  }, [navigate]);
 
   const fetchPosts = useCallback(
-    async (
-      currentLastId: number | null = lastId,
-      currentTab: "blog" | "portfolio" = tab
-    ) => {
-      if (currentLastId !== null && (loading || !hasMore)) return;
+    async (cursor: number | null = null) => {
+      if (loading || !hasMore) return;
 
       setLoading(true);
 
+      const actualSort = isFirstLoad ? "latest" : sortType;
+
       try {
-        const baseURL = currentTab === "blog" ? "/blog" : "/portfolio";
-        const response = await axios.get(`${baseURL}/${sortType}`, {
+        const res = await axios.get(`/${tab}/${actualSort}`, {
           params: {
-            lastId: currentLastId,
-            size: limit,
+            lastId: cursor,
+            size: 10,
           },
         });
 
-        const newPosts: Post[] = (response.data.data ?? []).map(
-          (
-            item: Omit<Post, "id"> & { blog_id?: number; portfolio_id?: number }
-          ) => ({
-            id: (item.blog_id ?? item.portfolio_id)!,
-            userId: item.userId,
-            nickname: item.nickname,
-            profileImage: item.profileImage,
-            title: item.title,
-            content: item.content,
-            like: item.like,
-            view: item.view,
-            comment: item.comment,
-            thumbnail: item.thumbnail,
-            time: item.time,
-          })
-        );
+        const list = res.data.data ?? [];
+
+        const newPosts: Post[] = list.map((item: any) => ({
+          id: item.blog_id ?? item.portfolio_id,
+          userId: item.userId,
+          nickname: item.nickname,
+          profileImage: item.profileImage,
+          title: item.title,
+          content: item.content,
+          like: item.like,
+          view: item.view,
+          comment: item.comment,
+          thumbnail: item.thumbnail,
+          time: item.time,
+        }));
 
         if (newPosts.length === 0) {
-          if (currentLastId === null) setPosts([]);
           setHasMore(false);
         } else {
           setPosts((prev) =>
-            currentLastId === null ? newPosts : [...prev, ...newPosts]
+            cursor === null ? newPosts : [...prev, ...newPosts]
           );
           setLastId(newPosts[newPosts.length - 1].id);
         }
-      } catch (error) {
-        console.error("데이터 가져오기 실패:", error);
+
+        if (isFirstLoad) setIsFirstLoad(false);
+      } catch {
         setHasMore(false);
       } finally {
         setLoading(false);
       }
     },
-    [limit, sortType, tab, loading, hasMore, lastId]
+    [tab, sortType, isFirstLoad, loading, hasMore]
   );
 
   useEffect(() => {
     setPosts([]);
-    setHasMore(true);
     setLastId(null);
-    setLoading(true);
-    fetchPosts(null, tab);
+    setHasMore(true);
+    setIsFirstLoad(true);
+    fetchPosts(null);
   }, [tab, sortType]);
 
   useEffect(() => {
     if (!observerRef.current) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !loading && hasMore) {
-          fetchPosts(lastId, tab);
+      ([entry]) => {
+        if (entry.isIntersecting && hasMore && !loading) {
+          fetchPosts(lastId);
         }
       },
-      { threshold: 1.0 }
+      { threshold: 1 }
     );
 
     observer.observe(observerRef.current);
     return () => observer.disconnect();
-  }, [fetchPosts, loading, hasMore, lastId, tab]);
+  }, [fetchPosts, lastId, hasMore, loading]);
 
   const handleCardClick = (id: number) => {
-    if (tab === "blog") {
-      navigate(`/blog/${id}`);
-    } else {
-      navigate(`/portfolio/${id}`);
-    }
-  };
-
-  const handleTabChange = (newTab: "blog" | "portfolio") => {
-    if (newTab === tab) return;
-    setTab(newTab);
+    navigate(`/${tab}/${id}`);
   };
 
   return (
-    <div className="p-4 bg-white min-h-screen flex flex-col items-center">
+    <div className="p-4 min-h-screen flex flex-col items-center">
       <MainHeader
-        onNavigate={(page) => console.log(`Navigate to ${page}`)}
         activeTab={tab}
-        onSelectTab={handleTabChange}
+        onSelectTab={setTab}
         ViewChange={setSortType}
         activeSort={sortType}
+        onNavigate={() => {}}
       />
 
-      <div className="flex flex-col gap-[2.75rem] w-full max-w-3xl">
+      <div className="flex flex-col gap-10 w-full max-w-3xl">
         {posts.map((post) => (
           <MainCard
             key={post.id}
@@ -198,10 +173,8 @@ const MainPage = () => {
         ))}
       </div>
 
-      {loading && <p className="text-gray-500">로딩 중..</p>}
-      {!loading && !hasMore && (
-        <p className="text-gray-500">더 이상 표시할 글이 없습니다.</p>
-      )}
+      {loading && <p>로딩 중...</p>}
+      {!loading && !hasMore && <p>더 이상 글이 없습니다.</p>}
 
       <div ref={observerRef} className="h-10" />
     </div>
