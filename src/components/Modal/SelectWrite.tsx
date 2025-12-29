@@ -9,8 +9,14 @@ export default function SelectWrite({
   const navigate = useNavigate();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="w-[280px] rounded-xl bg-white px-6 py-5 text-center">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+      onClick={() => setwritemode(false)}
+    >
+      <div
+        className="w-[280px] rounded-xl bg-white px-6 py-5 text-center"
+        onClick={(e) => e.stopPropagation()}
+      >
         <p className="mb-5 text-sm font-medium text-gray-800">
           무슨 글을 작성하실 건가요?
         </p>
