@@ -102,7 +102,7 @@ export default function MyPage() {
     if (!auth.token) return;
 
     try {
-      await api.patch(`/api/v1/portfolio/open/${postId}`, null, {
+      await api.patch(`/portfolio/open/${postId}`, null, {
         headers: { Authorization: `Bearer ${auth.token}` },
       });
 
@@ -152,8 +152,8 @@ export default function MyPage() {
     try {
       const deleteUrl =
         activeTab === "portfolio"
-          ? `/api/v1/portfolio/delete/${targetPostId}`
-          : `/api/v1/blog/delete/${targetPostId}`;
+          ? `/portfolio/delete/${targetPostId}`
+          : `/blog/delete/${targetPostId}`;
 
       await api.delete(deleteUrl, {
         headers: { Authorization: `Bearer ${auth.token}` },

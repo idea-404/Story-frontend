@@ -38,7 +38,7 @@ export default function UserPage() {
 
     const fetchUserProfile = async () => {
       try {
-        const res = await api.get(`/api/v1/profile/${id}`);
+        const res = await api.get(`/profile/${id}`);
         const data = res.data;
 
         setUserData({
