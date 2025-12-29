@@ -22,6 +22,8 @@ function App() {
         <Route path="/portfolio/:id" element={<Commant />} />
         <Route path="/blog/write" element={<Writing />} />
         <Route path="/portfolio/write" element={<Writing />} />
+        <Route path="/blog/write/:id" element={<Writing />} />
+        <Route path="/portfolio/write/:id" element={<Writing />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/" element={<MainPage />} />
         <Route path="/main" element={<MainPage />} />
