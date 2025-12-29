@@ -9,9 +9,10 @@ export const TokenCode = async (
   navigate: NavigateFunction
 ) => {
   try {
-    const res = await api.post(`/auth/${type}`, { code: code });
+    const res = await api.post(`/auth//oauth/success`, { code: code });
     const tokenValue = res.data.token;
     useTokenStore.getState().setAuthWithToken(tokenValue);
+    console.log(type);
     // console.log("받은 토큰:", tokenValue);
     if (res.data.role === "UNVERIFIED") {
       navigate("/info");
