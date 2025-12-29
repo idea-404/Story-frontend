@@ -34,6 +34,7 @@ const MainPage = () => {
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
   const [sortType, setSortType] = useState<SortType>("view");
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     const token = new URLSearchParams(window.location.search).get("token");
@@ -46,7 +47,7 @@ const MainPage = () => {
   }, [navigate]);
 
   const fetchPosts = useCallback(
-    async (cursor: number | null = null) => {
+    async (cursor: number | null) => {
       if (loading || !hasMore) return;
 
       setLoading(true);
@@ -83,8 +84,7 @@ const MainPage = () => {
           );
           setLastId(newPosts[newPosts.length - 1].id);
         }
-      } catch (e) {
-        console.error("게시글 불러오기 실패", e);
+      } catch {
         setHasMore(false);
       } finally {
         setLoading(false);
@@ -97,11 +97,16 @@ const MainPage = () => {
     setPosts([]);
     setLastId(null);
     setHasMore(true);
-    fetchPosts(null);
+    setInitialized(false);
+
+    fetchPosts(null).then(() => {
+      setInitialized(true);
+    });
   }, [tab, sortType, fetchPosts]);
 
   useEffect(() => {
     if (!observerRef.current) return;
+    if (!initialized) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -109,12 +114,15 @@ const MainPage = () => {
           fetchPosts(lastId);
         }
       },
-      { threshold: 1 }
+      {
+        threshold: 0,
+        rootMargin: "200px",
+      }
     );
 
     observer.observe(observerRef.current);
     return () => observer.disconnect();
-  }, [fetchPosts, lastId, hasMore, loading]);
+  }, [initialized, fetchPosts, lastId, hasMore, loading]);
 
   const handleCardClick = (id: number) => {
     navigate(`/${tab}/${id}`);
