@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "@/API/api";
 import MainCard from "@/components/MainCard";
@@ -23,11 +23,8 @@ type SortType = "view" | "like" | "comment";
 
 const MainPage = () => {
   const navigate = useNavigate();
-  const observerRef = useRef<HTMLDivElement | null>(null);
 
   const [posts, setPosts] = useState<Post[]>([]);
-  const [lastId, setLastId] = useState<number | null>(null);
-  const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
   const [sortType, setSortType] = useState<SortType>("view");
@@ -42,76 +39,47 @@ const MainPage = () => {
     });
   }, [navigate]);
 
-  const fetchPosts = useCallback(
-    async (cursor: number | null) => {
-      if (loading) return;
+  const fetchPosts = useCallback(async () => {
+    if (loading) return;
 
-      setLoading(true);
+    setLoading(true);
 
-      try {
-        const res = await api.get(`/main/${tab}/${sortType}`, {
-          params: {
-            lastId: cursor,
-            size: 10,
-          },
-        });
+    try {
+      const res = await api.get(`/main/${tab}/${sortType}`, {
+        params: {
+          size: 10,
+        },
+      });
 
-        const list = res.data.data ?? [];
+      const list =
+        tab === "blog" ? res.data.blog ?? [] : res.data.portfolio ?? [];
 
-        if (list.length === 0) {
-          setHasMore(false);
-          return;
-        }
+      const newPosts: Post[] = list.map((item: any) => ({
+        id: item.blog_id ?? item.portfolio_id,
+        userId: item.userId,
+        nickname: item.nickname,
+        profileImage: item.profileImage,
+        title: item.title,
+        content: item.content,
+        like: item.like,
+        view: item.view,
+        comment: item.comment,
+        thumbnail: item.thumbnail,
+        time: item.time,
+      }));
 
-        const newPosts: Post[] = list.map((item: any) => ({
-          id: item.blog_id ?? item.portfolio_id,
-          userId: item.userId,
-          nickname: item.nickname,
-          profileImage: item.profileImage,
-          title: item.title,
-          content: item.content,
-          like: item.like,
-          view: item.view,
-          comment: item.comment,
-          thumbnail: item.thumbnail,
-          time: item.time,
-        }));
-
-        setPosts((prev) =>
-          cursor === null ? newPosts : [...prev, ...newPosts]
-        );
-        setLastId(newPosts[newPosts.length - 1].id);
-      } catch {
-        setHasMore(false);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [tab, sortType, loading]
-  );
+      setPosts(newPosts);
+    } catch {
+      setPosts([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [tab, sortType, loading]);
 
   useEffect(() => {
     setPosts([]);
-    setLastId(null);
-    setHasMore(true);
-    fetchPosts(null);
-  }, [tab, sortType]);
-
-  useEffect(() => {
-    if (!observerRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && hasMore && !loading) {
-          fetchPosts(lastId);
-        }
-      },
-      { threshold: 0 }
-    );
-
-    observer.observe(observerRef.current);
-    return () => observer.disconnect();
-  }, [lastId, hasMore, loading, fetchPosts]);
+    fetchPosts();
+  }, [tab, sortType, fetchPosts]);
 
   const handleCardClick = (id: number) => {
     navigate(`/${tab}/${id}`);
@@ -150,11 +118,6 @@ const MainPage = () => {
 
       {loading && <p>로딩 중...</p>}
       {!loading && posts.length === 0 && <p>게시글이 없습니다.</p>}
-      {!loading && !hasMore && posts.length > 0 && (
-        <p>더 이상 글이 없습니다.</p>
-      )}
-
-      <div ref={observerRef} className="h-10" />
     </div>
   );
 };
