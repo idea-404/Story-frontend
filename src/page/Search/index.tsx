@@ -10,7 +10,7 @@ export default function SearchPage() {
   const [hasSearched, setHasSearched] = useState(false);
   const handleSearch = async () => {
     try {
-      const res = await api.get(`/search`, {
+      const res = await api.get(`/main/search`, {
         params: {
           keyword,
           lastId: 0,
