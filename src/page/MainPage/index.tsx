@@ -8,21 +8,6 @@ import useTokenStore from "@/Store/token";
 
 axios.defaults.baseURL = "/api/v1/main";
 
-/**
- * 게시글 타입
- * @typedef {Object} Post
- * @property {number} id - 게시글 ID
- * @property {number} userId - 작성자(유저) ID
- * @property {string} nickname - 작성자 닉네임
- * @property {string} profileImage - 작성자 프사 URL
- * @property {string} title - 글 제목
- * @property {string} content - 글 미리보기
- * @property {number} like - 좋아요 수
- * @property {number} view - 조회 수
- * @property {number} comment - 댓글 수
- * @property {string|null} thumbnail - 썸네일 이미지 URL (없으면 null)
- * @property {string} time - 업로드 시간
- */
 type Post = {
   id: number;
   userId: number;
@@ -63,7 +48,6 @@ const MainPage = () => {
   const fetchPosts = useCallback(
     async (cursor: number | null = null) => {
       if (loading || !hasMore) return;
-
       setLoading(true);
 
       try {
@@ -74,7 +58,17 @@ const MainPage = () => {
           },
         });
 
-        const list = res.data.data ?? [];
+        console.log("게시글 응답:", res.data);
+
+        const rawData = res.data?.data;
+        const list =
+          rawData?.content ?? rawData?.posts ?? rawData?.list ?? rawData ?? [];
+
+        if (!Array.isArray(list)) {
+          console.error("게시글 데이터가 배열이 아님:", list);
+          setHasMore(false);
+          return;
+        }
 
         const newPosts: Post[] = list.map((item: any) => ({
           id: item.id,
@@ -90,6 +84,8 @@ const MainPage = () => {
           time: item.createdAt,
         }));
 
+        console.log("변환된 posts:", newPosts);
+
         if (newPosts.length === 0) {
           setHasMore(false);
         } else {
@@ -98,7 +94,8 @@ const MainPage = () => {
           );
           setLastId(newPosts[newPosts.length - 1].id);
         }
-      } catch {
+      } catch (e) {
+        console.error("게시글 요청 실패", e);
         setHasMore(false);
       } finally {
         setLoading(false);
@@ -112,7 +109,7 @@ const MainPage = () => {
     setLastId(null);
     setHasMore(true);
     fetchPosts(null);
-  }, [tab, sortType]);
+  }, [tab, sortType, fetchPosts]);
 
   useEffect(() => {
     if (!observerRef.current) return;
@@ -123,7 +120,7 @@ const MainPage = () => {
           fetchPosts(lastId);
         }
       },
-      { threshold: 1 }
+      { threshold: 0.1 }
     );
 
     observer.observe(observerRef.current);
