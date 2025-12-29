@@ -9,8 +9,21 @@ import Blog from "@/components/Modal/Blog";
 import api from "@/API/api";
 
 const Writing = () => {
-  const [text, setText] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // MyPage에서 전달받은 데이터
+  const { isEdit, postData } = location.state || {};
+  
+  const writeType = location.pathname.includes("/blog/write")
+    ? "blog"
+    : location.pathname.includes("/portfolio/write")
+    ? "portfolio"
+    : "unknown";
+
+  // 초기값에 기존 데이터 설정
+  const [text, setText] = useState<string>(postData?.content || "");
+  const [title, setTitle] = useState<string>(postData?.title || "");
   const [headingType, setHeadingType] = useState<string>("body");
   const [Aiasdf, setAiasdf] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -18,15 +31,7 @@ const Writing = () => {
   const [End, setEnd] = useState<boolean>(false);
   const [conversionType, setConversionType] = useState<conversionType>("stay");
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const writeType = location.pathname.includes("/blog/write")
-    ? "blog"
-    : location.pathname.includes("/portfolio/write")
-    ? "portfolio"
-    : "unknown";
-
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null!);
   const selectionTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastSelectionRef = useRef<{ start: number; end: number }>({
     start: 0,
