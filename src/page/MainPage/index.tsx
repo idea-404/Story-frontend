@@ -43,8 +43,8 @@ const MainPage = () => {
   }, [navigate]);
 
   const fetchPosts = useCallback(
-    async (cursor: number | null = null) => {
-      if (loading || !hasMore) return;
+    async (cursor: number | null) => {
+      if (loading) return;
 
       setLoading(true);
 
@@ -57,6 +57,11 @@ const MainPage = () => {
         });
 
         const list = res.data.data ?? [];
+
+        if (list.length === 0) {
+          setHasMore(false);
+          return;
+        }
 
         const newPosts: Post[] = list.map((item: any) => ({
           id: item.blog_id ?? item.portfolio_id,
@@ -72,11 +77,6 @@ const MainPage = () => {
           time: item.time,
         }));
 
-        if (newPosts.length === 0) {
-          setHasMore(false);
-          return;
-        }
-
         setPosts((prev) =>
           cursor === null ? newPosts : [...prev, ...newPosts]
         );
@@ -87,7 +87,7 @@ const MainPage = () => {
         setLoading(false);
       }
     },
-    [tab, sortType, loading, hasMore]
+    [tab, sortType, loading]
   );
 
   useEffect(() => {
@@ -95,7 +95,7 @@ const MainPage = () => {
     setLastId(null);
     setHasMore(true);
     fetchPosts(null);
-  }, [tab, sortType, fetchPosts]);
+  }, [tab, sortType]);
 
   useEffect(() => {
     if (!observerRef.current) return;
@@ -111,7 +111,7 @@ const MainPage = () => {
 
     observer.observe(observerRef.current);
     return () => observer.disconnect();
-  }, [fetchPosts, lastId, hasMore, loading]);
+  }, [lastId, hasMore, loading, fetchPosts]);
 
   const handleCardClick = (id: number) => {
     navigate(`/${tab}/${id}`);
