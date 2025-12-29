@@ -74,7 +74,7 @@ export default function ProfileSettings({
     const studentId = `${data.grade}${data.class}${data.number}`;
 
     try {
-      const res = await api.patch("/api/v1/mypage/jeongbo", {
+      const res = await api.patch("/mypage/jeongbo", {
         nickname: data.name,
         studentId,
         major: data.major,
