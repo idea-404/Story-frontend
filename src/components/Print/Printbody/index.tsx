@@ -1,7 +1,8 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import rehypeSanitize from "rehype-sanitize";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import { write } from "@/API";
+
 const Printbody = ({
   title,
   body,
@@ -18,12 +19,20 @@ const Printbody = ({
     : location.pathname.includes("/portfolio/write")
     ? "portfolio"
     : "unknown";
+  const sanitizeSchema = {
+    ...defaultSchema,
+    attributes: {
+      ...defaultSchema.attributes,
+      img: [...(defaultSchema.attributes?.img || []), "src", "alt"],
+    },
+  };
+
   return (
     <div className="flex flex-col gap-[2.75rem]">
       <div className="w-[35.75rem] h-[59.26vh] mt-[1rem] overflow-y-scroll overflow-x-hidden prose">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeSanitize]}
+          rehypePlugins={[[rehypeSanitize, sanitizeSchema]]}
         >
           {body}
         </ReactMarkdown>
