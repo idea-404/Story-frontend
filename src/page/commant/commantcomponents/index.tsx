@@ -18,9 +18,11 @@ const Commantcomponents = ({ id, type }: { id: number; type: string }) => {
       setLoading(true);
       const result = await GetComments(id, type);
       console.log("댓글 결과:", result);
-      if (result) {
+      if (result && result.comment) {
         console.log("댓글 배열:", result.comment);
         setComments(result.comment);
+      } else {
+        setComments([]);
       }
       setLoading(false);
     };
