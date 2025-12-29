@@ -69,21 +69,8 @@ const MainPage = () => {
 
       const actualSort = isFirstLoad ? "latest" : sortType;
 
-      let endpoint: string;
-      if (actualSort === "latest") {
-        endpoint = "latest";
-      } else if (actualSort === "view") {
-        endpoint = "view";
-      } else if (actualSort === "like") {
-        endpoint = "like";
-      } else if (actualSort === "comment") {
-        endpoint = "comment";
-      } else {
-        endpoint = "latest";
-      }
-
       try {
-        const res = await axios.get(`/${tab}/${endpoint}`, {
+        const res = await axios.get(`/${tab}/${actualSort}`, {
           params: {
             lastId: cursor,
             size: 10,
