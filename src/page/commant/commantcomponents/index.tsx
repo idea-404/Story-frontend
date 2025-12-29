@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { GetComments } from "@/API/Comment";
 
 interface Comment {
-  comment_id: number;
+  id: number;
   nickname: string;
   content: string;
   createAt: string;
@@ -18,9 +18,9 @@ const Commantcomponents = ({ id, type }: { id: number; type: string }) => {
       setLoading(true);
       const result = await GetComments(id, type);
       console.log("댓글 결과:", result);
-      if (result && result.comment) {
-        console.log("댓글 배열:", result.comment);
-        setComments(result.comment);
+      if (result && result.comments) {
+        console.log("댓글 배열:", result.comments);
+        setComments(result.comments);
       } else {
         setComments([]);
       }
@@ -34,7 +34,7 @@ const Commantcomponents = ({ id, type }: { id: number; type: string }) => {
   return (
     <div className="flex flex-col">
       {comments.map((comment) => (
-        <div key={comment.comment_id} className="mb-[2rem]">
+        <div key={comment.id} className="mb-[2rem]">
           <div className="flex justify-between w-[32rem] mt-[3.75rem] mb-[1.25rem]">
             <div className="flex items-center gap-[0.96rem]">
               <Person h={40} />

@@ -2,15 +2,16 @@ import api from "@/API/api";
 import axios from "axios";
 
 interface Comment {
-  comment_id: number;
+  id: number;
   nickname: string;
   content: string;
   createAt: string;
 }
 
 interface CommentResponse {
-  portfolio_id: number;
-  comment: Comment[];
+  blogId?: number;
+  portfolio_id?: number;
+  comments: Comment[];
 }
 
 export const GetComments = async (
@@ -19,7 +20,7 @@ export const GetComments = async (
 ): Promise<CommentResponse | null> => {
   try {
     const res = await api.get(`/${type}/comment/${id}`);
-    console.log('댓글 API 응답:', res.status, res.data);
+    console.log("댓글 API 응답:", res.status, res.data);
     if (res.status === 200 || res.status === 201) {
       return res.data;
     }
