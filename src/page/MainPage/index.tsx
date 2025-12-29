@@ -51,7 +51,7 @@ const MainPage = () => {
         tab === "blog" ? res.data.blog ?? [] : res.data.portfolio ?? [];
 
       const newPosts: Post[] = list.map((item: any) => ({
-        id: item.blog_id ?? item.portfolio_id,
+        id: tab === "blog" ? item.blog_id : item.portfolio_id,
         userId: item.userId,
         nickname: item.nickname,
         profileImage: item.profileImage,
