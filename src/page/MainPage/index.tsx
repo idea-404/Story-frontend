@@ -68,11 +68,9 @@ const MainPage = () => {
       setLoading(true);
 
       const actualSort = isFirstLoad ? "latest" : sortType;
-      // API 엔드포인트를 /blog/id 형식으로 변경
-      const endpoint = actualSort === "latest" ? "latest" : "id";
 
       try {
-        const res = await axios.get(`/${tab}/${endpoint}`, {
+        const res = await axios.get(`/${tab}/${actualSort}`, {
           params: {
             lastId: cursor,
             size: 10,
