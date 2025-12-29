@@ -77,7 +77,7 @@ const MainPage = () => {
         const list = res.data.data ?? [];
 
         const newPosts: Post[] = list.map((item: any) => ({
-          id: item.blog_id ?? item.portfolio_id,
+          id: item.id,
           userId: item.userId,
           nickname: item.nickname,
           profileImage: item.profileImage,
@@ -87,7 +87,7 @@ const MainPage = () => {
           view: item.view,
           comment: item.comment,
           thumbnail: item.thumbnail,
-          time: item.time,
+          time: item.createdAt,
         }));
 
         if (newPosts.length === 0) {
