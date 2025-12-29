@@ -54,7 +54,7 @@ const Inputheader = ({
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await api.post("/image/upload", formData, {
+      const res = await api.post("/portfolio/image/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
