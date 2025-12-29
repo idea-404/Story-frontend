@@ -6,7 +6,7 @@ import MainCard from "@/components/MainCard";
 import MainHeader from "@/components/MainHeader";
 import useTokenStore from "@/Store/token";
 
-axios.defaults.baseURL = "/main";
+axios.defaults.baseURL = "/api/v1/main";
 
 /**
  * 게시글 타입
