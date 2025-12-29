@@ -8,6 +8,21 @@ import useTokenStore from "@/Store/token";
 
 axios.defaults.baseURL = "/api/v1/main";
 
+/**
+ * 게시글 타입
+ * @typedef {Object} Post
+ * @property {number} id - 게시글 ID
+ * @property {number} userId - 작성자(유저) ID
+ * @property {string} nickname - 작성자 닉네임
+ * @property {string} profileImage - 작성자 프사 URL
+ * @property {string} title - 글 제목
+ * @property {string} content - 글 미리보기
+ * @property {number} like - 좋아요 수
+ * @property {number} view - 조회 수
+ * @property {number} comment - 댓글 수
+ * @property {string|null} thumbnail - 썸네일 이미지 URL (없으면 null)
+ * @property {string} time - 업로드 시간
+ */
 type Post = {
   id: number;
   userId: number;
@@ -34,7 +49,6 @@ const MainPage = () => {
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
   const [sortType, setSortType] = useState<SortType>("view");
-  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     const token = new URLSearchParams(window.location.search).get("token");
@@ -47,13 +61,13 @@ const MainPage = () => {
   }, [navigate]);
 
   const fetchPosts = useCallback(
-    async (cursor: number | null) => {
+    async (cursor: number | null = null) => {
       if (loading || !hasMore) return;
 
       setLoading(true);
 
       try {
-        const res = await api.get(`/main/${tab}/${sortType}`, {
+        const res = await axios.get(`/${tab}/${sortType}`, {
           params: {
             lastId: cursor,
             size: 10,
@@ -63,7 +77,7 @@ const MainPage = () => {
         const list = res.data.data ?? [];
 
         const newPosts: Post[] = list.map((item: any) => ({
-          id: item.id,
+          id: item.blog_id ?? item.portfolio_id,
           userId: item.userId,
           nickname: item.nickname,
           profileImage: item.profileImage,
@@ -73,7 +87,7 @@ const MainPage = () => {
           view: item.view,
           comment: item.comment,
           thumbnail: item.thumbnail,
-          time: item.createdAt,
+          time: item.time,
         }));
 
         if (newPosts.length === 0) {
@@ -97,16 +111,11 @@ const MainPage = () => {
     setPosts([]);
     setLastId(null);
     setHasMore(true);
-    setInitialized(false);
-
-    fetchPosts(null).then(() => {
-      setInitialized(true);
-    });
-  }, [tab, sortType, fetchPosts]);
+    fetchPosts(null);
+  }, [tab, sortType]);
 
   useEffect(() => {
     if (!observerRef.current) return;
-    if (!initialized) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -114,15 +123,12 @@ const MainPage = () => {
           fetchPosts(lastId);
         }
       },
-      {
-        threshold: 0,
-        rootMargin: "200px",
-      }
+      { threshold: 1 }
     );
 
     observer.observe(observerRef.current);
     return () => observer.disconnect();
-  }, [initialized, fetchPosts, lastId, hasMore, loading]);
+  }, [fetchPosts, lastId, hasMore, loading]);
 
   const handleCardClick = (id: number) => {
     navigate(`/${tab}/${id}`);
