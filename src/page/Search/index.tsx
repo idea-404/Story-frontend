@@ -3,9 +3,25 @@ import MainCard from "@/components/MainCard";
 import Search from "@/components/Search/index";
 import api from "@/API/api";
 
+type SearchItem = {
+  id: number;
+  userId: number;
+  nickname: string;
+  title: string;
+  content: string;
+  like: number;
+  view: number;
+  comment: number;
+  createdAt: string;
+  thumbnail: string | null;
+  portfolio_id?: number | null;
+  profileImage?: string | null;
+  __type: "portfolio" | "blog";
+};
+
 export default function SearchPage() {
   const [keyword, setKeyword] = useState("");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState<SearchItem[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async () => {
@@ -17,11 +33,21 @@ export default function SearchPage() {
         },
       });
 
-      const data = res.data.data || [];
-      setResult(data);
+      const data = res.data?.data ?? {};
+      const portfolio = Array.isArray(data.portfolio) ? data.portfolio : [];
+      const blog = Array.isArray(data.blog) ? data.blog : [];
+
+      const merged: SearchItem[] = [
+        ...portfolio.map((x: any) => ({ ...x, __type: "portfolio" as const })),
+        ...blog.map((x: any) => ({ ...x, __type: "blog" as const })),
+      ];
+
+      setResult(merged);
       setHasSearched(true);
     } catch (err) {
       console.error(err);
+      setResult([]);
+      setHasSearched(true);
     }
   };
 
@@ -40,28 +66,24 @@ export default function SearchPage() {
           </p>
         )}
 
-        {result.map((item: any) => {
-          const isPortfolio = item.portfolio_id !== null;
-
-          return (
-            <MainCard
-              key={item.id}
-              postId={item.id}
-              type={isPortfolio ? "portfolio" : "blog"}
-              userId={item.userId}
-              nickname={item.nickname}
-              profileImage={item.profileImage}
-              title={item.title}
-              content={item.content}
-              like={item.like}
-              view={item.view}
-              comment={item.comment}
-              thumbnail={item.thumbnail}
-              time={item.time}
-              onClick={(id) => console.log(id)}
-            />
-          );
-        })}
+        {result.map((item) => (
+          <MainCard
+            key={`${item.__type}-${item.id}`}
+            postId={item.id}
+            type={item.__type}
+            userId={item.userId}
+            nickname={item.nickname}
+            profileImage={item.profileImage || ""}
+            title={item.title}
+            content={item.content}
+            like={item.like}
+            view={item.view}
+            comment={item.comment}
+            thumbnail={item.thumbnail}
+            time={item.createdAt}
+            onClick={(id) => console.log(id)}
+          />
+        ))}
       </div>
     </div>
   );
