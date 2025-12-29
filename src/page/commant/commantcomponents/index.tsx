@@ -17,7 +17,9 @@ const Commantcomponents = ({ id, type }: { id: number; type: string }) => {
     const fetchComments = async () => {
       setLoading(true);
       const result = await GetComments(id, type);
+      console.log("댓글 결과:", result);
       if (result) {
+        console.log("댓글 배열:", result.comment);
         setComments(result.comment);
       }
       setLoading(false);

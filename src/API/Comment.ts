@@ -19,7 +19,8 @@ export const GetComments = async (
 ): Promise<CommentResponse | null> => {
   try {
     const res = await api.get(`/${type}/comment/${id}`);
-    if (res.status === 201) {
+    console.log('댓글 API 응답:', res.status, res.data);
+    if (res.status === 200 || res.status === 201) {
       return res.data;
     }
     return null;
