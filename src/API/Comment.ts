@@ -18,7 +18,7 @@ export const GetComments = async (
   type: string
 ): Promise<CommentResponse | null> => {
   try {
-    const res = await api.get(`/${type}/${id}`);
+    const res = await api.get(`/${type}/comment/${id}`);
     if (res.status === 201) {
       return res.data;
     }
@@ -28,8 +28,6 @@ export const GetComments = async (
       const status = error.response.status;
       if (status === 404) {
         alert("댓글을 불러올 수 없습니다.");
-      } else if (status === 401) {
-        alert("로그인 후 이용해주세요.");
       } else {
         alert("백엔드 서버 비상!!!!!!!!!");
       }

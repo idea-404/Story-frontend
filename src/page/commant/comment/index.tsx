@@ -1,11 +1,19 @@
 import { Commentpush } from "@/API/commentpush";
 import { useState } from "react";
 
-const Commantintput = ({ id, type }: { id: number; type: string }) => {
+const Commantintput = ({
+  id,
+  type,
+  comment,
+}: {
+  id: number;
+  type: string;
+  comment: number;
+}) => {
   const [text, settext] = useState("");
   return (
     <div className="flex flex-col justify-center w-[32rem]">
-      <div className="w-[32rem] text-[1.25rem]">10개의 댓글</div>
+      <div className="w-[32rem] text-[1.25rem]">{comment}개의 댓글</div>
       <div className="w-[32rem] h-[7.25rem] bg-[#EFF0F2] rounded-[0.4375rem] mt-[0.5rem] px-[1rem] pt-[1rem]">
         <textarea
           value={text}
