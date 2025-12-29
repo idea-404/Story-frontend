@@ -54,7 +54,7 @@ export default function MyPage() {
     }
 
     try {
-      const res = await api.get("/api/v1/mypage/view", {
+      const res = await api.get("/mypage/view", {
         headers: { Authorization: `Bearer ${auth.token}` },
       });
 
