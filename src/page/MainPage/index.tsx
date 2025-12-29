@@ -76,8 +76,8 @@ const MainPage = () => {
     fetchPosts();
   }, [tab, sortType, fetchPosts]);
 
-  const handleCardClick = (id: number) => {
-    navigate(`/${tab}/${id}`);
+  const handleCardClick = (type: "blog" | "portfolio", id: number) => {
+    navigate(`/${type}/${id}`);
   };
 
   return (
@@ -90,7 +90,7 @@ const MainPage = () => {
         onNavigate={() => {}}
       />
 
-      <div className="flex flex-col gap-10 w-full max-w-3xl">
+      <div className="flex flex-col items-center gap-10 w-full max-w-3xl">
         {posts.map((post) => (
           <MainCard
             key={post.id}
@@ -106,7 +106,7 @@ const MainPage = () => {
             thumbnail={post.thumbnail}
             time={post.time}
             type={tab}
-            onClick={handleCardClick}
+            onClick={(id) => handleCardClick(tab, id)}
           />
         ))}
       </div>
