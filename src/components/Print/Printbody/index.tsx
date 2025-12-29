@@ -40,7 +40,10 @@ const Printbody = ({
       <div className="flex justify-end gap-[2.25rem]">
         {writeType === "portfolio" && (
           <button
-            onClick={() => write(title, body, body.slice(0, 64))}
+            onClick={() => {
+              alert("임시저장 되었습니다.");
+              write(title, body, body.slice(0, 64));
+            }}
             className={buttonStyle}
           >
             임시저장
