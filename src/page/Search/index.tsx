@@ -6,14 +6,13 @@ import api from "@/API/api";
 export default function SearchPage() {
   const [keyword, setKeyword] = useState("");
   const [result, setResult] = useState([]);
-  const [lastId, setLastId] = useState(0);
   const [hasSearched, setHasSearched] = useState(false);
+
   const handleSearch = async () => {
     try {
-      const res = await api.get(`/main/search`, {
+      const res = await api.get("/main/search", {
         params: {
           keyword,
-          lastId: 0,
           size: 10,
         },
       });
@@ -21,12 +20,6 @@ export default function SearchPage() {
       const data = res.data.data || [];
       setResult(data);
       setHasSearched(true);
-
-      if (data.length > 0) {
-        const nextLastId = data[data.length - 1].id;
-        setLastId(nextLastId);
-        console.log("다음 요청에서 사용할 lastId:", nextLastId);
-      }
     } catch (err) {
       console.error(err);
     }
