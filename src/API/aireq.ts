@@ -8,11 +8,11 @@ export const Aireq = async (
   id: number,
   setConversionType: React.Dispatch<React.SetStateAction<conversionType>>
 ) => {
+  setConversionType("ing");
   try {
     const res = await api.post(`/ola/${id}`, {
       question: body,
     });
-    setConversionType("ing");
     if (res.status === 200) {
       useAiResponseStore.getState().setResponse(res.data.answer); //응답 확인하기
       setConversionType("Ok");
