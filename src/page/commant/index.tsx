@@ -82,7 +82,7 @@ const Commant = () => {
         </div>
       </div>
       <hr className="mt-[4.63rem] mb-[1.25rem] h-[0.125rem] bg-[#CBCCCE] w-[35.75rem]" />
-      <Commantintput id={Number(id)} type={pageType} />
+      <Commantintput id={Number(id)} type={pageType} comment={data.comment} />
       <Commantcomponents type={pageType} id={Number(id)} />
     </div>
   );
