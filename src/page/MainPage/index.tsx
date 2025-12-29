@@ -49,7 +49,6 @@ const MainPage = () => {
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState<"blog" | "portfolio">("blog");
   const [sortType, setSortType] = useState<SortType>("view");
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
     const token = new URLSearchParams(window.location.search).get("token");
@@ -67,10 +66,8 @@ const MainPage = () => {
 
       setLoading(true);
 
-      const actualSort = isFirstLoad ? "latest" : sortType;
-
       try {
-        const res = await axios.get(`/${tab}/${actualSort}`, {
+        const res = await axios.get(`/${tab}/${sortType}`, {
           params: {
             lastId: cursor,
             size: 10,
@@ -101,22 +98,19 @@ const MainPage = () => {
           );
           setLastId(newPosts[newPosts.length - 1].id);
         }
-
-        if (isFirstLoad) setIsFirstLoad(false);
       } catch {
         setHasMore(false);
       } finally {
         setLoading(false);
       }
     },
-    [tab, sortType, isFirstLoad, loading, hasMore]
+    [tab, sortType, loading, hasMore]
   );
 
   useEffect(() => {
     setPosts([]);
     setLastId(null);
     setHasMore(true);
-    setIsFirstLoad(true);
     fetchPosts(null);
   }, [tab, sortType]);
 
