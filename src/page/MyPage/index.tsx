@@ -32,7 +32,7 @@ type Mode = "none" | "edit" | "delete";
 
 export default function MyPage() {
   const navigate = useNavigate();
-  const { auth } = useTokenStore(); // Zustand store 사용
+  const { auth } = useTokenStore();
 
   const [activeTab, setActiveTab] = useState<"blog" | "portfolio" | "intro">(
     "blog"
@@ -73,20 +73,15 @@ export default function MyPage() {
       });
 
       setZerodogPostIds(
-        portfolio
-          .filter((post: Post) => post.zerodog)
-          .map((post: Post) => post.id)
+        portfolio.filter((p: Post) => p.zerodog).map((p: Post) => p.id)
       );
     } catch (e: any) {
       const status = e.response?.status;
-
       if (status === 400 || status === 403) {
         alert("정보 입력이 필요합니다.");
         navigate("/info");
         return;
       }
-
-      console.error(e);
       alert("마이페이지 정보를 불러오는데 실패했습니다.");
     } finally {
       setLoading(false);
@@ -98,7 +93,6 @@ export default function MyPage() {
   }, []);
 
   const handleZerodogToggle = async (postId: number) => {
-    const isOpen = zerodogPostIds.includes(postId);
     if (!auth.token) return;
 
     try {
@@ -107,26 +101,30 @@ export default function MyPage() {
       });
 
       setZerodogPostIds((prev) =>
-        isOpen ? prev.filter((id) => id !== postId) : [...prev, postId]
+        prev.includes(postId)
+          ? prev.filter((id) => id !== postId)
+          : [...prev, postId]
       );
-    } catch (e) {
-      console.error(e);
-      alert("공개여부 변경에 실패했습니다.");
+    } catch {
+      alert("공개여부 변경 실패");
     }
   };
 
-  const handleCardClick = (postId: number) => {
+  const handleCardClick = (post: Post) => {
     if (mode === "edit") {
-      navigate(
+      const path =
         activeTab === "portfolio"
-          ? `/portfolio/write/${postId}`
-          : `/blog/write/${postId}`
-      );
+          ? `/portfolio/write/${post.id}`
+          : `/blog/write/${post.id}`;
+
+      navigate(path, {
+        state: { post },
+      });
       return;
     }
 
     if (mode === "delete") {
-      setTargetPostId(postId);
+      setTargetPostId(post.id);
       setIsDeleteModalOpen(true);
     }
   };
@@ -149,36 +147,23 @@ export default function MyPage() {
   const handleDeleteConfirm = async () => {
     if (!targetPostId || !auth.token) return;
 
-    try {
-      const deleteUrl =
-        activeTab === "portfolio"
-          ? `/portfolio/delete/${targetPostId}`
-          : `/blog/delete/${targetPostId}`;
+    const url =
+      activeTab === "portfolio"
+        ? `/portfolio/delete/${targetPostId}`
+        : `/blog/delete/${targetPostId}`;
 
-      await api.delete(deleteUrl, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+    await api.delete(url, {
+      headers: { Authorization: `Bearer ${auth.token}` },
+    });
 
-      await fetchMyPage();
-
-      setMode("none");
-      setTargetPostId(null);
-      setIsDeleteModalOpen(false);
-    } catch (e) {
-      console.error(e);
-      alert("삭제 실패");
-    }
+    await fetchMyPage();
+    setMode("none");
+    setTargetPostId(null);
+    setIsDeleteModalOpen(false);
   };
 
   if (loading) return null;
-
-  if (!userData) {
-    return (
-      <div className="mt-20 text-center text-gray-500">
-        마이페이지 정보를 불러올 수 없습니다.
-      </div>
-    );
-  }
+  if (!userData) return null;
 
   const posts = activeTab === "portfolio" ? userData.portfolio : userData.blog;
 
@@ -201,26 +186,11 @@ export default function MyPage() {
           <div className="absolute left-222 top-1 flex gap-3">
             {mode === "none" ? (
               <>
-                <button
-                  onClick={handleEditClick}
-                  className="h-8 rounded-full border border-primary-main1 px-4 text-sm text-primary-main1 transition hover:bg-primary-main1 hover:text-white"
-                >
-                  수정
-                </button>
-                <button
-                  onClick={handleDeleteClick}
-                  className="h-8 rounded-full border border-primary-main1 px-4 text-sm text-primary-main1 transition hover:bg-primary-main1 hover:text-white"
-                >
-                  삭제
-                </button>
+                <button onClick={handleEditClick}>수정</button>
+                <button onClick={handleDeleteClick}>삭제</button>
               </>
             ) : (
-              <button
-                onClick={handleCancelMode}
-                className="h-8 rounded-full border border-gray-300 px-4 text-sm text-gray-500 transition hover:bg-gray-200"
-              >
-                취소
-              </button>
+              <button onClick={handleCancelMode}>취소</button>
             )}
           </div>
         )}
@@ -232,8 +202,8 @@ export default function MyPage() {
         <div className="mt-10 flex flex-col gap-6">
           {posts.map((post) => (
             <MainCard
-              userId={post.userid}
               key={post.id}
+              userId={post.userid}
               postId={post.id}
               nickname={post.nickname}
               profileImage={userData.profileImage}
@@ -248,7 +218,7 @@ export default function MyPage() {
               showFavorite={activeTab === "portfolio" && mode === "none"}
               isFavorite={zerodogPostIds.includes(post.id)}
               onFavoriteClick={handleZerodogToggle}
-              onClick={handleCardClick}
+              onClick={() => handleCardClick(post)}
             />
           ))}
         </div>
