@@ -15,6 +15,9 @@ export const write = async (
     if (res.status === 201) {
       alert("포트폴리오가 성공적으로 저장되었습니다.");
       return true;
+    } else if (res.status === 200) {
+      alert("포트폴리오 수정이 성공적으로 저장되었습니다.");
+      return true;
     }
     return false;
   } catch (error) {
