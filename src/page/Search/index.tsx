@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MainCard from "@/components/MainCard";
-import Search from "@/components/Search/index";
+import Search from "@/components/Search";
 import api from "@/API/api";
 
 type SearchItem = {
@@ -15,7 +15,6 @@ type SearchItem = {
   createdAt?: string;
   thumbnail: string | null;
   profileImage?: string | null;
-
   __type: "portfolio" | "blog";
 };
 
@@ -27,14 +26,10 @@ export default function SearchPage() {
   const handleSearch = async () => {
     try {
       const res = await api.get("/main/search", {
-        params: {
-          keyword,
-          size: 10,
-        },
+        params: { keyword, size: 10 },
       });
 
       const payload = res.data?.data ?? res.data ?? {};
-
       const portfolio = Array.isArray(payload.portfolio)
         ? payload.portfolio
         : [];
@@ -55,15 +50,15 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="w-full flex justify-center pt-16">
-      <div className="w-full max-w-3xl px-4">
+    <div className="w-full">
+      <div className="mx-auto w-full max-w-3xl px-4">
         <Search
           value={keyword}
           onChange={(v) => setKeyword(v)}
           onSearch={handleSearch}
         />
 
-        <div className="w-full flex flex-col gap-6 mt-4">
+        <div className="mt-4 flex flex-col gap-6">
           {hasSearched && result.length === 0 && (
             <p className="text-sm text-center text-gray-500">
               더 이상 표시할 글이 없습니다.
