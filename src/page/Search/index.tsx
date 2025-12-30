@@ -55,15 +55,15 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="w-full flex justify-center">
-      <div className="w-full max-w-3xl px-4 py-6">
+    <div className="w-full flex justify-center pt-16">
+      <div className="w-full max-w-3xl px-4">
         <Search
           value={keyword}
           onChange={(v) => setKeyword(v)}
           onSearch={handleSearch}
         />
 
-        <div className="w-full flex flex-col gap-10 mt-6">
+        <div className="w-full flex flex-col gap-6 mt-4">
           {hasSearched && result.length === 0 && (
             <p className="text-sm text-center text-gray-500">
               더 이상 표시할 글이 없습니다.
